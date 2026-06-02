@@ -1,0 +1,8 @@
+{
+  "buildCommand": "git submodule update --init --recursive && npm run build",
+  "env": {
+    "NEXT_PUBLIC_BASE44_API_URL": "@base44_api_url",
+    "NEXT_PUBLIC_BASE44_API_KEY": "@base44_api_key",
+    "NEXT_PUBLIC_CLIENT_ID": "@client_id"
+  }
+}
