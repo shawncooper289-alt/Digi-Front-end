@@ -12,13 +12,16 @@ const brand = {
 
 const avaSkye = {
   name: 'Ava Skye',
-  title: 'AI Growth Strategist',
+  title: 'AI Host and Growth Strategist',
   promise: 'A calm, confident guide who turns every visitor into a clear next step.',
   voice: 'Warm, direct, strategic, and consistent across the platform, walkthroughs, and future videos.',
+  appearance: 'Polished AI host with long brown hair, warm tan complexion, natural makeup, charcoal blazer, black top, and a friendly confident expression.',
+  videoDirection: 'Keep Ava Skye framed like a premium platform host beside DigiMark101 training screens, with the same hair, complexion, wardrobe, nameplate, and calm presenter energy in every video.',
   visualRules: [
     'Purple-forward DigiMark101 palette with dark ink contrast and silver accents',
     'Confident agency tone: growth, clarity, automation, and measurable outcomes',
-    'Same name, role, voice, and guidance style in every page, prompt, and video script'
+    'Ava Skye stays visually consistent: long brown hair, warm tan skin tone, polished natural makeup, charcoal blazer, and professional AI host posture',
+    'Same name, role, voice, appearance, and guidance style in every page, prompt, and video script'
   ]
 };
 
@@ -341,11 +344,17 @@ export default function Home() {
           margin-bottom: 22px;
         }
 
-        .voice-box {
+        .voice-box,
+        .appearance-box {
           border-left: 3px solid ${brand.magenta};
           padding-left: 16px;
           color: #d1d5db;
           line-height: 1.55;
+        }
+
+        .appearance-box {
+          border-left-color: ${brand.violet};
+          margin-top: 14px;
         }
 
         .walkthrough-panel {
@@ -514,6 +523,7 @@ export default function Home() {
             <div className="role">{avaSkye.title}</div>
             <div className="quote">“{avaSkye.promise}”</div>
             <div className="voice-box">Voice standard: {avaSkye.voice}</div>
+            <div className="appearance-box">Visual standard: {avaSkye.appearance}</div>
           </aside>
         </section>
 
@@ -560,7 +570,7 @@ export default function Home() {
 
         <p className="footer-note">
           Powered by Ava OS • Base44 backend • Deployed on Vercel<br />
-          Ava Skye remains the same guide across the website, platform prompts, walkthrough scripts, and future videos.
+          Ava Skye remains the same guide across the website, platform prompts, walkthrough scripts, and future videos: {avaSkye.videoDirection}
         </p>
       </div>
     </main>
