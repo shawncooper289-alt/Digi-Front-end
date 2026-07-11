@@ -1,7 +1,7 @@
 {
   "name": "digi-front-end",
   "version": "1.0.0",
-  "description": "Front-end website that will connect to Base44 but will open from vercel",
+  "description": "DigiMark101 frontend for the Ava Skye full-length walkthrough.",
   "private": true,
   "scripts": {
     "dev": "next dev",
