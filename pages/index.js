@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [message, setMessage] = useState('Initializing Dynasty...');
+  const [message, setMessage] = useState('Initializing Ava Skye...');
   const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Test existing API endpoint (unchanged)
-    fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setMessage('Welcome to Your Digital Dynasty');
-        setLoading(false);
-      });
+    const timer = window.setTimeout(() => {
+      setMessage('Ava Skye is ready');
+      setLoading(false);
+    }, 400);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (
@@ -110,7 +104,7 @@ export default function Home() {
             letterSpacing: '-1px'
           }}
         >
-          Your Digital Dynasty Starts Here
+          Ava Skye Starts Here
         </h1>
 
         <p
@@ -123,7 +117,7 @@ export default function Home() {
             lineHeight: '1.6'
           }}
         >
-          Advanced AI-powered marketing automation. The simplest structure. Unlimited potential.
+          A clean frontend experience for Ava Skye.
         </p>
 
         {/* Status Box */}
@@ -145,7 +139,7 @@ export default function Home() {
           </h2>
           <p style={{ fontSize: '1.1rem', margin: 0, minHeight: '2rem' }}>
             {loading ? (
-              <span style={{ opacity: 0.7 }}>Connecting to Ava OS...</span>
+              <span style={{ opacity: 0.7 }}>Preparing Ava Skye...</span>
             ) : (
               <span style={{ color: '#34d399' }}>✓ {message}</span>
             )}
@@ -184,15 +178,12 @@ export default function Home() {
               e.target.style.boxShadow = '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)';
             }}
           >
-            Enter Dashboard
+            Enter Ava Skye
           </button>
 
           <button
             onClick={() => {
-              fetch('/api/hello', { method: 'POST' })
-                .then((res) => res.json())
-                .then((data) => setMessage(data.message))
-                .catch(() => setMessage('Error connecting to backend'));
+              setMessage('Ava Skye is ready');
             }}
             style={{
               padding: '1rem 2rem',
@@ -218,7 +209,7 @@ export default function Home() {
               e.target.style.background = 'transparent';
             }}
           >
-            Test Ava OS
+            Refresh Status
           </button>
         </div>
 
@@ -231,7 +222,7 @@ export default function Home() {
             animation: 'fadeIn 1.5s ease-out 1s both'
           }}
         >
-          Powered by Ava OS • Base44 Backend • Ava Knowledge Base
+          Ava Skye frontend
           <br />
           <small>Deployed on Vercel • Fully responsive • Zero downtime updates</small>
         </p>
