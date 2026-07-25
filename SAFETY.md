@@ -8,7 +8,7 @@ This update enhances your existing client setup while maintaining 100% backward 
 
 ### What's NOT Changing:
 - Existing AvaOS client configuration
-- Current Base44 API endpoints
+- Current Supabase API endpoints
 - Active client sessions & data
 - User permissions & roles
 - Integrations with third-party services
@@ -88,7 +88,7 @@ git push origin main
 - ✅ All existing endpoints work
 - ✅ All existing pages accessible
 - ✅ AvaOS initialization same
-- ✅ Base44 API calls unchanged
+- ✅ Supabase API calls verified
 - ✅ User data migration: NOT REQUIRED
 - ✅ Configuration reuse: YES
 - ✅ Client routes same: YES
@@ -111,10 +111,10 @@ Your clients can optionally use:
 
 ## 🔧 Environment Variables
 
-**Existing vars still work:**
+**Required Supabase vars:**
 ```env
-NEXT_PUBLIC_BASE44_API_URL=...
-NEXT_PUBLIC_BASE44_API_KEY=...
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 NEXT_PUBLIC_CLIENT_ID=...
 ```
 
@@ -195,7 +195,7 @@ git push --force
 
 ### Current Setup:
 - ✅ AvaOS enabled
-- ✅ Base44 backend connected
+- ✅ Supabase backend connected
 - ✅ Ava Knowledge Base integrated
 - ✅ Social media posting working
 - ✅ Email marketing active
@@ -272,7 +272,7 @@ END IF
 - [ ] Backup existing database
 - [ ] Test existing client login
 - [ ] Test AvaOS functionality
-- [ ] Test Base44 API calls
+- [ ] Test Supabase API calls
 - [ ] Test social media posting
 - [ ] Test email campaign sending
 - [ ] Test analytics viewing

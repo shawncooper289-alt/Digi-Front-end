@@ -231,7 +231,7 @@ export default function Home() {
             animation: 'fadeIn 1.5s ease-out 1s both'
           }}
         >
-          Powered by Ava OS • Base44 Backend • Ava Knowledge Base
+          Powered by Ava OS • Supabase Backend • Ava Knowledge Base
           <br />
           <small>Deployed on Vercel • Fully responsive • Zero downtime updates</small>
         </p>
