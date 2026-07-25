@@ -6,3 +6,4 @@
     "NEXT_PUBLIC_CLIENT_ID": "@client_id"
   }
 }
+Path: .github/workflows/deploy-to-vercel.yml
