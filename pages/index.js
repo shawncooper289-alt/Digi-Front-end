@@ -1,241 +1,335 @@
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
+import { useState } from 'react';
+import { Bot, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
-export default function Home() {
-  const [message, setMessage] = useState('Initializing Dynasty...');
-  const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export default function LandingPage() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    // Test existing API endpoint (unchanged)
-    fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setMessage('Welcome to Your Digital Dynasty');
-        setLoading(false);
-      });
-  }, []);
+  const handleLeadSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    if (!isSupabaseConfigured || !supabase) {
+      setLoading(false);
+      setMessage('Supabase is not configured yet. Add the Vercel environment variables first.');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('leads')
+      .insert([{ email: email.trim().toLowerCase() }]);
+
+    setLoading(false);
+
+    if (error) {
+      if (error.code === '23505') {
+        setMessage('You are already registered!');
+      } else {
+        setMessage('Something went wrong. Please try again.');
+      }
+      return;
+    }
+
+    setMessage('Success! You are on the early access list.');
+    setEmail('');
+  };
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #050816 0%, #0f1419 50%, #1a1f2e 100%)',
-        color: '#f9fafb',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-        padding: '2rem',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      {/* Animated background elements */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          top: '-200px',
-          left: '-200px',
-          animation: 'float 6s ease-in-out infinite'
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          width: '300px',
-          height: '300px',
-          background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          bottom: '-150px',
-          right: '-150px',
-          animation: 'float 8s ease-in-out infinite reverse'
-        }}
-      />
+    <>
+      <Head>
+        <title>DigiMark101 | AI Marketing Platform</title>
+        <meta
+          name="description"
+          content="DigiMark101 is an AI-powered marketing agency platform with Supabase-powered early access capture."
+        />
+      </Head>
 
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(30px); }
+      <main className="shell">
+        <nav className="nav">
+          <a className="brand" href="/" aria-label="DigiMark101 home">
+            <span className="brand-icon"><Bot size={20} /></span>
+            <span>DigiMark101</span>
+          </a>
+          <a className="nav-button" href="#early-access">
+            Get Started <ArrowRight size={16} />
+          </a>
+        </nav>
+
+        <section className="hero">
+          <div className="eyebrow">
+            <Sparkles size={14} />
+            The World&apos;s Most Advanced AI Marketing Platform
+          </div>
+
+          <h1>
+            Your Digital Empire <br />
+            <span>Starts Here.</span>
+          </h1>
+
+          <p className="hero-copy">
+            DigiMark101 gives you a complete AI-powered agency in a box — funnels, websites,
+            content, emails, bots, and an AI Chief of Staff named <strong>Ava Skye</strong> who runs it all.
+          </p>
+
+          <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
+            <input
+              type="email"
+              required
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              aria-label="Email address"
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? 'Joining...' : 'Get Early Access'}
+            </button>
+          </form>
+
+          {message && <p className="message">{message}</p>}
+
+          <div className="badges" aria-label="Platform highlights">
+            <span><CheckCircle2 size={16} /> Cancel Anytime</span>
+            <span><CheckCircle2 size={16} /> Mobile App Ready</span>
+            <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
+          </div>
+        </section>
+      </main>
+
+      <style jsx>{`
+        :global(body) {
+          margin: 0;
+          background: #020617;
+          color: #ffffff;
+          font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
+
+        :global(*) {
+          box-sizing: border-box;
+        }
+
+        .shell {
+          min-height: 100vh;
+          color: #ffffff;
+          background:
+            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18), transparent 34rem),
+            radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.16), transparent 28rem),
+            #020617;
+        }
+
+        .nav {
+          width: min(1280px, calc(100% - 64px));
+          margin: 0 auto;
+          padding: 20px 0;
+          border-bottom: 1px solid #1e293b;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .brand,
+        .nav-button {
+          color: inherit;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .brand {
+          gap: 10px;
+          font-size: 1.25rem;
+          font-weight: 800;
+          letter-spacing: -0.04em;
+        }
+
+        .brand-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: grid;
+          place-items: center;
+          background: linear-gradient(135deg, #6366f1, #a855f7);
+          box-shadow: 0 14px 34px rgba(99, 102, 241, 0.32);
+        }
+
+        .nav-button {
+          gap: 8px;
+          border: 0;
+          border-radius: 999px;
+          padding: 10px 20px;
+          background: #4f46e5;
+          color: #ffffff;
+          font-size: 0.9rem;
+          font-weight: 700;
+          transition: background 180ms ease, transform 180ms ease;
+        }
+
+        .nav-button:hover {
+          background: #6366f1;
+          transform: translateY(-1px);
+        }
+
+        .hero {
+          width: min(1024px, calc(100% - 48px));
+          margin: 0 auto;
+          padding: 96px 0 64px;
+          text-align: center;
+        }
+
+        .eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          border: 1px solid rgba(99, 102, 241, 0.32);
+          background: rgba(99, 102, 241, 0.1);
+          color: #818cf8;
+          border-radius: 999px;
+          padding: 7px 16px;
+          margin-bottom: 32px;
+          font-size: 0.75rem;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        h1 {
+          margin: 0 0 24px;
+          font-size: clamp(3.2rem, 8vw, 7rem);
+          line-height: 1.02;
+          font-weight: 900;
+          letter-spacing: -0.065em;
+        }
+
+        h1 span {
+          background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+
+        .hero-copy {
+          max-width: 760px;
+          margin: 0 auto 40px;
+          color: #94a3b8;
+          font-size: clamp(1.05rem, 2vw, 1.25rem);
+          line-height: 1.75;
+        }
+
+        .hero-copy strong {
+          color: #ffffff;
+        }
+
+        .lead-form {
+          width: min(448px, 100%);
+          margin: 0 auto 26px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .lead-form input,
+        .lead-form button {
+          border-radius: 999px;
+          min-height: 52px;
+          font: inherit;
+        }
+
+        .lead-form input {
+          width: 100%;
+          border: 1px solid #1e293b;
+          background: #0f172a;
+          color: #ffffff;
+          padding: 0 20px;
+          outline: none;
+          transition: border-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .lead-form input::placeholder {
+          color: #64748b;
+        }
+
+        .lead-form input:focus {
+          border-color: #6366f1;
+          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+        }
+
+        .lead-form button {
+          flex: 0 0 auto;
+          border: 0;
+          cursor: pointer;
+          background: #4f46e5;
+          color: #ffffff;
+          padding: 0 28px;
+          font-weight: 800;
+          white-space: nowrap;
+          transition: background 180ms ease, opacity 180ms ease;
+        }
+
+        .lead-form button:hover:not(:disabled) {
+          background: #6366f1;
+        }
+
+        .lead-form button:disabled {
+          cursor: not-allowed;
+          opacity: 0.55;
+        }
+
+        .message {
+          min-height: 18px;
+          margin: -12px 0 24px;
+          color: #818cf8;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
+
+        .badges {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 24px;
+          flex-wrap: wrap;
+          color: #94a3b8;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
+
+        .badges span {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .badges :global(svg) {
+          color: #818cf8;
+        }
+
+        @media (max-width: 640px) {
+          .nav {
+            width: min(100% - 32px, 1280px);
           }
-          to {
-            opacity: 1;
-            transform: translateY(0);
+
+          .nav-button {
+            display: none;
           }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .dynasty-title {
-          animation: slideUp 0.8s ease-out 0.1s both;
-        }
-        .dynasty-subtitle {
-          animation: slideUp 0.8s ease-out 0.3s both;
-        }
-        .dynasty-box {
-          animation: slideUp 0.8s ease-out 0.5s both;
-        }
-        .dynasty-button {
-          animation: slideUp 0.8s ease-out 0.7s both;
+
+          .hero {
+            width: min(100% - 32px, 1024px);
+            padding-top: 72px;
+          }
+
+          .lead-form {
+            flex-direction: column;
+          }
+
+          .lead-form button {
+            width: 100%;
+          }
         }
       `}</style>
-
-      {/* Main Content - Z-index to appear over background */}
-      <div style={{ position: 'relative', zIndex: 10 }}>
-        <h1
-          className="dynasty-title"
-          style={{
-            fontSize: '3.5rem',
-            fontWeight: 800,
-            marginBottom: '0.5rem',
-            background: 'linear-gradient(135deg, #60a5fa 0%, #ec4899 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            letterSpacing: '-1px'
-          }}
-        >
-          Your Digital Dynasty Starts Here
-        </h1>
-
-        <p
-          className="dynasty-subtitle"
-          style={{
-            fontSize: '1.3rem',
-            maxWidth: '600px',
-            marginBottom: '2rem',
-            opacity: 0.85,
-            lineHeight: '1.6'
-          }}
-        >
-          Advanced AI-powered marketing automation. The simplest structure. Unlimited potential.
-        </p>
-
-        {/* Status Box */}
-        <div
-          className="dynasty-box"
-          style={{
-            padding: '2rem',
-            borderRadius: '1rem',
-            background:
-              'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(236,72,153,0.1) 100%)',
-            border: '1px solid rgba(148,163,184,0.3)',
-            marginBottom: '2rem',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 8px 32px rgba(15,23,42,0.2)'
-          }}
-        >
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#60a5fa' }}>
-            {loading ? 'Initializing...' : 'System Status'}
-          </h2>
-          <p style={{ fontSize: '1.1rem', margin: 0, minHeight: '2rem' }}>
-            {loading ? (
-              <span style={{ opacity: 0.7 }}>Connecting to Ava OS...</span>
-            ) : (
-              <span style={{ color: '#34d399' }}>✓ {message}</span>
-            )}
-          </p>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="dynasty-button" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => {
-              window.location.href = '/dashboard';
-            }}
-            style={{
-              padding: '1rem 2rem',
-              borderRadius: '999px',
-              border: 'none',
-              cursor: 'pointer',
-              background: 'linear-gradient(135deg, #3b82f6, #ec4899)',
-              color: '#f9fafb',
-              fontWeight: 700,
-              fontSize: '1rem',
-              boxShadow: '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)',
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 15px 35px rgba(59,130,246,0.5), 0 0 60px rgba(236,72,153,0.3)'
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 15px 35px rgba(59,130,246,0.5), 0 0 60px rgba(236,72,153,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)';
-            }}
-          >
-            Enter Dashboard
-          </button>
-
-          <button
-            onClick={() => {
-              fetch('/api/hello', { method: 'POST' })
-                .then((res) => res.json())
-                .then((data) => setMessage(data.message))
-                .catch(() => setMessage('Error connecting to backend'));
-            }}
-            style={{
-              padding: '1rem 2rem',
-              borderRadius: '999px',
-              border: '2px solid rgba(148,163,184,0.5)',
-              cursor: 'pointer',
-              background: 'transparent',
-              color: '#f9fafb',
-              fontWeight: 700,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                borderColor: 'rgba(96,165,250,0.8)',
-                background: 'rgba(59,130,246,0.1)'
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.borderColor = 'rgba(96,165,250,0.8)';
-              e.target.style.background = 'rgba(59,130,246,0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.borderColor = 'rgba(148,163,184,0.5)';
-              e.target.style.background = 'transparent';
-            }}
-          >
-            Test Ava OS
-          </button>
-        </div>
-
-        {/* Footer */}
-        <p
-          style={{
-            marginTop: '3rem',
-            fontSize: '0.9rem',
-            opacity: 0.6,
-            animation: 'fadeIn 1.5s ease-out 1s both'
-          }}
-        >
-          Powered by Ava OS • Supabase Backend • Ava Knowledge Base
-          <br />
-          <small>Deployed on Vercel • Fully responsive • Zero downtime updates</small>
-        </p>
-      </div>
-    </main>
+    </>
   );
 }
