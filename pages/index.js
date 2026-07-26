@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
 import AvaChatModal from '../components/AvaChatModal';
+import AvaSkyeVisual from '../components/AvaSkyeVisual';
 import DigiMarkLogo from '../components/DigiMarkLogo';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
@@ -139,43 +140,49 @@ export default function LandingPage() {
         </nav>
 
         <section className="hero">
-          <div className="eyebrow">
-            <Sparkles size={14} />
-            The World&apos;s Most Advanced AI Marketing Platform
-          </div>
+          <div className="hero-content">
+            <div>
+              <div className="eyebrow">
+                <Sparkles size={14} />
+                Meet Ava Skye, Your AI Chief of Staff
+              </div>
 
-          <div className="hero-logo"><DigiMarkLogo /></div>
+              <div className="hero-logo"><DigiMarkLogo /></div>
 
-          <h1>
-            Your Digital Empire <br />
-            <span>Starts Here.</span>
-          </h1>
+              <h1>
+                Your Digital Empire <br />
+                <span>Starts Here.</span>
+              </h1>
 
-          <p className="hero-copy">
-            DigiMark101 gives you a complete AI-powered agency in a box — funnels, websites,
-            content, emails, bots, and an AI Chief of Staff named <strong>Ava Skye</strong> who runs it all.
-          </p>
+              <p className="hero-copy">
+                DigiMark101 gives you a complete AI-powered agency in a box — funnels, websites,
+                content, emails, bots, and <strong>Ava Skye</strong>, your polished AI Chief of Staff guiding every growth move.
+              </p>
 
-          <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
-            <input
-              type="email"
-              required
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              aria-label="Email address"
-            />
-            <button type="submit" disabled={loading}>
-              {loading ? 'Joining...' : 'Get Early Access'}
-            </button>
-          </form>
+              <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  aria-label="Email address"
+                />
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Joining...' : 'Get Early Access'}
+                </button>
+              </form>
 
-          {message && <p className="message">{message}</p>}
+              {message && <p className="message">{message}</p>}
 
-          <div className="badges" aria-label="Platform highlights">
-            <span><CheckCircle2 size={16} /> Cancel Anytime</span>
-            <span><CheckCircle2 size={16} /> Mobile App Ready</span>
-            <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
+              <div className="badges" aria-label="Platform highlights">
+                <span><CheckCircle2 size={16} /> Cancel Anytime</span>
+                <span><CheckCircle2 size={16} /> Mobile App Ready</span>
+                <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
+              </div>
+            </div>
+
+            <AvaSkyeVisual />
           </div>
         </section>
         <section className="pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
@@ -325,10 +332,16 @@ export default function LandingPage() {
         }
 
         .hero {
-          width: min(1024px, calc(100% - 48px));
+          width: min(1180px, calc(100% - 48px));
           margin: 0 auto;
-          padding: 96px 0 64px;
-          text-align: center;
+          padding: 86px 0 64px;
+        }
+
+        .hero-content {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
+          gap: 54px;
+          align-items: center;
         }
 
         .eyebrow {
@@ -349,7 +362,7 @@ export default function LandingPage() {
 
         .hero-logo {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           margin: -10px 0 26px;
         }
 
@@ -370,7 +383,7 @@ export default function LandingPage() {
 
         .hero-copy {
           max-width: 760px;
-          margin: 0 auto 40px;
+          margin: 0 0 40px;
           color: #94a3b8;
           font-size: clamp(1.05rem, 2vw, 1.25rem);
           line-height: 1.75;
@@ -382,7 +395,7 @@ export default function LandingPage() {
 
         .lead-form {
           width: min(448px, 100%);
-          margin: 0 auto 26px;
+          margin: 0 0 26px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -727,10 +740,26 @@ export default function LandingPage() {
         }
 
         @media (max-width: 860px) {
+          .hero-content,
           .ai-showcase,
           .tier-grid,
           .purchase-form {
             grid-template-columns: 1fr;
+          }
+
+          .hero-content {
+            text-align: center;
+          }
+
+          .hero-logo,
+          .badges {
+            justify-content: center;
+          }
+
+          .hero-copy,
+          .lead-form {
+            margin-left: auto;
+            margin-right: auto;
           }
 
           .purchase-form {

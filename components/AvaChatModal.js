@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Bot, Send, Sparkles, X } from 'lucide-react';
+import { Send, X } from 'lucide-react';
+import AvaSkyeVisual from './AvaSkyeVisual';
 
 const starters = [
   'Build me a launch plan',
@@ -55,7 +56,7 @@ export default function AvaChatModal() {
   return (
     <>
       <button className="launcher" onClick={() => setOpen(true)} aria-label="Open Ava AI chat">
-        <span className="launcher-orb"><Bot size={24} /></span>
+        <span className="launcher-orb"><AvaSkyeVisual compact /></span>
         <span>
           Ask Ava
           <small>AI Gateway online</small>
@@ -66,7 +67,7 @@ export default function AvaChatModal() {
         <div className="overlay" role="dialog" aria-modal="true" aria-label="Ava Skye AI chat">
           <div className="modal">
             <header>
-              <div className="avatar"><Sparkles size={22} /></div>
+              <div className="avatar"><AvaSkyeVisual compact /></div>
               <div>
                 <strong>Ava Skye</strong>
                 <span>Powered by Vercel AI Gateway</span>
@@ -137,7 +138,6 @@ export default function AvaChatModal() {
         .avatar {
           display: grid;
           place-items: center;
-          background: linear-gradient(135deg, #6366f1, #a855f7, #f472b6);
           color: #fff;
         }
 
@@ -146,6 +146,7 @@ export default function AvaChatModal() {
           height: 46px;
           border-radius: 999px;
           box-shadow: 0 0 32px rgba(168, 85, 247, 0.65);
+          overflow: hidden;
         }
 
         .launcher small,
@@ -191,7 +192,8 @@ export default function AvaChatModal() {
         .avatar {
           width: 44px;
           height: 44px;
-          border-radius: 16px;
+          border-radius: 999px;
+          overflow: hidden;
         }
 
         .close {
