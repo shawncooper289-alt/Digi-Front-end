@@ -6,7 +6,7 @@ This document protects your existing client setup.
 
 ### Current Client Configuration:
 - **Client ID**: `digi-marketing` (or your ID)
-- **Backend**: Base44 (Digi-Back-end)
+- **Backend**: Supabase
 - **AI Engine**: Ava Knowledge Base + Ava OS
 - **Status**: ✅ ACTIVE & WORKING
 
@@ -34,7 +34,7 @@ npm run test:existing
 echo "Testing $NEXT_PUBLIC_CLIENT_ID"
 
 # 4. Check API endpoints
-curl -H "X-Client-ID: $NEXT_PUBLIC_CLIENT_ID" https://api.base44.com/health
+curl "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/" -H "apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY"
 
 # 5. Only then deploy
 git push origin main
@@ -52,8 +52,8 @@ git push --force origin main
 ```env
 # These MUST NOT CHANGE
 NEXT_PUBLIC_CLIENT_ID=digi-marketing
-NEXT_PUBLIC_BASE44_API_URL=https://api.base44.com
-NEXT_PUBLIC_BASE44_API_KEY=[your-key]
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[your-anon-key]
 ```
 
 ### Post-Deployment Verification:
