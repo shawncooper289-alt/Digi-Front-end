@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { Bot, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Bot, Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2 } from 'lucide-react';
+import AvaChatModal from '../components/AvaChatModal';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
 export default function LandingPage() {
@@ -97,7 +98,29 @@ export default function LandingPage() {
             <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
           </div>
         </section>
+        <section className="ai-showcase" aria-label="Ava AI Gateway enhancements">
+          <div className="showcase-card command-card">
+            <span className="card-kicker"><Zap size={15} /> Vercel AI Gateway</span>
+            <h2>Ava Skye now runs on premium model routing.</h2>
+            <p>
+              Ask Ava for launch plans, funnel strategy, emails, social content, and agency workflows powered by
+              Vercel AI Gateway model failover.
+            </p>
+          </div>
+          <div className="showcase-card glass-card">
+            <Wand2 size={24} />
+            <strong>Visual polish</strong>
+            <span>Animated glow fields, glass cards, brighter gradients, and a floating Ava command center.</span>
+          </div>
+          <div className="showcase-card glass-card">
+            <ShieldCheck size={24} />
+            <strong>Same brand mark</strong>
+            <span>The DigiMark101 bot logo stays in place while the experience gets a more premium AI feel.</span>
+          </div>
+        </section>
       </main>
+
+      <AvaChatModal />
 
       <style jsx>{`
         :global(body) {
@@ -305,6 +328,97 @@ export default function LandingPage() {
 
         .badges :global(svg) {
           color: #818cf8;
+        }
+
+        .ai-showcase {
+          width: min(1120px, calc(100% - 48px));
+          margin: 10px auto 0;
+          padding: 0 0 86px;
+          display: grid;
+          grid-template-columns: 1.2fr 0.9fr 0.9fr;
+          gap: 18px;
+        }
+
+        .showcase-card {
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          border-radius: 28px;
+          background: rgba(15, 23, 42, 0.72);
+          box-shadow: 0 26px 90px rgba(2, 6, 23, 0.36);
+          backdrop-filter: blur(18px);
+        }
+
+        .showcase-card::before {
+          content: '';
+          position: absolute;
+          inset: -40% auto auto -25%;
+          width: 220px;
+          height: 220px;
+          border-radius: 999px;
+          background: rgba(168, 85, 247, 0.24);
+          filter: blur(8px);
+        }
+
+        .command-card {
+          padding: 30px;
+        }
+
+        .card-kicker {
+          position: relative;
+          z-index: 1;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #c4b5fd;
+          font-size: 0.78rem;
+          font-weight: 900;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .command-card h2 {
+          position: relative;
+          z-index: 1;
+          margin: 14px 0;
+          font-size: clamp(1.8rem, 3vw, 3rem);
+          line-height: 1;
+          letter-spacing: -0.055em;
+        }
+
+        .command-card p,
+        .glass-card span {
+          position: relative;
+          z-index: 1;
+          color: #94a3b8;
+          line-height: 1.65;
+        }
+
+        .glass-card {
+          min-height: 220px;
+          padding: 26px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          gap: 10px;
+        }
+
+        .glass-card :global(svg) {
+          position: relative;
+          z-index: 1;
+          color: #c084fc;
+        }
+
+        .glass-card strong {
+          position: relative;
+          z-index: 1;
+          font-size: 1.2rem;
+        }
+
+        @media (max-width: 860px) {
+          .ai-showcase {
+            grid-template-columns: 1fr;
+          }
         }
 
         @media (max-width: 640px) {
