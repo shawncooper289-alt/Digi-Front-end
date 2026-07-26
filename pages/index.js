@@ -1,13 +1,91 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { Bot, Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2 } from 'lucide-react';
+import { Bot, Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
 import AvaChatModal from '../components/AvaChatModal';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
+
+const seatTiers = [
+  {
+    id: 'starter-seat',
+    name: 'Starter Seat',
+    seats: '1 seat',
+    price: '$97/mo',
+    icon: Users,
+    description: 'For solo founders launching their first AI-powered marketing system.',
+    highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates'],
+  },
+  {
+    id: 'growth-team',
+    name: 'Growth Team',
+    seats: '3 seats',
+    price: '$297/mo',
+    icon: Rocket,
+    description: 'For teams that need campaign execution, content, and follow-up systems.',
+    highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Supabase-backed onboarding'],
+    featured: true,
+  },
+  {
+    id: 'agency-command',
+    name: 'Agency Command',
+    seats: '10 seats',
+    price: '$997/mo',
+    icon: Crown,
+    description: 'For agencies building a full client acquisition and delivery command center.',
+    highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff'],
+  },
+];
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [selectedTier, setSelectedTier] = useState(seatTiers[1].id);
+  const [purchaseEmail, setPurchaseEmail] = useState('');
+  const [purchaseLoading, setPurchaseLoading] = useState(false);
+  const [purchaseMessage, setPurchaseMessage] = useState('');
+  const selectedSeatTier = seatTiers.find((tier) => tier.id === selectedTier) || seatTiers[1];
+
+  const handlePurchaseSubmit = async (event) => {
+    event.preventDefault();
+    setPurchaseLoading(true);
+    setPurchaseMessage('');
+
+    try {
+      const response = await fetch('/api/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: purchaseEmail.trim().toLowerCase(),
+          tier: selectedSeatTier.id,
+          tierName: selectedSeatTier.name,
+          seats: selectedSeatTier.seats,
+          price: selectedSeatTier.price,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setPurchaseMessage(data.error || 'Could not start purchase. Please try again.');
+        return;
+      }
+
+      setPurchaseMessage(data.message || 'Purchase handoff saved. Continue to the Supabase-backed onboarding step.');
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
+      }
+
+      if (data.nextUrl) {
+        window.location.href = data.nextUrl;
+      }
+    } catch (error) {
+      setPurchaseMessage('Could not reach the purchase backend. Please try again.');
+    } finally {
+      setPurchaseLoading(false);
+    }
+  };
 
   const handleLeadSubmit = async (event) => {
     event.preventDefault();
@@ -55,8 +133,8 @@ export default function LandingPage() {
             <span className="brand-icon"><Bot size={20} /></span>
             <span>DigiMark101</span>
           </a>
-          <a className="nav-button" href="#early-access">
-            Get Started <ArrowRight size={16} />
+          <a className="nav-button" href="#seat-tiers">
+            Choose Seats <ArrowRight size={16} />
           </a>
         </nav>
 
@@ -98,6 +176,65 @@ export default function LandingPage() {
             <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
           </div>
         </section>
+        <section className="pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
+          <div className="pricing-heading">
+            <span className="card-kicker"><Users size={15} /> Choose Your Seat Tier</span>
+            <h2>Select a plan, make the purchase, and enter the Supabase backend flow.</h2>
+            <p>
+              Every seat-tier selection is saved as a Supabase purchase handoff so the backend knows which package,
+              buyer email, and onboarding path to prepare after checkout.
+            </p>
+          </div>
+
+          <div className="tier-grid">
+            {seatTiers.map((tier) => {
+              const Icon = tier.icon;
+              const active = selectedTier === tier.id;
+
+              return (
+                <button
+                  type="button"
+                  className={`tier-card ${active ? 'active' : ''} ${tier.featured ? 'featured' : ''}`}
+                  key={tier.id}
+                  onClick={() => setSelectedTier(tier.id)}
+                  aria-pressed={active}
+                >
+                  <span className="tier-icon"><Icon size={22} /></span>
+                  <span className="tier-name">{tier.name}</span>
+                  <strong>{tier.price}</strong>
+                  <span className="tier-seats">{tier.seats}</span>
+                  <span className="tier-description">{tier.description}</span>
+                  <span className="tier-list">
+                    {tier.highlights.map((highlight) => (
+                      <span key={highlight}><CheckCircle2 size={14} /> {highlight}</span>
+                    ))}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <form className="purchase-form" onSubmit={handlePurchaseSubmit}>
+            <div>
+              <span>Selected: {selectedSeatTier.name}</span>
+              <strong>{selectedSeatTier.seats} · {selectedSeatTier.price}</strong>
+            </div>
+            <input
+              type="email"
+              required
+              placeholder="Buyer email address"
+              value={purchaseEmail}
+              onChange={(event) => setPurchaseEmail(event.target.value)}
+              aria-label="Buyer email address"
+            />
+            <button type="submit" disabled={purchaseLoading}>
+              {purchaseLoading ? 'Starting Purchase...' : 'Continue to Purchase'}
+              <ArrowRight size={16} />
+            </button>
+          </form>
+          {purchaseMessage && <p className="purchase-message">{purchaseMessage}</p>}
+        </section>
+
         <section className="ai-showcase" aria-label="Ava AI Gateway enhancements">
           <div className="showcase-card command-card">
             <span className="card-kicker"><Zap size={15} /> Vercel AI Gateway</span>
@@ -330,6 +467,182 @@ export default function LandingPage() {
           color: #818cf8;
         }
 
+        .pricing-section {
+          width: min(1120px, calc(100% - 48px));
+          margin: 0 auto;
+          padding: 0 0 80px;
+        }
+
+        .pricing-heading {
+          max-width: 820px;
+          margin: 0 auto 28px;
+          text-align: center;
+        }
+
+        .pricing-heading h2 {
+          margin: 14px 0;
+          font-size: clamp(2rem, 4vw, 4.2rem);
+          line-height: 1;
+          letter-spacing: -0.06em;
+        }
+
+        .pricing-heading p {
+          margin: 0;
+          color: #94a3b8;
+          line-height: 1.7;
+        }
+
+        .tier-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+        }
+
+        .tier-card {
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          border-radius: 28px;
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          color: #ffffff;
+          background: rgba(15, 23, 42, 0.72);
+          text-align: left;
+          cursor: pointer;
+          transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .tier-card:hover,
+        .tier-card.active {
+          transform: translateY(-4px);
+          border-color: rgba(192, 132, 252, 0.72);
+          box-shadow: 0 24px 80px rgba(79, 70, 229, 0.24);
+        }
+
+        .tier-card.featured::after {
+          content: 'Most Popular';
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          border-radius: 999px;
+          padding: 6px 10px;
+          background: rgba(168, 85, 247, 0.2);
+          color: #e9d5ff;
+          font-size: 0.68rem;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .tier-icon {
+          width: 46px;
+          height: 46px;
+          border-radius: 16px;
+          display: grid;
+          place-items: center;
+          background: linear-gradient(135deg, #6366f1, #a855f7);
+          color: #fff;
+        }
+
+        .tier-name {
+          color: #c4b5fd;
+          font-weight: 900;
+        }
+
+        .tier-card strong {
+          font-size: 2.2rem;
+          letter-spacing: -0.06em;
+        }
+
+        .tier-seats,
+        .tier-description {
+          color: #94a3b8;
+          line-height: 1.55;
+        }
+
+        .tier-list {
+          display: grid;
+          gap: 8px;
+          margin-top: 8px;
+          color: #cbd5e1;
+          font-size: 0.86rem;
+          font-weight: 700;
+        }
+
+        .tier-list span {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+        }
+
+        .tier-list :global(svg) {
+          color: #818cf8;
+        }
+
+        .purchase-form {
+          margin: 22px auto 0;
+          padding: 16px;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          border-radius: 999px;
+          display: grid;
+          grid-template-columns: 1fr 1.1fr auto;
+          gap: 12px;
+          align-items: center;
+          background: rgba(15, 23, 42, 0.82);
+          backdrop-filter: blur(18px);
+        }
+
+        .purchase-form div {
+          display: grid;
+          gap: 3px;
+          padding-left: 12px;
+        }
+
+        .purchase-form div span,
+        .purchase-message {
+          color: #94a3b8;
+          font-size: 0.85rem;
+        }
+
+        .purchase-form input {
+          min-height: 50px;
+          border: 1px solid #1e293b;
+          border-radius: 999px;
+          background: #0f172a;
+          color: #fff;
+          padding: 0 18px;
+          outline: none;
+        }
+
+        .purchase-form button {
+          min-height: 50px;
+          border: 0;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: linear-gradient(135deg, #4f46e5, #a855f7);
+          color: #fff;
+          padding: 0 22px;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .purchase-form button:disabled {
+          cursor: not-allowed;
+          opacity: 0.58;
+        }
+
+        .purchase-message {
+          margin: 12px 0 0;
+          text-align: center;
+          font-weight: 800;
+        }
+
         .ai-showcase {
           width: min(1120px, calc(100% - 48px));
           margin: 10px auto 0;
@@ -416,8 +729,14 @@ export default function LandingPage() {
         }
 
         @media (max-width: 860px) {
-          .ai-showcase {
+          .ai-showcase,
+          .tier-grid,
+          .purchase-form {
             grid-template-columns: 1fr;
+          }
+
+          .purchase-form {
+            border-radius: 28px;
           }
         }
 
