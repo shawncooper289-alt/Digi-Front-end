@@ -150,13 +150,13 @@ export default function LandingPage() {
               <div className="hero-logo"><DigiMarkLogo /></div>
 
               <h1>
-                Your Digital Empire <br />
-                <span>Starts Here.</span>
+                The Future of Digital Marketing <br />
+                <span>Runs Through Ava.</span>
               </h1>
 
               <p className="hero-copy">
-                DigiMark101 gives you a complete AI-powered agency in a box — funnels, websites,
-                content, emails, bots, and <strong>Ava Skye</strong>, your polished AI Chief of Staff guiding every growth move.
+                DigiMark101 is a futuristic AI marketing command center — combining premium strategy, campaign automation,
+                conversion funnels, content systems, and <strong>Ava Skye</strong>, your human-facing AI Chief of Staff.
               </p>
 
               <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
@@ -176,9 +176,15 @@ export default function LandingPage() {
               {message && <p className="message">{message}</p>}
 
               <div className="badges" aria-label="Platform highlights">
-                <span><CheckCircle2 size={16} /> Cancel Anytime</span>
-                <span><CheckCircle2 size={16} /> Mobile App Ready</span>
-                <span><CheckCircle2 size={16} /> 24/7 AI Support</span>
+                <span><CheckCircle2 size={16} /> AI Strategy</span>
+                <span><CheckCircle2 size={16} /> Campaign Automation</span>
+                <span><CheckCircle2 size={16} /> Revenue Workflows</span>
+              </div>
+
+              <div className="hero-stats" aria-label="DigiMark101 agency system highlights">
+                <span><strong>24/7</strong><small>Ava guidance</small></span>
+                <span><strong>3</strong><small>seat tiers</small></span>
+                <span><strong>1</strong><small>growth command center</small></span>
               </div>
             </div>
 
@@ -244,24 +250,24 @@ export default function LandingPage() {
           {purchaseMessage && <p className="purchase-message">{purchaseMessage}</p>}
         </section>
 
-        <section className="ai-showcase" aria-label="Ava AI Gateway enhancements">
+        <section className="ai-showcase" aria-label="DigiMark101 futuristic agency operating system">
           <div className="showcase-card command-card">
-            <span className="card-kicker"><Zap size={15} /> Vercel AI Gateway</span>
-            <h2>Ava Skye now runs on premium model routing.</h2>
+            <span className="card-kicker"><Zap size={15} /> AI Agency Operating System</span>
+            <h2>Ava Skye turns attention into campaigns, funnels, and customers.</h2>
             <p>
-              Ask Ava for launch plans, funnel strategy, emails, social content, and agency workflows powered by
-              Vercel AI Gateway model failover.
+              Your buyers see a premium digital agency. Behind the scenes, Ava helps coordinate offers, content,
+              email sequences, lead capture, client onboarding, and growth strategy from one command layer.
             </p>
           </div>
           <div className="showcase-card glass-card">
             <Wand2 size={24} />
-            <strong>Visual polish</strong>
-            <span>Animated glow fields, glass cards, brighter gradients, and a floating Ava command center.</span>
+            <strong>Futuristic presentation</strong>
+            <span>Dark luxury interface, glass panels, AI glow systems, and a high-converting brand presence.</span>
           </div>
           <div className="showcase-card glass-card">
             <ShieldCheck size={24} />
-            <strong>Same brand mark</strong>
-            <span>The DigiMark101 bot logo stays in place while the experience gets a more premium AI feel.</span>
+            <strong>Revenue-ready stack</strong>
+            <span>Supabase handoff, Stripe checkout wiring, Vercel webhooks, and Ava-guided customer acquisition.</span>
           </div>
         </section>
       </main>
@@ -284,9 +290,10 @@ export default function LandingPage() {
           min-height: 100vh;
           color: #ffffff;
           background:
-            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18), transparent 34rem),
-            radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.16), transparent 28rem),
-            #020617;
+            radial-gradient(circle at 20% 0%, rgba(34, 197, 94, 0.12), transparent 30rem),
+            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.24), transparent 36rem),
+            radial-gradient(circle at 85% 18%, rgba(217, 70, 239, 0.22), transparent 30rem),
+            linear-gradient(135deg, #020617 0%, #070b1d 48%, #111827 100%);
         }
 
         .nav {
@@ -339,8 +346,8 @@ export default function LandingPage() {
 
         .hero-content {
           display: grid;
-          grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
-          gap: 54px;
+          grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+          gap: 64px;
           align-items: center;
         }
 
@@ -475,7 +482,42 @@ export default function LandingPage() {
         }
 
         .badges :global(svg) {
-          color: #818cf8;
+          color: #86efac;
+        }
+
+        .hero-stats {
+          width: min(560px, 100%);
+          margin-top: 28px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+        }
+
+        .hero-stats span {
+          border: 1px solid rgba(148, 163, 184, 0.18);
+          border-radius: 18px;
+          padding: 16px;
+          background: rgba(15, 23, 42, 0.58);
+          backdrop-filter: blur(18px);
+        }
+
+        .hero-stats strong,
+        .hero-stats small {
+          display: block;
+        }
+
+        .hero-stats strong {
+          font-size: 1.6rem;
+          letter-spacing: -0.05em;
+        }
+
+        .hero-stats small {
+          margin-top: 4px;
+          color: #94a3b8;
+          font-size: 0.72rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
         }
 
         .pricing-section {
@@ -666,10 +708,10 @@ export default function LandingPage() {
         .showcase-card {
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(148, 163, 184, 0.2);
+          border: 1px solid rgba(192, 132, 252, 0.26);
           border-radius: 28px;
-          background: rgba(15, 23, 42, 0.72);
-          box-shadow: 0 26px 90px rgba(2, 6, 23, 0.36);
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 27, 75, 0.48));
+          box-shadow: 0 30px 100px rgba(2, 6, 23, 0.46), 0 0 70px rgba(168, 85, 247, 0.1);
           backdrop-filter: blur(18px);
         }
 
@@ -757,7 +799,8 @@ export default function LandingPage() {
           }
 
           .hero-copy,
-          .lead-form {
+          .lead-form,
+          .hero-stats {
             margin-left: auto;
             margin-right: auto;
           }
