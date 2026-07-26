@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { Bot, Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
+import { Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
 import AvaChatModal from '../components/AvaChatModal';
+import DigiMarkLogo from '../components/DigiMarkLogo';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
 const seatTiers = [
@@ -130,8 +131,7 @@ export default function LandingPage() {
       <main className="shell">
         <nav className="nav">
           <a className="brand" href="/" aria-label="DigiMark101 home">
-            <span className="brand-icon"><Bot size={20} /></span>
-            <span>DigiMark101</span>
+            <DigiMarkLogo compact />
           </a>
           <a className="nav-button" href="#seat-tiers">
             Choose Seats <ArrowRight size={16} />
@@ -143,6 +143,8 @@ export default function LandingPage() {
             <Sparkles size={14} />
             The World&apos;s Most Advanced AI Marketing Platform
           </div>
+
+          <div className="hero-logo"><DigiMarkLogo /></div>
 
           <h1>
             Your Digital Empire <br />
@@ -305,16 +307,6 @@ export default function LandingPage() {
           letter-spacing: -0.04em;
         }
 
-        .brand-icon {
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
-          display: grid;
-          place-items: center;
-          background: linear-gradient(135deg, #6366f1, #a855f7);
-          box-shadow: 0 14px 34px rgba(99, 102, 241, 0.32);
-        }
-
         .nav-button {
           gap: 8px;
           border: 0;
@@ -353,6 +345,12 @@ export default function LandingPage() {
           font-weight: 800;
           letter-spacing: 0.12em;
           text-transform: uppercase;
+        }
+
+        .hero-logo {
+          display: flex;
+          justify-content: center;
+          margin: -10px 0 26px;
         }
 
         h1 {

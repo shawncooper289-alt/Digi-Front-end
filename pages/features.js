@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import DigiMarkLogo from '../components/DigiMarkLogo';
 import { isSupabaseConfigured } from '../lib/supabaseClient';
 
 const features = [
@@ -45,7 +46,7 @@ export default function Features() {
   return (
     <>
       <Head>
-        <title>Features | Digital Dynasty</title>
+        <title>Features | DigiMark101</title>
         <meta
           name="description"
           content="AI-powered marketing automation features backed by Supabase."
@@ -55,7 +56,7 @@ export default function Features() {
       <main className="page-shell">
         <section className="hero">
           <nav className="nav">
-            <a href="/" className="brand">Digital Dynasty</a>
+            <a href="/" className="brand" aria-label="DigiMark101 home"><DigiMarkLogo compact /></a>
             <div className="nav-links">
               <a href="/#dashboard">Dashboard</a>
               <a href="/features">Features</a>
