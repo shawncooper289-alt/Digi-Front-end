@@ -4,7 +4,7 @@ export default function DigiMarkLogo({ compact = false }) {
       <span className="mark" aria-hidden="true">D</span>
       <span className="wordmark">
         <strong>DigiMark<span>101</span></strong>
-        {!compact && <small>Ava OS Marketing Workspace</small>}
+        {!compact && <small>Ava Skye Marketing OS</small>}
       </span>
 
       <style jsx>{`
