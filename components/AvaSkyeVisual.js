@@ -1,35 +1,35 @@
 export default function AvaSkyeVisual({ compact = false }) {
   return (
-    <div className={`ava-card ${compact ? 'compact' : ''}`} aria-label="Ava Skye, DigiMark101 AI Chief of Staff">
+    <div className={`ava-card ${compact ? 'compact' : ''}`} aria-label="Ava Skye, humanlike DigiMark101 AI Chief of Staff">
       <div className="portrait-wrap">
         <svg viewBox="0 0 420 520" role="img" focusable="false">
           <defs>
-            <linearGradient id="avaStage" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#123c4f" />
-              <stop offset="55%" stopColor="#102031" />
+            <linearGradient id="avaBackdrop" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#132235" />
+              <stop offset="58%" stopColor="#101827" />
               <stop offset="100%" stopColor="#050816" />
             </linearGradient>
-            <linearGradient id="avaSuit" x1="15%" y1="0%" x2="90%" y2="100%">
-              <stop offset="0%" stopColor="#1f2937" />
-              <stop offset="48%" stopColor="#080b14" />
-              <stop offset="100%" stopColor="#000000" />
+            <linearGradient id="avaBlazer" x1="10%" y1="0%" x2="90%" y2="100%">
+              <stop offset="0%" stopColor="#263241" />
+              <stop offset="54%" stopColor="#111827" />
+              <stop offset="100%" stopColor="#020617" />
             </linearGradient>
             <linearGradient id="avaHair" x1="20%" y1="0%" x2="80%" y2="100%">
-              <stop offset="0%" stopColor="#15151b" />
-              <stop offset="70%" stopColor="#050506" />
-              <stop offset="100%" stopColor="#000" />
+              <stop offset="0%" stopColor="#241711" />
+              <stop offset="55%" stopColor="#120b08" />
+              <stop offset="100%" stopColor="#050302" />
             </linearGradient>
-            <radialGradient id="avaSkin" cx="50%" cy="35%" r="70%">
-              <stop offset="0%" stopColor="#ffe7cf" />
-              <stop offset="56%" stopColor="#e7b08a" />
-              <stop offset="100%" stopColor="#c98162" />
+            <radialGradient id="avaSkin" cx="46%" cy="30%" r="72%">
+              <stop offset="0%" stopColor="#ffe9d5" />
+              <stop offset="48%" stopColor="#e8b18d" />
+              <stop offset="100%" stopColor="#b86f52" />
             </radialGradient>
-            <radialGradient id="greenEye" cx="50%" cy="48%" r="65%">
-              <stop offset="0%" stopColor="#dcfce7" />
-              <stop offset="42%" stopColor="#22c55e" />
-              <stop offset="100%" stopColor="#064e3b" />
+            <radialGradient id="avaIris" cx="50%" cy="48%" r="65%">
+              <stop offset="0%" stopColor="#dbeafe" />
+              <stop offset="48%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#1e3a8a" />
             </radialGradient>
-            <filter id="avaShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <filter id="portraitShadow" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="0" dy="22" stdDeviation="20" floodColor="#020617" floodOpacity="0.48" />
             </filter>
             <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -38,57 +38,54 @@ export default function AvaSkyeVisual({ compact = false }) {
             </filter>
           </defs>
 
-          <rect width="420" height="520" rx="38" fill="url(#avaStage)" />
-          <path d="M0 83 C91 34 160 20 247 45 C315 64 366 44 420 16 V520 H0 Z" fill="#0f172a" opacity="0.34" />
-          <circle cx="72" cy="88" r="88" fill="#a855f7" opacity="0.16" filter="url(#softGlow)" />
-          <circle cx="352" cy="398" r="130" fill="#22c55e" opacity="0.08" filter="url(#softGlow)" />
-          <path d="M46 420 C138 368 259 373 376 422" stroke="#8b5cf6" strokeWidth="2" opacity="0.25" fill="none" />
-          <path d="M70 448 C159 406 265 407 350 450" stroke="#22c55e" strokeWidth="2" opacity="0.18" fill="none" />
+          <rect width="420" height="520" rx="38" fill="url(#avaBackdrop)" />
+          <circle cx="82" cy="88" r="86" fill="#38bdf8" opacity="0.12" filter="url(#softGlow)" />
+          <circle cx="338" cy="410" r="126" fill="#22c55e" opacity="0.08" filter="url(#softGlow)" />
+          <path d="M43 426 C142 382 270 382 376 427" stroke="#38bdf8" strokeWidth="1.5" opacity="0.18" fill="none" />
 
-          <g filter="url(#avaShadow)">
-            <path d="M73 504 C89 388 127 326 210 326 C293 326 331 388 347 504 Z" fill="url(#avaSuit)" />
-            <path d="M145 344 L209 448 L276 344 C256 330 236 324 210 324 C184 324 164 330 145 344 Z" fill="#f8fafc" />
-            <path d="M176 350 L210 424 L245 350 L224 328 L210 356 L196 328 Z" fill="#111827" />
-            <path d="M116 504 C127 411 145 362 181 333 L204 504 Z" fill="#111827" />
-            <path d="M304 504 C293 411 275 362 239 333 L216 504 Z" fill="#050816" />
-            <path d="M184 349 L209 448 L167 398 Z" fill="#7c3aed" opacity="0.5" />
-            <path d="M236 349 L211 448 L253 398 Z" fill="#d946ef" opacity="0.35" />
+          <g filter="url(#portraitShadow)">
+            <path d="M72 504 C90 405 128 342 210 342 C292 342 330 405 348 504 Z" fill="url(#avaBlazer)" />
+            <path d="M146 362 C171 346 189 340 210 340 C231 340 250 346 276 362 L248 504 H172 Z" fill="#f8fafc" />
+            <path d="M178 365 L210 446 L242 365 L224 340 L210 360 L196 340 Z" fill="#1f2937" />
+            <path d="M116 504 C126 420 148 374 184 346 L205 504 Z" fill="#172033" />
+            <path d="M304 504 C294 420 272 374 236 346 L215 504 Z" fill="#0b1120" />
 
-            <path d="M102 236 C82 139 120 72 211 68 C302 72 338 140 318 238 C303 316 260 360 210 360 C160 360 117 316 102 236 Z" fill="url(#avaHair)" />
-            <path d="M125 226 C109 139 143 91 211 90 C279 91 312 140 296 226 C283 292 250 334 210 334 C170 334 138 292 125 226 Z" fill="url(#avaSkin)" />
-            <path d="M127 202 C139 139 176 111 247 113 C232 89 207 78 178 86 C142 96 121 132 111 195 C115 198 121 201 127 202 Z" fill="url(#avaHair)" />
-            <path d="M105 233 C101 154 137 82 211 70 C145 71 92 127 91 223 C90 294 117 343 157 373 C135 334 117 283 105 233 Z" fill="url(#avaHair)" />
-            <path d="M315 233 C319 154 283 82 209 70 C275 71 328 127 329 223 C330 294 303 343 263 373 C285 334 303 283 315 233 Z" fill="url(#avaHair)" />
+            <path d="M100 248 C84 150 123 78 211 72 C299 78 336 151 320 248 C308 335 260 374 210 374 C160 374 112 335 100 248 Z" fill="url(#avaHair)" />
+            <path d="M124 238 C111 158 142 105 211 103 C280 105 311 158 296 238 C285 304 250 348 210 348 C170 348 135 304 124 238 Z" fill="url(#avaSkin)" />
+            <path d="M122 205 C137 137 177 103 246 112 C231 88 206 79 176 88 C141 99 118 137 111 197 C114 202 119 205 122 205 Z" fill="url(#avaHair)" />
+            <path d="M296 205 C285 145 256 115 207 102 C276 99 313 147 308 218 C304 217 300 211 296 205 Z" fill="url(#avaHair)" />
+            <path d="M105 248 C101 163 137 83 211 74 C146 76 92 134 91 228 C90 301 118 352 160 382 C135 340 116 290 105 248 Z" fill="url(#avaHair)" />
+            <path d="M315 248 C319 163 283 83 209 74 C274 76 328 134 329 228 C330 301 302 352 260 382 C285 340 304 290 315 248 Z" fill="url(#avaHair)" />
 
-            <ellipse cx="174" cy="229" rx="17" ry="10" fill="#f8fafc" />
-            <ellipse cx="246" cy="229" rx="17" ry="10" fill="#f8fafc" />
-            <circle cx="174" cy="229" r="8" fill="url(#greenEye)" />
-            <circle cx="246" cy="229" r="8" fill="url(#greenEye)" />
-            <circle cx="177" cy="226" r="3" fill="#ffffff" />
-            <circle cx="249" cy="226" r="3" fill="#ffffff" />
-            <circle cx="174" cy="229" r="3" fill="#052e16" />
-            <circle cx="246" cy="229" r="3" fill="#052e16" />
-            <path d="M152 212 C166 203 184 204 197 214" stroke="#111827" strokeWidth="5" strokeLinecap="round" fill="none" />
-            <path d="M223 214 C237 204 255 203 268 212" stroke="#111827" strokeWidth="5" strokeLinecap="round" fill="none" />
-            <path d="M208 235 C203 259 201 272 220 273" stroke="#ad7356" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.55" />
-            <path d="M181 302 C199 318 224 318 241 302" stroke="#7f1d1d" strokeWidth="6" strokeLinecap="round" fill="none" />
-            <path d="M188 300 C202 307 221 307 234 300" stroke="#fff7ed" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.72" />
-            <circle cx="151" cy="263" r="13" fill="#fb7185" opacity="0.15" />
-            <circle cx="269" cy="263" r="13" fill="#fb7185" opacity="0.15" />
+            <path d="M153 222 C165 214 184 214 197 224" stroke="#2b1a14" strokeWidth="5" strokeLinecap="round" fill="none" />
+            <path d="M223 224 C236 214 255 214 267 222" stroke="#2b1a14" strokeWidth="5" strokeLinecap="round" fill="none" />
+            <ellipse cx="176" cy="238" rx="15" ry="8" fill="#f8fafc" />
+            <ellipse cx="244" cy="238" rx="15" ry="8" fill="#f8fafc" />
+            <circle cx="176" cy="238" r="7" fill="url(#avaIris)" />
+            <circle cx="244" cy="238" r="7" fill="url(#avaIris)" />
+            <circle cx="176" cy="238" r="3" fill="#0f172a" />
+            <circle cx="244" cy="238" r="3" fill="#0f172a" />
+            <circle cx="179" cy="235" r="2.5" fill="#ffffff" />
+            <circle cx="247" cy="235" r="2.5" fill="#ffffff" />
+            <path d="M207 244 C202 265 201 282 220 282" stroke="#a0644d" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.62" />
+            <path d="M183 306 C200 320 222 320 238 306" stroke="#7f1d1d" strokeWidth="5" strokeLinecap="round" fill="none" />
+            <path d="M190 304 C204 310 219 310 232 304" stroke="#fff7ed" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.65" />
+            <circle cx="151" cy="270" r="15" fill="#f9a8d4" opacity="0.13" />
+            <circle cx="269" cy="270" r="15" fill="#f9a8d4" opacity="0.13" />
           </g>
 
-          <g opacity="0.9">
-            <rect x="38" y="37" width="88" height="28" rx="14" fill="rgba(15,23,42,0.72)" />
-            <circle cx="57" cy="51" r="5" fill="#22c55e" />
-            <text x="70" y="56" fill="#e2e8f0" fontSize="12" fontWeight="700">Ava Online</text>
+          <g opacity="0.92">
+            <rect x="36" y="36" width="112" height="28" rx="14" fill="rgba(15,23,42,0.72)" />
+            <circle cx="55" cy="50" r="5" fill="#22c55e" />
+            <text x="68" y="55" fill="#e2e8f0" fontSize="12" fontWeight="700">Ava Online</text>
           </g>
         </svg>
       </div>
       {!compact && (
         <div className="ava-copy">
           <span>Meet Ava Skye</span>
-          <strong>AI Chief of Staff for revenue growth</strong>
-          <p>Human-facing strategy, futuristic execution: campaigns, funnels, content, and customer acquisition guided by Ava.</p>
+          <strong>Humanlike AI Chief of Staff for revenue growth</strong>
+          <p>A polished, human-facing advisor for campaigns, funnels, content, and customer acquisition guided by Ava.</p>
         </div>
       )}
 
@@ -96,11 +93,11 @@ export default function AvaSkyeVisual({ compact = false }) {
         .ava-card {
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(192, 132, 252, 0.34);
+          border: 1px solid rgba(125, 211, 252, 0.28);
           border-radius: 34px;
           padding: 18px;
-          background: linear-gradient(145deg, rgba(15, 23, 42, 0.86), rgba(30, 27, 75, 0.62));
-          box-shadow: 0 34px 120px rgba(2, 6, 23, 0.52), 0 0 80px rgba(168, 85, 247, 0.16);
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.62));
+          box-shadow: 0 34px 120px rgba(2, 6, 23, 0.52), 0 0 80px rgba(56, 189, 248, 0.12);
           backdrop-filter: blur(22px);
         }
 
