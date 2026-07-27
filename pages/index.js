@@ -1,6 +1,18 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
+import {
+  ArrowRight,
+  BarChart3,
+  Bot,
+  CheckCircle2,
+  Crown,
+  Database,
+  Megaphone,
+  Rocket,
+  Sparkles,
+  Users,
+  Wand2,
+} from 'lucide-react';
 import AvaChatModal from '../components/AvaChatModal';
 import AvaSkyeVisual from '../components/AvaSkyeVisual';
 import DigiMarkLogo from '../components/DigiMarkLogo';
@@ -13,7 +25,7 @@ const seatTiers = [
     seats: '1 seat',
     price: '$97/mo',
     icon: Users,
-    description: 'For solo founders launching their first AI-powered marketing system.',
+    description: 'Launch a polished AI marketing command center for one founder or creator.',
     highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates'],
   },
   {
@@ -22,7 +34,7 @@ const seatTiers = [
     seats: '3 seats',
     price: '$297/mo',
     icon: Rocket,
-    description: 'For teams that need campaign execution, content, and follow-up systems.',
+    description: 'Run daily acquisition, content, email, and follow-up systems as a team.',
     highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Supabase-backed onboarding'],
     featured: true,
   },
@@ -32,9 +44,39 @@ const seatTiers = [
     seats: '10 seats',
     price: '$997/mo',
     icon: Crown,
-    description: 'For agencies building a full client acquisition and delivery command center.',
+    description: 'Operate a client-ready acquisition and delivery hub with Ava at the center.',
     highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff'],
   },
+];
+
+const operatingSystem = [
+  {
+    icon: Megaphone,
+    title: 'Campaign Launchpad',
+    copy: 'Turn offers into channel plans, creative briefs, ad angles, and launch calendars.',
+  },
+  {
+    icon: Wand2,
+    title: 'Content Studio',
+    copy: 'Generate social posts, email sequences, landing page copy, and follow-up assets.',
+  },
+  {
+    icon: Bot,
+    title: 'Ava OS Assistant',
+    copy: 'A humanlike AI Chief of Staff guides the next best move across every growth workflow.',
+  },
+  {
+    icon: Database,
+    title: 'Supabase Backend',
+    copy: 'Leads and purchase handoffs connect to Supabase tables without exposing service keys.',
+  },
+];
+
+const dashboardCards = [
+  ['Campaigns', '12 active', '+28% pipeline'],
+  ['Lead Capture', 'Supabase live', 'Realtime ready'],
+  ['Email Flow', '7-day sequence', 'Ava drafted'],
+  ['Growth Score', '91%', 'Ready to scale'],
 ];
 
 export default function LandingPage() {
@@ -72,7 +114,7 @@ export default function LandingPage() {
         return;
       }
 
-      setPurchaseMessage(data.message || 'Purchase handoff saved. Continue to the Supabase-backed onboarding step.');
+      setPurchaseMessage(data.message || 'Purchase handoff saved. Continue to onboarding.');
 
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
@@ -108,96 +150,150 @@ export default function LandingPage() {
 
     if (error) {
       if (error.code === '23505') {
-        setMessage('You are already registered!');
+        setMessage('You are already registered.');
       } else {
         setMessage('Something went wrong. Please try again.');
       }
       return;
     }
 
-    setMessage('Success! You are on the early access list.');
+    setMessage('Success. You are on the early access list.');
     setEmail('');
   };
 
   return (
     <>
       <Head>
-        <title>DigiMark101 | AI Marketing Platform</title>
+        <title>DigiMark101 | Ava Skye AI Marketing OS</title>
         <meta
           name="description"
-          content="DigiMark101 is an AI-powered marketing agency platform with Supabase-powered early access capture."
+          content="DigiMark101 is a Base44-inspired AI marketing frontend powered by Ava Skye and connected to a Supabase backend."
         />
       </Head>
 
-      <main className="shell">
+      <main className="site-shell">
         <nav className="nav">
           <a className="brand" href="/" aria-label="DigiMark101 home">
             <DigiMarkLogo compact />
           </a>
-          <a className="nav-button" href="#seat-tiers">
-            Choose Seats <ArrowRight size={16} />
+          <div className="nav-links">
+            <a href="#platform">Platform</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="/features">Features</a>
+            <a href="#seat-tiers">Pricing</a>
+          </div>
+          <a className="nav-button" href="#early-access">
+            Start with Ava <ArrowRight size={16} />
           </a>
         </nav>
 
         <section className="hero">
-          <div className="hero-content">
-            <div>
-              <div className="eyebrow">
-                <Sparkles size={14} />
-                Meet Ava Skye, Your AI Chief of Staff
-              </div>
+          <div className="hero-copy-panel">
+            <span className="pill"><Sparkles size={15} /> Base44-style DigiMark101 frontend</span>
+            <h1>
+              AI marketing that feels personal, polished, and ready to sell.
+            </h1>
+            <p>
+              Ava Skye introduces DigiMark101 as a humanlike AI Chief of Staff for campaigns, funnels,
+              content, lead capture, and customer acquisition. The frontend is now styled like a modern
+              Base44 product experience while keeping Supabase as the backend layer.
+            </p>
 
-              <div className="hero-logo"><DigiMarkLogo /></div>
+            <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
+              <input
+                type="email"
+                required
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                aria-label="Email address"
+              />
+              <button type="submit" disabled={loading}>
+                {loading ? 'Joining...' : 'Join Early Access'}
+              </button>
+            </form>
+            {message && <p className="message">{message}</p>}
 
-              <h1>
-                The Future of Digital Marketing <br />
-                <span>Runs Through Ava.</span>
-              </h1>
-
-              <p className="hero-copy">
-                DigiMark101 is a futuristic AI marketing command center — combining premium strategy, campaign automation,
-                conversion funnels, content systems, and <strong>Ava Skye</strong>, your human-facing AI Chief of Staff.
-              </p>
-
-              <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  aria-label="Email address"
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Joining...' : 'Get Early Access'}
-                </button>
-              </form>
-
-              {message && <p className="message">{message}</p>}
-
-              <div className="badges" aria-label="Platform highlights">
-                <span><CheckCircle2 size={16} /> AI Strategy</span>
-                <span><CheckCircle2 size={16} /> Campaign Automation</span>
-                <span><CheckCircle2 size={16} /> Revenue Workflows</span>
-              </div>
-
-              <div className="hero-stats" aria-label="DigiMark101 agency system highlights">
-                <span><strong>24/7</strong><small>Ava guidance</small></span>
-                <span><strong>3</strong><small>seat tiers</small></span>
-                <span><strong>1</strong><small>growth command center</small></span>
-              </div>
+            <div className="trust-row" aria-label="Platform highlights">
+              <span><CheckCircle2 size={16} /> Humanlike Ava</span>
+              <span><CheckCircle2 size={16} /> Supabase connected</span>
+              <span><CheckCircle2 size={16} /> Vercel deployed</span>
             </div>
+          </div>
 
+          <div className="ava-stage">
             <AvaSkyeVisual />
           </div>
         </section>
-        <section className="pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
-          <div className="pricing-heading">
-            <span className="card-kicker"><Users size={15} /> Choose Your Seat Tier</span>
-            <h2>Select a plan, make the purchase, and enter the Supabase backend flow.</h2>
+
+        <section id="platform" className="section platform-section">
+          <div className="section-heading">
+            <span className="eyebrow">DigiMark101 Operating System</span>
+            <h2>Every Base44-style page section now points to the same growth command center.</h2>
             <p>
-              Every seat-tier selection is saved as a Supabase purchase handoff so the backend knows which package,
-              buyer email, and onboarding path to prepare after checkout.
+              The frontend presents a full product experience, and the live forms still hand data to Supabase.
+            </p>
+          </div>
+
+          <div className="module-grid">
+            {operatingSystem.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article className="module-card" key={item.title}>
+                  <span><Icon size={22} /></span>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="dashboard" className="section dashboard-section">
+          <div className="dashboard-panel">
+            <div>
+              <span className="eyebrow">Command Dashboard</span>
+              <h2>A polished growth workspace for campaigns, leads, and client acquisition.</h2>
+              <p>
+                This mirrors the Base44 product-page feel: clear cards, soft gradients, human-centered Ava guidance,
+                and conversion-focused actions backed by the Supabase tables already wired into the app.
+              </p>
+            </div>
+            <div className="dashboard-card-grid">
+              {dashboardCards.map(([label, value, note]) => (
+                <div className="metric-card" key={label}>
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                  <small>{note}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section backend-section">
+          <div className="backend-copy">
+            <span className="eyebrow">Supabase backend</span>
+            <h2>Base44-inspired frontend. Supabase-powered data layer.</h2>
+            <p>
+              Lead capture writes to the <strong>leads</strong> table. Seat-tier purchase handoffs post through
+              <strong> /api/purchase</strong> and save to <strong>purchase_handoffs</strong>. Public Supabase browser
+              keys stay in environment variables, while service-role keys remain out of the frontend.
+            </p>
+          </div>
+          <div className="backend-stack" aria-label="Supabase connection requirements">
+            <code>NEXT_PUBLIC_SUPABASE_URL</code>
+            <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
+            <code>PURCHASE_CHECKOUT_URL</code>
+          </div>
+        </section>
+
+        <section className="section pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
+          <div className="section-heading">
+            <span className="eyebrow">Choose seats</span>
+            <h2>Select a plan and enter the Supabase purchase handoff flow.</h2>
+            <p>
+              Each selection is saved so the backend knows the buyer, package, and onboarding path.
             </p>
           </div>
 
@@ -231,8 +327,8 @@ export default function LandingPage() {
 
           <form className="purchase-form" onSubmit={handlePurchaseSubmit}>
             <div>
-              <span>Selected: {selectedSeatTier.name}</span>
-              <strong>{selectedSeatTier.seats} · {selectedSeatTier.price}</strong>
+              <span>Selected package</span>
+              <strong>{selectedSeatTier.name} · {selectedSeatTier.seats} · {selectedSeatTier.price}</strong>
             </div>
             <input
               type="email"
@@ -243,326 +339,357 @@ export default function LandingPage() {
               aria-label="Buyer email address"
             />
             <button type="submit" disabled={purchaseLoading}>
-              {purchaseLoading ? 'Starting Purchase...' : 'Continue to Purchase'}
+              {purchaseLoading ? 'Starting...' : 'Continue to Purchase'}
               <ArrowRight size={16} />
             </button>
           </form>
           {purchaseMessage && <p className="purchase-message">{purchaseMessage}</p>}
         </section>
 
-        <section className="ai-showcase" aria-label="DigiMark101 futuristic agency operating system">
-          <div className="showcase-card command-card">
-            <span className="card-kicker"><Zap size={15} /> AI Agency Operating System</span>
-            <h2>Ava Skye turns attention into campaigns, funnels, and customers.</h2>
-            <p>
-              Your buyers see a premium digital agency. Behind the scenes, Ava helps coordinate offers, content,
-              email sequences, lead capture, client onboarding, and growth strategy from one command layer.
-            </p>
-          </div>
-          <div className="showcase-card glass-card">
-            <Wand2 size={24} />
-            <strong>Futuristic presentation</strong>
-            <span>Dark luxury interface, glass panels, AI glow systems, and a high-converting brand presence.</span>
-          </div>
-          <div className="showcase-card glass-card">
-            <ShieldCheck size={24} />
-            <strong>Revenue-ready stack</strong>
-            <span>Supabase handoff, Stripe checkout wiring, Vercel webhooks, and Ava-guided customer acquisition.</span>
-          </div>
+        <section className="section closing-section">
+          <BarChart3 size={28} />
+          <h2>Ava is the humanlike face of the DigiMark101 growth system.</h2>
+          <p>
+            Visitors see a clean Base44-style website. Underneath, Vercel serves the frontend,
+            Supabase receives the data, and Ava guides the marketing workflow.
+          </p>
         </section>
       </main>
 
       <AvaChatModal />
 
       <style jsx>{`
-        :global(body) {
-          margin: 0;
-          background: #020617;
-          color: #ffffff;
-          font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
         :global(*) {
           box-sizing: border-box;
         }
 
-        .shell {
+        :global(body) {
+          margin: 0;
+          background: #eef5f7;
+          color: #102a36;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .site-shell {
           min-height: 100vh;
-          color: #ffffff;
+          overflow: hidden;
           background:
-            radial-gradient(circle at 20% 0%, rgba(34, 197, 94, 0.12), transparent 30rem),
-            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.24), transparent 36rem),
-            radial-gradient(circle at 85% 18%, rgba(217, 70, 239, 0.22), transparent 30rem),
-            linear-gradient(135deg, #020617 0%, #070b1d 48%, #111827 100%);
+            radial-gradient(circle at 12% 8%, rgba(104, 157, 174, 0.32), transparent 28rem),
+            radial-gradient(circle at 84% 20%, rgba(217, 197, 174, 0.32), transparent 26rem),
+            linear-gradient(180deg, #f4f8f9 0%, #e7f0f3 46%, #dce9ed 100%);
         }
 
         .nav {
-          width: min(1280px, calc(100% - 64px));
+          width: min(1180px, calc(100% - 40px));
           margin: 0 auto;
-          padding: 20px 0;
-          border-bottom: 1px solid #1e293b;
+          padding: 22px 0;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: 18px;
         }
 
         .brand,
+        .nav a,
         .nav-button {
           color: inherit;
           text-decoration: none;
-          display: inline-flex;
-          align-items: center;
         }
 
-        .brand {
-          gap: 10px;
-          font-size: 1.25rem;
-          font-weight: 800;
-          letter-spacing: -0.04em;
+        .nav-links {
+          display: flex;
+          gap: 24px;
+          color: #456775;
+          font-weight: 750;
+        }
+
+        .nav-button,
+        .lead-form button,
+        .purchase-form button {
+          border: 0;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: #234c5c;
+          color: #fff;
+          font-weight: 900;
+          cursor: pointer;
+          box-shadow: 0 18px 38px rgba(35, 76, 92, 0.22);
         }
 
         .nav-button {
-          gap: 8px;
-          border: 0;
-          border-radius: 999px;
-          padding: 10px 20px;
-          background: #4f46e5;
-          color: #ffffff;
-          font-size: 0.9rem;
-          font-weight: 700;
-          transition: background 180ms ease, transform 180ms ease;
+          padding: 12px 20px;
         }
 
-        .nav-button:hover {
-          background: #6366f1;
-          transform: translateY(-1px);
+        .hero,
+        .section {
+          width: min(1180px, calc(100% - 40px));
+          margin: 0 auto;
         }
 
         .hero {
-          width: min(1180px, calc(100% - 48px));
-          margin: 0 auto;
-          padding: 86px 0 64px;
-        }
-
-        .hero-content {
+          min-height: calc(100vh - 92px);
           display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
-          gap: 64px;
+          grid-template-columns: 0.92fr 0.78fr;
           align-items: center;
+          gap: 52px;
+          padding: 28px 0 72px;
         }
 
+        .pill,
         .eyebrow {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          border: 1px solid rgba(99, 102, 241, 0.32);
-          background: rgba(99, 102, 241, 0.1);
-          color: #818cf8;
-          border-radius: 999px;
-          padding: 7px 16px;
-          margin-bottom: 32px;
-          font-size: 0.75rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
+          color: #3f7282;
+          font-size: 0.78rem;
+          font-weight: 950;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
         }
 
-        .hero-logo {
-          display: flex;
-          justify-content: flex-start;
-          margin: -10px 0 26px;
+        .pill {
+          border: 1px solid rgba(63, 114, 130, 0.2);
+          border-radius: 999px;
+          padding: 9px 14px;
+          background: rgba(255, 255, 255, 0.58);
+          box-shadow: 0 18px 44px rgba(35, 76, 92, 0.08);
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+          margin-top: 0;
         }
 
         h1 {
-          margin: 0 0 24px;
-          font-size: clamp(3.2rem, 8vw, 7rem);
-          line-height: 1.02;
-          font-weight: 900;
-          letter-spacing: -0.065em;
+          margin: 24px 0;
+          font-size: clamp(3.6rem, 8vw, 7.6rem);
+          line-height: 0.88;
+          letter-spacing: -0.085em;
+          color: #122f3c;
         }
 
-        h1 span {
-          background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+        h2 {
+          margin: 12px 0 16px;
+          font-size: clamp(2.2rem, 5vw, 4.6rem);
+          line-height: 0.94;
+          letter-spacing: -0.075em;
+          color: #122f3c;
         }
 
-        .hero-copy {
-          max-width: 760px;
-          margin: 0 0 40px;
-          color: #94a3b8;
-          font-size: clamp(1.05rem, 2vw, 1.25rem);
+        h3 {
+          margin-bottom: 10px;
+          font-size: 1.2rem;
+          letter-spacing: -0.035em;
+        }
+
+        .hero-copy-panel p,
+        .section-heading p,
+        .dashboard-panel p,
+        .backend-copy p,
+        .closing-section p {
+          color: #456775;
+          font-size: 1.08rem;
           line-height: 1.75;
         }
 
-        .hero-copy strong {
-          color: #ffffff;
-        }
-
         .lead-form {
-          width: min(448px, 100%);
-          margin: 0 0 26px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
+          width: min(560px, 100%);
+          margin: 34px 0 14px;
+          padding: 8px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 8px;
+          border: 1px solid rgba(63, 114, 130, 0.18);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.74);
+          box-shadow: 0 24px 70px rgba(35, 76, 92, 0.12);
         }
 
         .lead-form input,
-        .lead-form button {
-          border-radius: 999px;
+        .purchase-form input {
           min-height: 52px;
+          border: 0;
+          outline: none;
+          background: transparent;
+          color: #122f3c;
+          padding: 0 18px;
           font: inherit;
         }
 
-        .lead-form input {
-          width: 100%;
-          border: 1px solid #1e293b;
-          background: #0f172a;
-          color: #ffffff;
-          padding: 0 20px;
-          outline: none;
-          transition: border-color 180ms ease, box-shadow 180ms ease;
+        .lead-form button,
+        .purchase-form button {
+          min-height: 52px;
+          padding: 0 24px;
         }
 
-        .lead-form input::placeholder {
-          color: #64748b;
-        }
-
-        .lead-form input:focus {
-          border-color: #6366f1;
-          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
-        }
-
-        .lead-form button {
-          flex: 0 0 auto;
-          border: 0;
-          cursor: pointer;
-          background: #4f46e5;
-          color: #ffffff;
-          padding: 0 28px;
-          font-weight: 800;
-          white-space: nowrap;
-          transition: background 180ms ease, opacity 180ms ease;
-        }
-
-        .lead-form button:hover:not(:disabled) {
-          background: #6366f1;
-        }
-
-        .lead-form button:disabled {
+        button:disabled {
           cursor: not-allowed;
-          opacity: 0.55;
+          opacity: 0.6;
         }
 
-        .message {
-          min-height: 18px;
-          margin: -12px 0 24px;
-          color: #818cf8;
-          font-size: 0.8rem;
-          font-weight: 700;
+        .message,
+        .purchase-message {
+          color: #2f6f7f;
+          font-weight: 850;
         }
 
-        .badges {
+        .trust-row {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 24px;
           flex-wrap: wrap;
-          color: #94a3b8;
-          font-size: 0.8rem;
-          font-weight: 700;
+          gap: 12px;
+          color: #456775;
+          font-size: 0.92rem;
+          font-weight: 850;
         }
 
-        .badges span {
+        .trust-row span {
           display: inline-flex;
           align-items: center;
           gap: 6px;
         }
 
-        .badges :global(svg) {
-          color: #86efac;
+        .trust-row :global(svg) {
+          color: #2f8f75;
         }
 
-        .hero-stats {
-          width: min(560px, 100%);
-          margin-top: 28px;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
+        .ava-stage {
+          transform: translateY(8px);
         }
 
-        .hero-stats span {
-          border: 1px solid rgba(148, 163, 184, 0.18);
-          border-radius: 18px;
-          padding: 16px;
-          background: rgba(15, 23, 42, 0.58);
-          backdrop-filter: blur(18px);
+        .section {
+          padding: 74px 0;
         }
 
-        .hero-stats strong,
-        .hero-stats small {
-          display: block;
-        }
-
-        .hero-stats strong {
-          font-size: 1.6rem;
-          letter-spacing: -0.05em;
-        }
-
-        .hero-stats small {
-          margin-top: 4px;
-          color: #94a3b8;
-          font-size: 0.72rem;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-        }
-
-        .pricing-section {
-          width: min(1120px, calc(100% - 48px));
-          margin: 0 auto;
-          padding: 0 0 80px;
-        }
-
-        .pricing-heading {
-          max-width: 820px;
-          margin: 0 auto 28px;
+        .section-heading {
+          max-width: 840px;
+          margin: 0 auto 34px;
           text-align: center;
         }
 
-        .pricing-heading h2 {
-          margin: 14px 0;
-          font-size: clamp(2rem, 4vw, 4.2rem);
-          line-height: 1;
+        .module-grid,
+        .tier-grid,
+        .dashboard-card-grid {
+          display: grid;
+          gap: 18px;
+        }
+
+        .module-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .module-card,
+        .metric-card,
+        .backend-section,
+        .tier-card,
+        .purchase-form,
+        .closing-section,
+        .dashboard-panel {
+          border: 1px solid rgba(63, 114, 130, 0.16);
+          background: rgba(255, 255, 255, 0.68);
+          box-shadow: 0 24px 80px rgba(35, 76, 92, 0.11);
+          backdrop-filter: blur(18px);
+        }
+
+        .module-card {
+          border-radius: 30px;
+          padding: 26px;
+        }
+
+        .module-card span,
+        .tier-icon,
+        .closing-section :global(svg) {
+          width: 52px;
+          height: 52px;
+          border-radius: 18px;
+          display: grid;
+          place-items: center;
+          background: #d7e9ee;
+          color: #234c5c;
+        }
+
+        .module-card p,
+        .tier-description,
+        .tier-seats,
+        .tier-list,
+        .metric-card small {
+          color: #52717c;
+          line-height: 1.62;
+        }
+
+        .dashboard-panel {
+          border-radius: 42px;
+          padding: 34px;
+          display: grid;
+          grid-template-columns: 0.95fr 1fr;
+          gap: 30px;
+          align-items: center;
+        }
+
+        .dashboard-card-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .metric-card {
+          border-radius: 28px;
+          padding: 24px;
+          background: rgba(255, 255, 255, 0.78);
+        }
+
+        .metric-card span,
+        .tier-name {
+          color: #3f7282;
+          font-weight: 950;
+        }
+
+        .metric-card strong {
+          display: block;
+          margin: 12px 0 6px;
+          font-size: 2rem;
           letter-spacing: -0.06em;
         }
 
-        .pricing-heading p {
-          margin: 0;
-          color: #94a3b8;
-          line-height: 1.7;
+        .backend-section {
+          border-radius: 42px;
+          padding: 34px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 24px;
+          align-items: center;
+        }
+
+        .backend-stack {
+          display: grid;
+          gap: 10px;
+          min-width: 330px;
+        }
+
+        code {
+          display: block;
+          padding: 14px 16px;
+          border-radius: 16px;
+          background: #173543;
+          color: #dff5fb;
+          font-size: 0.9rem;
         }
 
         .tier-grid {
-          display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 18px;
         }
 
         .tier-card {
           position: relative;
-          overflow: hidden;
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          border-radius: 28px;
-          padding: 24px;
+          border-radius: 32px;
+          padding: 26px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           gap: 10px;
-          color: #ffffff;
-          background: rgba(15, 23, 42, 0.72);
+          color: #122f3c;
           text-align: left;
           cursor: pointer;
           transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
@@ -570,9 +697,9 @@ export default function LandingPage() {
 
         .tier-card:hover,
         .tier-card.active {
-          transform: translateY(-4px);
-          border-color: rgba(192, 132, 252, 0.72);
-          box-shadow: 0 24px 80px rgba(79, 70, 229, 0.24);
+          transform: translateY(-5px);
+          border-color: rgba(35, 76, 92, 0.38);
+          box-shadow: 0 28px 90px rgba(35, 76, 92, 0.18);
         }
 
         .tier-card.featured::after {
@@ -581,48 +708,26 @@ export default function LandingPage() {
           top: 18px;
           right: 18px;
           border-radius: 999px;
-          padding: 6px 10px;
-          background: rgba(168, 85, 247, 0.2);
-          color: #e9d5ff;
+          padding: 7px 10px;
+          background: #234c5c;
+          color: #fff;
           font-size: 0.68rem;
-          font-weight: 900;
+          font-weight: 950;
           letter-spacing: 0.08em;
           text-transform: uppercase;
         }
 
-        .tier-icon {
-          width: 46px;
-          height: 46px;
-          border-radius: 16px;
-          display: grid;
-          place-items: center;
-          background: linear-gradient(135deg, #6366f1, #a855f7);
-          color: #fff;
-        }
-
-        .tier-name {
-          color: #c4b5fd;
-          font-weight: 900;
-        }
-
         .tier-card strong {
-          font-size: 2.2rem;
-          letter-spacing: -0.06em;
-        }
-
-        .tier-seats,
-        .tier-description {
-          color: #94a3b8;
-          line-height: 1.55;
+          font-size: 2.35rem;
+          letter-spacing: -0.07em;
         }
 
         .tier-list {
           display: grid;
           gap: 8px;
           margin-top: 8px;
-          color: #cbd5e1;
-          font-size: 0.86rem;
-          font-weight: 700;
+          font-size: 0.9rem;
+          font-weight: 760;
         }
 
         .tier-list span {
@@ -631,204 +736,91 @@ export default function LandingPage() {
           gap: 7px;
         }
 
-        .tier-list :global(svg) {
-          color: #818cf8;
-        }
-
         .purchase-form {
-          margin: 22px auto 0;
-          padding: 16px;
-          border: 1px solid rgba(148, 163, 184, 0.2);
+          margin: 24px auto 0;
+          padding: 14px;
           border-radius: 999px;
           display: grid;
-          grid-template-columns: 1fr 1.1fr auto;
+          grid-template-columns: 1fr 1fr auto;
           gap: 12px;
           align-items: center;
-          background: rgba(15, 23, 42, 0.82);
-          backdrop-filter: blur(18px);
         }
 
         .purchase-form div {
           display: grid;
-          gap: 3px;
+          gap: 4px;
           padding-left: 12px;
         }
 
-        .purchase-form div span,
-        .purchase-message {
-          color: #94a3b8;
+        .purchase-form div span {
+          color: #52717c;
           font-size: 0.85rem;
-        }
-
-        .purchase-form input {
-          min-height: 50px;
-          border: 1px solid #1e293b;
-          border-radius: 999px;
-          background: #0f172a;
-          color: #fff;
-          padding: 0 18px;
-          outline: none;
-        }
-
-        .purchase-form button {
-          min-height: 50px;
-          border: 0;
-          border-radius: 999px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: linear-gradient(135deg, #4f46e5, #a855f7);
-          color: #fff;
-          padding: 0 22px;
-          font-weight: 900;
-          cursor: pointer;
-        }
-
-        .purchase-form button:disabled {
-          cursor: not-allowed;
-          opacity: 0.58;
+          font-weight: 850;
         }
 
         .purchase-message {
-          margin: 12px 0 0;
           text-align: center;
-          font-weight: 800;
         }
 
-        .ai-showcase {
-          width: min(1120px, calc(100% - 48px));
-          margin: 10px auto 0;
-          padding: 0 0 86px;
-          display: grid;
-          grid-template-columns: 1.2fr 0.9fr 0.9fr;
-          gap: 18px;
+        .closing-section {
+          margin-bottom: 80px;
+          border-radius: 42px;
+          padding: 42px;
+          text-align: center;
         }
 
-        .showcase-card {
-          position: relative;
-          overflow: hidden;
-          border: 1px solid rgba(192, 132, 252, 0.26);
-          border-radius: 28px;
-          background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 27, 75, 0.48));
-          box-shadow: 0 30px 100px rgba(2, 6, 23, 0.46), 0 0 70px rgba(168, 85, 247, 0.1);
-          backdrop-filter: blur(18px);
+        .closing-section :global(svg) {
+          margin: 0 auto 18px;
         }
 
-        .showcase-card::before {
-          content: '';
-          position: absolute;
-          inset: -40% auto auto -25%;
-          width: 220px;
-          height: 220px;
-          border-radius: 999px;
-          background: rgba(168, 85, 247, 0.24);
-          filter: blur(8px);
+        .closing-section p {
+          max-width: 740px;
+          margin: 0 auto;
         }
 
-        .command-card {
-          padding: 30px;
-        }
-
-        .card-kicker {
-          position: relative;
-          z-index: 1;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          color: #c4b5fd;
-          font-size: 0.78rem;
-          font-weight: 900;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        .command-card h2 {
-          position: relative;
-          z-index: 1;
-          margin: 14px 0;
-          font-size: clamp(1.8rem, 3vw, 3rem);
-          line-height: 1;
-          letter-spacing: -0.055em;
-        }
-
-        .command-card p,
-        .glass-card span {
-          position: relative;
-          z-index: 1;
-          color: #94a3b8;
-          line-height: 1.65;
-        }
-
-        .glass-card {
-          min-height: 220px;
-          padding: 26px;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          gap: 10px;
-        }
-
-        .glass-card :global(svg) {
-          position: relative;
-          z-index: 1;
-          color: #c084fc;
-        }
-
-        .glass-card strong {
-          position: relative;
-          z-index: 1;
-          font-size: 1.2rem;
-        }
-
-        @media (max-width: 860px) {
-          .hero-content,
-          .ai-showcase,
-          .tier-grid,
+        @media (max-width: 980px) {
+          .hero,
+          .dashboard-panel,
+          .backend-section,
           .purchase-form {
             grid-template-columns: 1fr;
           }
 
-          .hero-content {
-            text-align: center;
+          .module-grid,
+          .tier-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
 
-          .hero-logo,
-          .badges {
-            justify-content: center;
-          }
-
-          .hero-copy,
-          .lead-form,
-          .hero-stats {
-            margin-left: auto;
-            margin-right: auto;
-          }
-
-          .purchase-form {
-            border-radius: 28px;
+          .backend-stack {
+            min-width: 0;
           }
         }
 
-        @media (max-width: 640px) {
-          .nav {
-            width: min(100% - 32px, 1280px);
-          }
-
+        @media (max-width: 700px) {
+          .nav-links,
           .nav-button {
             display: none;
           }
 
           .hero {
-            width: min(100% - 32px, 1024px);
-            padding-top: 72px;
+            min-height: auto;
+            padding-top: 44px;
           }
 
+          .module-grid,
+          .tier-grid,
+          .dashboard-card-grid,
           .lead-form {
-            flex-direction: column;
+            grid-template-columns: 1fr;
           }
 
-          .lead-form button {
+          .lead-form,
+          .purchase-form {
+            border-radius: 28px;
+          }
+
+          .lead-form button,
+          .purchase-form button {
             width: 100%;
           }
         }
