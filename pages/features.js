@@ -52,7 +52,7 @@ export default function Features() {
         <title>Features | DigiMark101</title>
         <meta
           name="description"
-          content="Base44-inspired DigiMark101 features powered by Ava Skye and connected to Supabase."
+          content="Base44-inspired DigiMark101 features powered by Ava OS and connected to Supabase."
         />
       </Head>
 
@@ -74,7 +74,7 @@ export default function Features() {
               <span className="pill"><CalendarDays size={15} /> Ava OS + Supabase</span>
               <h1>All the Base44-style pages point to one AI growth system.</h1>
               <p className="hero-copy">
-                DigiMark101 now reads like a full product website: humanlike Ava intro, feature cards,
+                DigiMark101 now reads like a full product website: Ava OS intro, feature cards,
                 command dashboard, backend status, and purchase flow. Supabase remains the connected backend.
               </p>
               <div className="actions">
@@ -115,7 +115,7 @@ export default function Features() {
             <h2>From visitor to campaign launch, the frontend stays connected to Supabase.</h2>
             <p>
               The old Base44-style experience is now represented as a Vercel-hosted frontend with the data layer
-              moved to Supabase. Ava remains the humanlike face and strategic guide.
+              moved to Supabase. Ava OS remains the strategic guide inside the same DigiMark101 project.
             </p>
           </div>
           <div className="timeline">

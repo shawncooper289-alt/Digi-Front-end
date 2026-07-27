@@ -63,7 +63,7 @@ const operatingSystem = [
   {
     icon: Bot,
     title: 'Ava OS Assistant',
-    copy: 'A humanlike AI Chief of Staff guides the next best move across every growth workflow.',
+    copy: 'A polished AI planning assistant guides the next best move across every growth workflow.',
   },
   {
     icon: Database,
@@ -164,10 +164,10 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>DigiMark101 | Ava Skye AI Marketing OS</title>
+        <title>DigiMark101 | Ava OS Marketing Workspace</title>
         <meta
           name="description"
-          content="DigiMark101 is a Base44-inspired AI marketing frontend powered by Ava Skye and connected to a Supabase backend."
+          content="DigiMark101 is a Base44-inspired AI marketing frontend powered by Ava OS and connected to a Supabase backend."
         />
       </Head>
 
@@ -194,7 +194,7 @@ export default function LandingPage() {
               AI marketing that feels personal, polished, and ready to sell.
             </h1>
             <p>
-              Ava Skye introduces DigiMark101 as a humanlike AI Chief of Staff for campaigns, funnels,
+              Ava OS introduces DigiMark101 as a polished AI marketing workspace for campaigns, funnels,
               content, lead capture, and customer acquisition. The frontend is now styled like a modern
               Base44 product experience while keeping Supabase as the backend layer.
             </p>
@@ -215,7 +215,7 @@ export default function LandingPage() {
             {message && <p className="message">{message}</p>}
 
             <div className="trust-row" aria-label="Platform highlights">
-              <span><CheckCircle2 size={16} /> Humanlike Ava</span>
+              <span><CheckCircle2 size={16} /> Ava OS workspace</span>
               <span><CheckCircle2 size={16} /> Supabase connected</span>
               <span><CheckCircle2 size={16} /> Vercel deployed</span>
             </div>
@@ -255,7 +255,7 @@ export default function LandingPage() {
               <span className="eyebrow">Command Dashboard</span>
               <h2>A polished growth workspace for campaigns, leads, and client acquisition.</h2>
               <p>
-                This mirrors the Base44 product-page feel: clear cards, soft gradients, human-centered Ava guidance,
+                This mirrors the Base44 product-page feel: clear cards, soft gradients, Ava OS guidance,
                 and conversion-focused actions backed by the Supabase tables already wired into the app.
               </p>
             </div>
@@ -348,10 +348,10 @@ export default function LandingPage() {
 
         <section className="section closing-section">
           <BarChart3 size={28} />
-          <h2>Ava is the humanlike face of the DigiMark101 growth system.</h2>
+          <h2>Ava OS is the AI command center for the DigiMark101 growth system.</h2>
           <p>
             Visitors see a clean Base44-style website. Underneath, Vercel serves the frontend,
-            Supabase receives the data, and Ava guides the marketing workflow.
+            Supabase receives the data, and Ava OS guides the marketing workflow.
           </p>
         </section>
       </main>

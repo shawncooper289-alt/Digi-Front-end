@@ -15,7 +15,7 @@ export default function AvaChatModal() {
     {
       role: 'assistant',
       content:
-        "Hi, I'm Ava Skye, your humanlike DigiMark101 AI Chief of Staff. Ask me to plan a campaign, funnel, content system, or lead-generation sprint.",
+        "Hi, I'm Ava, your DigiMark101 AI growth assistant. Ask me to plan a campaign, funnel, content system, or lead-generation sprint.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -64,12 +64,12 @@ export default function AvaChatModal() {
       </button>
 
       {open && (
-        <div className="overlay" role="dialog" aria-modal="true" aria-label="Ava Skye AI chat">
+        <div className="overlay" role="dialog" aria-modal="true" aria-label="Ava AI chat">
           <div className="modal">
             <header>
               <div className="avatar"><AvaSkyeVisual compact /></div>
               <div>
-                <strong>Ava Skye</strong>
+                <strong>Ava</strong>
                 <span>Powered by Vercel AI Gateway</span>
               </div>
               <button className="close" onClick={() => setOpen(false)} aria-label="Close Ava chat">
