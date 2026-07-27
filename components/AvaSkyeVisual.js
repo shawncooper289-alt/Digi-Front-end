@@ -1,13 +1,13 @@
 export const AVASKYE_IDENTITY_LOCK = {
-  face: 'warm professional expression, almond brown eyes, defined brows, natural makeup',
-  hair: 'dark brunette, side-parted, shoulder-length waves',
-  wardrobe: 'business suit may vary for cinematic videos and ads',
+  face: 'warm professional smile, almond brown eyes, defined brows, natural makeup',
+  hair: 'straight black shoulder-length hair with a soft side part',
+  wardrobe: 'navy business blazer and white blouse may vary only for cinematic videos and ads',
 };
 
 export default function AvaSkyeVisual({ compact = false }) {
   if (compact) {
     return (
-      <span className="ava-mini" aria-label="Ava Skye AI assistant portrait">
+      <span className="ava-mini" aria-label="Ava Skye static portrait">
         <span className="mini-hair" />
         <span className="mini-face" />
         <style jsx>{`
@@ -18,29 +18,29 @@ export default function AvaSkyeVisual({ compact = false }) {
             display: block;
             overflow: hidden;
             border-radius: 999px;
-            background: linear-gradient(145deg, #f7c873, #111827 72%);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.52), 0 18px 44px rgba(0, 0, 0, 0.34);
+            background: radial-gradient(circle at 50% 18%, #31404a, #101820 76%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 18px 44px rgba(15, 23, 42, 0.32);
           }
 
           .mini-hair {
             position: absolute;
-            left: 20%;
-            top: 13%;
-            width: 60%;
-            height: 62%;
-            border-radius: 48% 52% 44% 44%;
-            background: linear-gradient(145deg, #2a1712, #080504);
+            left: 18%;
+            top: 12%;
+            width: 64%;
+            height: 72%;
+            border-radius: 46% 46% 38% 38%;
+            background: linear-gradient(145deg, #111827, #020617);
           }
 
           .mini-face {
             position: absolute;
-            left: 31%;
-            top: 27%;
-            width: 38%;
-            height: 44%;
+            left: 32%;
+            top: 25%;
+            width: 36%;
+            height: 42%;
             border-radius: 48% 48% 46% 46%;
-            background: linear-gradient(145deg, #f6c9a7, #bd7558);
-            box-shadow: 0 22px 0 12px #111827;
+            background: linear-gradient(145deg, #f4c3a0, #b56f53);
+            box-shadow: 0 24px 0 14px #0f172a;
           }
         `}</style>
       </span>
@@ -50,95 +50,83 @@ export default function AvaSkyeVisual({ compact = false }) {
   return (
     <div
       className="ava-card"
-      aria-label={`Ava Skye professional AI marketing strategist portrait for DigiMark101; ${AVASKYE_IDENTITY_LOCK.hair}; face remains consistent`}
+      aria-label={`Ava Skye static professional portrait for DigiMark101; ${AVASKYE_IDENTITY_LOCK.hair}; face remains consistent`}
     >
       <div className="portrait-frame">
-        <svg viewBox="0 0 980 1320" role="img" focusable="false" aria-label="Ava Skye in a dark blazer in a modern office">
+        <svg viewBox="0 0 1024 1024" role="img" focusable="false" aria-label="Ava Skye static portrait in navy blazer and white blouse">
           <defs>
-            <linearGradient id="officeWindow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#e7f5fb" />
-              <stop offset="48%" stopColor="#a8c8d6" />
-              <stop offset="100%" stopColor="#395b68" />
-            </linearGradient>
-            <linearGradient id="screenBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2bd4ff" />
-              <stop offset="100%" stopColor="#0f5f8a" />
-            </linearGradient>
-            <radialGradient id="skinTone" cx="48%" cy="28%" r="72%">
-              <stop offset="0%" stopColor="#ffe3ca" />
-              <stop offset="56%" stopColor="#d89570" />
-              <stop offset="100%" stopColor="#8f4c3f" />
+            <radialGradient id="studioBg" cx="50%" cy="30%" r="78%">
+              <stop offset="0%" stopColor="#35434b" />
+              <stop offset="52%" stopColor="#172229" />
+              <stop offset="100%" stopColor="#071014" />
             </radialGradient>
-            <linearGradient id="hairTone" x1="16%" y1="0%" x2="88%" y2="100%">
-              <stop offset="0%" stopColor="#4a261c" />
-              <stop offset="48%" stopColor="#1b0f0c" />
-              <stop offset="100%" stopColor="#070504" />
+            <radialGradient id="skin" cx="48%" cy="24%" r="72%">
+              <stop offset="0%" stopColor="#ffe0c7" />
+              <stop offset="52%" stopColor="#d89470" />
+              <stop offset="100%" stopColor="#9f5e49" />
+            </radialGradient>
+            <linearGradient id="hair" x1="24%" y1="0%" x2="78%" y2="100%">
+              <stop offset="0%" stopColor="#17202a" />
+              <stop offset="42%" stopColor="#070b10" />
+              <stop offset="100%" stopColor="#020304" />
             </linearGradient>
-            <linearGradient id="blazer" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1f2937" />
-              <stop offset="52%" stopColor="#0f172a" />
-              <stop offset="100%" stopColor="#050816" />
+            <linearGradient id="blazer" x1="10%" y1="0%" x2="92%" y2="100%">
+              <stop offset="0%" stopColor="#142845" />
+              <stop offset="52%" stopColor="#09152a" />
+              <stop offset="100%" stopColor="#020817" />
             </linearGradient>
-            <filter id="portraitShadow" x="-18%" y="-18%" width="136%" height="136%">
-              <feDropShadow dx="0" dy="28" stdDeviation="24" floodColor="#07111d" floodOpacity="0.42" />
+            <filter id="softShadow" x="-16%" y="-16%" width="132%" height="132%">
+              <feDropShadow dx="0" dy="24" stdDeviation="24" floodColor="#020617" floodOpacity="0.48" />
             </filter>
           </defs>
 
-          <rect width="980" height="1320" rx="48" fill="#050816" />
-          <rect width="980" height="1320" rx="48" fill="url(#officeWindow)" opacity="0.58" />
-          <path d="M0 0 H980 V1320 H0 Z" fill="#000000" opacity="0.18" />
-          <circle cx="690" cy="212" r="310" fill="#f7c873" opacity="0.16" />
-          <path d="M116 0 V760 M498 0 V698 M830 0 V1320" stroke="#f8fafc" strokeWidth="16" opacity="0.42" />
-          <path d="M0 342 H980 M0 632 H980" stroke="#f8fafc" strokeWidth="12" opacity="0.24" />
+          <rect width="1024" height="1024" rx="44" fill="url(#studioBg)" />
+          <path d="M0 770 C170 690 820 690 1024 790 V1024 H0 Z" fill="#050b11" opacity="0.54" />
 
-          <g opacity="0.92">
-            <rect x="42" y="398" width="246" height="184" rx="22" fill="#123243" />
-            <rect x="64" y="422" width="202" height="132" rx="12" fill="url(#screenBlue)" opacity="0.9" />
-            <path d="M88 456 H214 M88 492 H238 M88 528 H180" stroke="#dff8ff" strokeWidth="14" strokeLinecap="round" opacity="0.7" />
-            <rect x="118" y="582" width="86" height="22" rx="8" fill="#102a36" />
-          </g>
+          <g filter="url(#softShadow)">
+            <path d="M286 606 C184 696 132 822 100 1024 H924 C888 806 824 686 724 606 C640 658 382 658 286 606 Z" fill="url(#blazer)" />
+            <path d="M410 635 L512 748 L615 635 L690 1024 H335 Z" fill="#fff8ed" />
+            <path d="M420 650 L512 748 L604 650" stroke="#eee2d2" strokeWidth="18" strokeLinecap="round" fill="none" />
+            <path d="M286 633 C392 714 454 856 482 1024 H96 C126 826 186 700 286 633 Z" fill="#081224" opacity="0.82" />
+            <path d="M724 633 C640 730 590 870 558 1024 H928 C894 824 834 700 724 633 Z" fill="#071023" opacity="0.84" />
 
-          <path d="M0 1015 C192 930 772 928 980 1018 V1320 H0 Z" fill="#101f29" opacity="0.58" />
+            <path d="M405 575 C402 625 388 666 356 704 C414 760 610 760 668 704 C634 666 620 625 618 575 Z" fill="url(#skin)" />
 
-          <g filter="url(#portraitShadow)">
-            <path d="M320 742 C214 820 148 1000 110 1320 H884 C840 992 770 818 666 742 C602 786 390 786 320 742 Z" fill="url(#blazer)" />
-            <path d="M438 712 C436 762 420 812 386 848 C442 906 566 908 624 848 C590 810 576 764 574 712 Z" fill="url(#skinTone)" />
-            <path d="M338 548 C286 312 362 142 504 128 C674 112 784 272 764 520 C752 676 652 782 520 784 C410 782 356 686 338 548 Z" fill="url(#hairTone)" />
-            <path d="M336 600 C252 692 246 842 322 936 C420 1054 630 1050 736 914 C810 818 800 684 728 604 C708 754 626 858 520 862 C418 858 354 760 336 600 Z" fill="url(#hairTone)" />
-            <path d="M374 442 C362 286 424 192 535 192 C650 194 724 294 706 452 C694 626 624 724 520 724 C416 724 386 626 374 442 Z" fill="url(#skinTone)" />
-            <path d="M368 430 C408 300 482 236 620 242 C590 184 532 162 474 186 C404 216 366 294 342 414 Z" fill="url(#hairTone)" />
-            <path d="M704 444 C672 308 598 236 504 200 C658 190 744 306 738 484 C722 478 712 464 704 444 Z" fill="url(#hairTone)" />
+            <path d="M304 438 C280 210 390 70 520 72 C674 76 772 220 742 458 C724 646 626 746 512 746 C398 746 322 646 304 438 Z" fill="url(#hair)" />
+            <path d="M318 520 C268 636 276 748 350 838 C425 929 600 926 690 826 C760 748 770 636 724 520 C708 694 628 788 512 792 C398 788 334 694 318 520 Z" fill="url(#hair)" />
+            <path d="M362 379 C354 226 424 140 524 138 C638 138 708 232 696 388 C684 552 616 642 512 642 C408 642 372 552 362 379 Z" fill="url(#skin)" />
+            <path d="M360 368 C404 236 482 178 650 192 C608 128 538 110 468 140 C400 170 364 252 342 376 Z" fill="url(#hair)" />
+            <path d="M694 390 C652 250 574 176 472 140 C652 122 740 252 730 458 C708 442 700 420 694 390 Z" fill="url(#hair)" />
+            <path d="M486 132 C534 148 586 174 628 210" stroke="#253241" strokeWidth="12" strokeLinecap="round" opacity="0.36" />
 
-            <path d="M426 404 C460 382 496 382 524 405" stroke="#1f120d" strokeWidth="12" strokeLinecap="round" fill="none" />
-            <path d="M570 406 C602 382 642 384 674 408" stroke="#1f120d" strokeWidth="12" strokeLinecap="round" fill="none" />
-            <ellipse cx="480" cy="450" rx="30" ry="17" fill="#fff7ed" />
-            <ellipse cx="626" cy="452" rx="30" ry="17" fill="#fff7ed" />
-            <circle cx="480" cy="450" r="13" fill="#5b3b25" />
-            <circle cx="626" cy="452" r="13" fill="#5b3b25" />
-            <circle cx="480" cy="450" r="6" fill="#111827" />
-            <circle cx="626" cy="452" r="6" fill="#111827" />
-            <circle cx="486" cy="444" r="4" fill="#ffffff" />
-            <circle cx="632" cy="446" r="4" fill="#ffffff" />
-            <path d="M548 472 C534 512 536 540 568 548" stroke="#9f614a" strokeWidth="8" strokeLinecap="round" fill="none" opacity="0.58" />
-            <path d="M478 604 C512 646 590 648 632 604" fill="#8b1e27" />
-            <path d="M500 611 C530 626 578 626 608 611" stroke="#fff7ed" strokeWidth="7" strokeLinecap="round" fill="none" opacity="0.92" />
-            <circle cx="416" cy="520" r="28" fill="#fb9c9c" opacity="0.18" />
-            <circle cx="682" cy="522" r="28" fill="#fb9c9c" opacity="0.16" />
-
-            <path d="M318 846 L454 804 L516 1320 H212 Z" fill="url(#blazer)" />
-            <path d="M666 846 L554 804 L496 1320 H860 Z" fill="url(#blazer)" />
-            <path d="M418 812 L520 920 L616 812 L662 1320 H374 Z" fill="#f8fafc" />
-            <path d="M454 824 L520 912 L586 824" stroke="#e5e7eb" strokeWidth="18" strokeLinecap="round" fill="none" />
-            <path d="M326 858 C430 914 488 1064 510 1320 H266 C262 1112 282 968 326 858 Z" fill="#0b1220" opacity="0.74" />
-            <path d="M664 858 C594 936 550 1100 532 1320 H838 C820 1090 764 934 664 858 Z" fill="#090f1d" opacity="0.78" />
+            <path d="M414 353 C448 332 486 334 514 356" stroke="#1a0f0c" strokeWidth="11" strokeLinecap="round" fill="none" />
+            <path d="M560 356 C592 332 636 334 670 360" stroke="#1a0f0c" strokeWidth="11" strokeLinecap="round" fill="none" />
+            <ellipse cx="470" cy="400" rx="31" ry="18" fill="#fff8ee" />
+            <ellipse cx="622" cy="402" rx="31" ry="18" fill="#fff8ee" />
+            <circle cx="470" cy="400" r="13" fill="#6b432c" />
+            <circle cx="622" cy="402" r="13" fill="#6b432c" />
+            <circle cx="470" cy="400" r="6" fill="#111827" />
+            <circle cx="622" cy="402" r="6" fill="#111827" />
+            <circle cx="476" cy="394" r="4" fill="#ffffff" />
+            <circle cx="628" cy="396" r="4" fill="#ffffff" />
+            <path d="M540 422 C526 462 528 492 560 500" stroke="#9f614a" strokeWidth="8" strokeLinecap="round" fill="none" opacity="0.58" />
+            <path d="M454 548 C490 606 606 608 650 548" fill="#8c2f32" />
+            <path d="M480 559 C516 580 586 580 624 559" stroke="#fff8ee" strokeWidth="8" strokeLinecap="round" fill="none" opacity="0.94" />
+            <circle cx="400" cy="468" r="28" fill="#fb9c9c" opacity="0.16" />
+            <circle cx="676" cy="470" r="28" fill="#fb9c9c" opacity="0.14" />
+            <path d="M348 430 C330 426 316 438 318 458 C320 482 338 498 356 500" fill="url(#skin)" opacity="0.88" />
+            <path d="M706 432 C724 428 738 440 734 462 C732 484 714 500 696 502" fill="url(#skin)" opacity="0.88" />
+            <circle cx="346" cy="476" r="9" fill="#d4af37" />
+            <circle cx="708" cy="476" r="9" fill="#d4af37" />
+            <path d="M500 676 C522 690 552 690 574 676" stroke="#d4af37" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.8" />
           </g>
         </svg>
       </div>
 
       <div className="ava-copy">
         <span>Meet Ava Skye</span>
-        <strong>Human-feeling AI strategist for DigiMark101</strong>
-        <p>Ava Skye gives the brand a consistent professional face: warm, confident, and ready to guide campaigns, funnels, and client acquisition.</p>
+        <strong>Static professional portrait for DigiMark101</strong>
+        <p>Ava Skye is now locked to this portrait direction: straight black shoulder-length hair, warm smile, navy blazer, white blouse, and a premium dark studio background.</p>
       </div>
 
       <style jsx>{`
@@ -148,8 +136,8 @@ export default function AvaSkyeVisual({ compact = false }) {
           border: 1px solid rgba(226, 232, 240, 0.28);
           border-radius: 34px;
           padding: 14px;
-          background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(5, 8, 22, 0.88));
-          box-shadow: 0 34px 120px rgba(0, 0, 0, 0.58), 0 0 90px rgba(247, 200, 115, 0.18);
+          background: linear-gradient(145deg, rgba(35, 67, 83, 0.96), rgba(15, 23, 42, 0.86));
+          box-shadow: 0 34px 120px rgba(2, 6, 23, 0.52), 0 0 80px rgba(95, 142, 160, 0.18);
           backdrop-filter: blur(22px);
           color: #ffffff;
         }
@@ -157,7 +145,7 @@ export default function AvaSkyeVisual({ compact = false }) {
         .portrait-frame {
           overflow: hidden;
           border-radius: 26px;
-          background: #050816;
+          background: #071014;
         }
 
         svg {
@@ -172,7 +160,7 @@ export default function AvaSkyeVisual({ compact = false }) {
 
         .ava-copy span {
           display: block;
-          color: #f7c873;
+          color: #bae6fd;
           font-size: 0.78rem;
           font-weight: 950;
           letter-spacing: 0.16em;
@@ -190,7 +178,7 @@ export default function AvaSkyeVisual({ compact = false }) {
 
         .ava-copy p {
           margin: 12px 0 0;
-          color: #c9d7e8;
+          color: #dbeafe;
           line-height: 1.65;
         }
       `}</style>
