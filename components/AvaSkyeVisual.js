@@ -1,3 +1,9 @@
+export const AVASKYE_IDENTITY_LOCK = {
+  face: 'warm professional expression, almond brown eyes, defined brows, natural makeup',
+  hair: 'dark brunette, side-parted, shoulder-length waves',
+  wardrobe: 'business suit may vary for cinematic videos and ads',
+};
+
 export default function AvaSkyeVisual({ compact = false }) {
   if (compact) {
     return (
@@ -42,7 +48,10 @@ export default function AvaSkyeVisual({ compact = false }) {
   }
 
   return (
-    <div className="ava-card" aria-label="Ava Skye professional AI marketing strategist portrait for DigiMark101">
+    <div
+      className="ava-card"
+      aria-label={`Ava Skye professional AI marketing strategist portrait for DigiMark101; ${AVASKYE_IDENTITY_LOCK.hair}; face remains consistent`}
+    >
       <div className="portrait-frame">
         <svg viewBox="0 0 980 1320" role="img" focusable="false" aria-label="Ava Skye in a dark blazer in a modern office">
           <defs>
@@ -127,7 +136,7 @@ export default function AvaSkyeVisual({ compact = false }) {
       <div className="ava-copy">
         <span>Meet Ava Skye</span>
         <strong>Professional AI marketing strategist for DigiMark101</strong>
-        <p>Ava now follows the polished office-portrait direction: dark hair, black blazer, warm expression, and a premium business setting for the single DigiMark101 project.</p>
+        <p>Ava Skye keeps the same face and dark wavy hair across DigiMark101. Her business suit can vary for cinematic videos and ads, but her identity stays consistent.</p>
       </div>
 
       <style jsx>{`
