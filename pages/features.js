@@ -1,45 +1,48 @@
 import Head from 'next/head';
+import { ArrowRight, Bot, CalendarDays, Database, Mail, Megaphone, MonitorSmartphone, Share2 } from 'lucide-react';
+import AvaChatModal from '../components/AvaChatModal';
+import AvaSkyeVisual from '../components/AvaSkyeVisual';
 import DigiMarkLogo from '../components/DigiMarkLogo';
 import { isSupabaseConfigured } from '../lib/supabaseClient';
 
 const features = [
   {
     title: 'AI Marketing Automation',
-    description: 'Launch campaigns, generate copy, and coordinate follow-ups with Ava OS workflows designed for growth teams.',
-    icon: 'AI'
+    description: 'Ava turns offers into campaign briefs, launch tasks, and next-step recommendations.',
+    icon: Bot,
   },
   {
     title: 'Smart Campaign Builder',
-    description: 'Plan offers, audiences, creatives, channels, and schedules from one guided workspace.',
-    icon: 'CB'
+    description: 'Plan audiences, hooks, channels, creative assets, and launch calendars from one page.',
+    icon: Megaphone,
   },
   {
     title: 'Supabase Data Layer',
-    description: 'Use Supabase for auth-ready records, realtime updates, and a scalable Postgres-backed backend.',
-    icon: 'SB'
+    description: 'Store leads, purchase handoffs, client signals, and onboarding state in Supabase.',
+    icon: Database,
   },
   {
     title: 'Social Media Manager',
-    description: 'Create platform-ready posts, organize content calendars, and keep brand messaging consistent.',
-    icon: 'SM'
+    description: 'Draft platform-ready posts, organize publishing themes, and keep messaging consistent.',
+    icon: Share2,
   },
   {
     title: 'Email Marketing',
-    description: 'Build sequences, nurture leads, and connect every campaign to the same customer profile.',
-    icon: 'EM'
+    description: 'Build nurture flows, launch sequences, reactivation campaigns, and client follow-ups.',
+    icon: Mail,
   },
   {
-    title: 'Growth Analytics',
-    description: 'Track funnel performance, campaign ROI, engagement, and client-ready reporting in one place.',
-    icon: 'GA'
-  }
+    title: 'Growth Dashboard',
+    description: 'Present a clean premium growth workspace for activity, funnel status, and next actions.',
+    icon: MonitorSmartphone,
+  },
 ];
 
 const workflow = [
-  'Capture leads and customer signals',
-  'Store campaign and client data in Supabase',
-  'Let Ava OS recommend the next best action',
-  'Publish, follow up, and measure growth'
+  ['01', 'Capture leads', 'Visitor and buyer data enters Supabase through the frontend forms.'],
+  ['02', 'Plan with Ava', 'Ava maps the campaign, funnel, content, and follow-up workflow.'],
+  ['03', 'Launch assets', 'Teams publish social, email, landing page, and acquisition assets.'],
+  ['04', 'Measure growth', 'DigiMark101 keeps the command center focused on revenue actions.'],
 ];
 
 export default function Features() {
@@ -49,88 +52,115 @@ export default function Features() {
         <title>Features | DigiMark101</title>
         <meta
           name="description"
-          content="AI-powered marketing automation features backed by Supabase."
+          content="Cinematic DigiMark101 features powered by Ava Skye and connected to Supabase."
         />
       </Head>
 
       <main className="page-shell">
-        <section className="hero">
-          <nav className="nav">
-            <a href="/" className="brand" aria-label="DigiMark101 home"><DigiMarkLogo compact /></a>
-            <div className="nav-links">
-              <a href="/#dashboard">Dashboard</a>
-              <a href="/features">Features</a>
-              <a href="/#contact">Contact</a>
-            </div>
-          </nav>
+        <nav className="nav">
+          <a href="/" className="brand" aria-label="DigiMark101 home"><DigiMarkLogo compact /></a>
+          <div className="nav-links">
+            <a href="/features">Features</a>
+            <a href="/campaigns">Campaigns</a>
+            <a href="/social-media">Social</a>
+            <a href="/email-marketing">Email</a>
+            <a href="/lead-capture">Leads</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/ava-skye">Ava Skye</a>
+          </div>
+          <a className="nav-button" href="/#early-access">Start with Ava <ArrowRight size={16} /></a>
+        </nav>
 
+        <section className="hero">
           <div className="hero-grid">
             <div>
-              <p className="eyebrow">Ava OS + Supabase</p>
-              <h1>Smart growth systems for modern marketing teams.</h1>
+              <span className="pill"><CalendarDays size={15} /> Ava Skye + Supabase</span>
+              <h1>Every premium page points to one AI growth system.</h1>
               <p className="hero-copy">
-                Mirror your Base44 growth flow with a Vercel frontend and a Supabase backend built for campaigns,
-                client portals, realtime insights, and AI-assisted execution.
+                DigiMark101 now reads like a polished product website: cinematic Ava Skye intro, feature cards,
+                command dashboard, backend status, and purchase flow. Supabase remains the connected backend.
               </p>
               <div className="actions">
-                <a className="primary" href="/#dashboard">Enter Dashboard</a>
-                <a className="secondary" href="#features">Explore Features</a>
+                <a className="primary" href="/#seat-tiers">Choose Seats</a>
+                <a className="secondary" href="/#dashboard">View Dashboard</a>
               </div>
               <div className="status-pill">
                 <span className={isSupabaseConfigured ? 'dot online' : 'dot'} />
                 {isSupabaseConfigured ? 'Supabase connection variables detected' : 'Waiting for Supabase env vars'}
               </div>
             </div>
-
-            <div className="hero-card" aria-label="Growth workflow summary">
-              <div className="card-header">
-                <span>Growth Flow</span>
-                <strong>Live Smart</strong>
-              </div>
-              {workflow.map((step, index) => (
-                <div className="timeline-row" key={step}>
-                  <span>{index + 1}</span>
-                  <p>{step}</p>
-                </div>
-              ))}
-            </div>
+            <AvaSkyeVisual />
           </div>
         </section>
 
         <section id="features" className="features-section">
-          <p className="eyebrow centered">Platform Features</p>
-          <h2>Everything needed to attract, convert, and retain customers.</h2>
+          <div className="section-heading">
+            <span className="eyebrow">Feature system</span>
+            <h2>Everything needed to attract, convert, and retain customers.</h2>
+          </div>
           <div className="feature-grid">
-            {features.map((feature) => (
-              <article className="feature-card" key={feature.title}>
-                <div className="icon">{feature.icon}</div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-              </article>
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <article className="feature-card" key={feature.title}>
+                  <span className="icon"><Icon size={22} /></span>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="workflow-section">
+          <div>
+            <span className="eyebrow">Growth workflow</span>
+            <h2>From visitor to campaign launch, the frontend stays connected to Supabase.</h2>
+            <p>
+              The experience is now represented as a Vercel-hosted frontend with the data layer
+              connected to Supabase. Ava Skye remains the strategic guide inside the same DigiMark101 project.
+            </p>
+          </div>
+          <div className="timeline">
+            {workflow.map(([number, title, copy]) => (
+              <div className="timeline-row" key={title}>
+                <strong>{number}</strong>
+                <span>
+                  <b>{title}</b>
+                  <small>{copy}</small>
+                </span>
+              </div>
             ))}
           </div>
         </section>
 
         <section className="integration-section">
           <div>
-            <p className="eyebrow">Backend Ready</p>
-            <h2>Supabase replaces the Base44 backend layer.</h2>
+            <span className="eyebrow">Backend ready</span>
+            <h2>Supabase powers the connected backend layer.</h2>
             <p>
-              The frontend now expects public Supabase connection variables and keeps sensitive service-role keys out
-              of browser code. Add tables, auth rules, and edge functions in Supabase while Vercel serves the UI.
+              Keep public Supabase connection variables in Vercel, store records in Supabase tables,
+              and keep sensitive service-role keys out of browser code.
             </p>
           </div>
           <div className="env-card">
             <code>NEXT_PUBLIC_SUPABASE_URL</code>
             <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
+            <code>PURCHASE_CHECKOUT_URL</code>
           </div>
         </section>
       </main>
 
+      <AvaChatModal />
+
       <style jsx>{`
+        :global(*) {
+          box-sizing: border-box;
+        }
+
         :global(body) {
           margin: 0;
-          background: #050816;
+          background: #07111d;
           color: #f8fafc;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
@@ -138,77 +168,102 @@ export default function Features() {
         .page-shell {
           min-height: 100vh;
           background:
-            radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 36rem),
-            radial-gradient(circle at top right, rgba(236, 72, 153, 0.18), transparent 32rem),
-            linear-gradient(135deg, #050816 0%, #0f172a 55%, #111827 100%);
+            radial-gradient(circle at 16% 8%, rgba(255, 214, 167, 0.18), transparent 28rem),
+            radial-gradient(circle at 84% 16%, rgba(83, 166, 255, 0.18), transparent 32rem),
+            linear-gradient(180deg, #050816 0%, #07111d 46%, #0d1b2a 100%);
           overflow: hidden;
         }
 
+        .nav,
         .hero,
         .features-section,
+        .workflow-section,
         .integration-section {
-          width: min(1120px, calc(100% - 32px));
+          width: min(1180px, calc(100% - 40px));
           margin: 0 auto;
         }
 
-        .hero {
-          padding: 28px 0 80px;
-        }
-
-        .nav,
-        .nav-links,
-        .actions,
-        .status-pill,
-        .card-header,
-        .timeline-row,
-        .integration-section,
-        .env-card {
+        .nav {
+          padding: 22px 0;
           display: flex;
           align-items: center;
-        }
-
-        .nav {
           justify-content: space-between;
-          margin-bottom: 88px;
+          gap: 18px;
         }
 
         .brand,
         .nav a,
-        .actions a {
+        .actions a,
+        .nav-button {
           color: inherit;
           text-decoration: none;
         }
 
-        .brand {
-          font-weight: 900;
-          letter-spacing: -0.04em;
-          font-size: 1.25rem;
+        .nav-links,
+        .actions,
+        .status-pill,
+        .workflow-section,
+        .integration-section {
+          display: flex;
+          align-items: center;
         }
 
         .nav-links {
-          gap: 22px;
-          color: #cbd5e1;
-          font-size: 0.95rem;
+          gap: 14px;
+          color: #b6c6d8;
+          font-size: 0.9rem;
+          font-weight: 800;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .nav-button,
+        .primary {
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: linear-gradient(135deg, #f7c873, #e88d4a 52%, #b45cff);
+          color: #07111d;
+          font-weight: 900;
+          box-shadow: 0 20px 56px rgba(232, 141, 74, 0.28);
+        }
+
+        .nav-button {
+          padding: 12px 20px;
+        }
+
+        .hero {
+          padding: 48px 0 76px;
         }
 
         .hero-grid {
           display: grid;
-          grid-template-columns: 1.05fr 0.95fr;
-          gap: 48px;
+          grid-template-columns: 0.95fr 0.72fr;
+          gap: 52px;
           align-items: center;
         }
 
+        .pill,
         .eyebrow {
-          margin: 0 0 14px;
-          color: #60a5fa;
-          font-size: 0.82rem;
-          font-weight: 800;
-          letter-spacing: 0.18em;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #f7c873;
+          font-size: 0.78rem;
+          font-weight: 950;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
         }
 
-        .centered {
-          text-align: center;
+        .pill {
+          border: 1px solid rgba(247, 200, 115, 0.24);
+          border-radius: 999px;
+          padding: 9px 14px;
+          background: rgba(255, 255, 255, 0.07);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+          backdrop-filter: blur(18px);
         }
 
         h1,
@@ -219,55 +274,53 @@ export default function Features() {
         }
 
         h1 {
-          margin-bottom: 24px;
-          font-size: clamp(3rem, 7vw, 5.9rem);
-          line-height: 0.92;
-          letter-spacing: -0.07em;
-          max-width: 760px;
+          margin: 24px 0;
+          font-size: clamp(3.4rem, 8vw, 7.2rem);
+          line-height: 0.88;
+          letter-spacing: -0.085em;
+          color: #ffffff;
         }
 
         h2 {
-          font-size: clamp(2rem, 4vw, 3.4rem);
-          line-height: 1;
-          letter-spacing: -0.055em;
-          margin-bottom: 34px;
+          margin: 12px 0 16px;
+          font-size: clamp(2.2rem, 5vw, 4.6rem);
+          line-height: 0.94;
+          letter-spacing: -0.075em;
+          color: #ffffff;
         }
 
         .hero-copy,
+        .section-heading p,
+        .workflow-section p,
         .integration-section p {
-          color: #cbd5e1;
-          font-size: 1.1rem;
+          color: #b6c6d8;
+          font-size: 1.08rem;
           line-height: 1.75;
-          max-width: 670px;
         }
 
         .actions {
-          gap: 14px;
+          gap: 12px;
           flex-wrap: wrap;
-          margin: 34px 0 18px;
+          margin: 28px 0 18px;
         }
 
         .primary,
         .secondary {
-          border-radius: 999px;
-          padding: 15px 24px;
-          font-weight: 800;
-        }
-
-        .primary {
-          background: linear-gradient(135deg, #3b82f6, #ec4899);
-          box-shadow: 0 18px 45px rgba(59, 130, 246, 0.32);
+          padding: 15px 22px;
+          font-weight: 900;
         }
 
         .secondary {
-          border: 1px solid rgba(148, 163, 184, 0.35);
-          color: #e2e8f0;
+          border: 1px solid rgba(247, 200, 115, 0.24);
+          border-radius: 999px;
+          color: #f7c873;
+          background: rgba(255, 255, 255, 0.07);
         }
 
         .status-pill {
           gap: 10px;
-          color: #cbd5e1;
-          font-size: 0.92rem;
+          color: #b6c6d8;
+          font-weight: 850;
         }
 
         .dot {
@@ -275,68 +328,23 @@ export default function Features() {
           height: 10px;
           border-radius: 999px;
           background: #f59e0b;
-          box-shadow: 0 0 24px rgba(245, 158, 11, 0.9);
+          box-shadow: 0 0 24px rgba(245, 158, 11, 0.8);
         }
 
         .dot.online {
-          background: #34d399;
-          box-shadow: 0 0 24px rgba(52, 211, 153, 0.9);
+          background: #2f8f75;
+          box-shadow: 0 0 24px rgba(47, 143, 117, 0.8);
         }
 
-        .hero-card,
-        .feature-card,
+        .features-section,
+        .workflow-section,
         .integration-section {
-          background: rgba(15, 23, 42, 0.74);
-          border: 1px solid rgba(148, 163, 184, 0.22);
-          box-shadow: 0 24px 90px rgba(2, 6, 23, 0.32);
-          backdrop-filter: blur(18px);
+          padding: 74px 0;
         }
 
-        .hero-card {
-          border-radius: 32px;
-          padding: 28px;
-          transform: rotate(1.5deg);
-        }
-
-        .card-header {
-          justify-content: space-between;
-          color: #94a3b8;
-          margin-bottom: 26px;
-        }
-
-        .card-header strong {
-          color: #f8fafc;
-        }
-
-        .timeline-row {
-          gap: 16px;
-          padding: 18px;
-          margin-top: 14px;
-          border-radius: 20px;
-          background: rgba(30, 41, 59, 0.75);
-        }
-
-        .timeline-row span,
-        .icon {
-          display: grid;
-          place-items: center;
-          flex: 0 0 auto;
-          width: 42px;
-          height: 42px;
-          border-radius: 14px;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(236, 72, 153, 0.28));
-          color: #bfdbfe;
-          font-weight: 900;
-        }
-
-        .timeline-row p {
-          margin: 0;
-          color: #e2e8f0;
-          line-height: 1.5;
-        }
-
-        .features-section {
-          padding: 30px 0 80px;
+        .section-heading {
+          max-width: 850px;
+          margin: 0 auto 34px;
           text-align: center;
         }
 
@@ -344,89 +352,113 @@ export default function Features() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 18px;
-          text-align: left;
+        }
+
+        .feature-card,
+        .workflow-section,
+        .integration-section,
+        .timeline-row {
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.045));
+          box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+          backdrop-filter: blur(18px);
         }
 
         .feature-card {
-          border-radius: 24px;
-          padding: 26px;
-          transition: transform 180ms ease, border-color 180ms ease;
-        }
-
-        .feature-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(96, 165, 250, 0.55);
-        }
-
-        .feature-card h3 {
-          margin: 18px 0 10px;
-          font-size: 1.18rem;
-        }
-
-        .feature-card p {
-          margin: 0;
-          color: #cbd5e1;
-          line-height: 1.65;
-        }
-
-        .integration-section {
-          justify-content: space-between;
-          gap: 26px;
           border-radius: 30px;
+          padding: 26px;
+        }
+
+        .icon,
+        .timeline-row strong {
+          width: 52px;
+          height: 52px;
+          border-radius: 18px;
+          display: grid;
+          place-items: center;
+          background: rgba(247, 200, 115, 0.13);
+          color: #f7c873;
+        }
+
+        .feature-card p,
+        .timeline-row small {
+          color: #b6c6d8;
+          line-height: 1.62;
+        }
+
+        .workflow-section,
+        .integration-section {
+          border-radius: 42px;
           padding: 34px;
-          margin-bottom: 70px;
+          gap: 30px;
+          align-items: center;
         }
 
-        .integration-section h2 {
-          margin-bottom: 16px;
+        .workflow-section > div:first-child,
+        .integration-section > div:first-child {
+          flex: 1 1 0;
         }
 
-        .integration-section p {
-          margin-bottom: 0;
-        }
-
+        .timeline,
         .env-card {
-          align-items: stretch;
-          flex-direction: column;
+          display: grid;
           gap: 12px;
-          min-width: 310px;
+          flex: 0 0 min(430px, 100%);
+        }
+
+        .timeline-row {
+          border-radius: 24px;
+          padding: 14px;
+          display: flex;
+          gap: 14px;
+          align-items: center;
+          box-shadow: none;
+        }
+
+        .timeline-row span {
+          display: grid;
+          gap: 4px;
+        }
+
+        .timeline-row b,
+        .feature-card h3 {
+          color: #ffffff;
+        }
+
+        .timeline-row small {
+          display: block;
         }
 
         code {
           display: block;
           padding: 14px 16px;
-          border-radius: 14px;
-          background: rgba(2, 6, 23, 0.75);
-          color: #93c5fd;
-          border: 1px solid rgba(148, 163, 184, 0.18);
+          border-radius: 16px;
+          background: rgba(5, 8, 22, 0.72);
+          color: #dbeafe;
+          font-size: 0.9rem;
         }
 
-        @media (max-width: 860px) {
-          .nav {
-            margin-bottom: 56px;
-          }
-
-          .nav-links {
-            display: none;
-          }
-
+        @media (max-width: 980px) {
           .hero-grid,
           .feature-grid {
             grid-template-columns: 1fr;
           }
 
-          .hero-card {
-            transform: none;
-          }
-
+          .workflow-section,
           .integration-section {
             flex-direction: column;
             align-items: flex-start;
           }
+        }
 
-          .env-card {
-            min-width: 0;
-            width: 100%;
+        @media (max-width: 700px) {
+          .nav-links,
+          .nav-button {
+            display: none;
+          }
+
+          h1 {
+            font-size: clamp(3rem, 15vw, 5rem);
           }
         }
       `}</style>

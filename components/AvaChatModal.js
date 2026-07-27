@@ -3,9 +3,9 @@ import { Send, X } from 'lucide-react';
 import AvaSkyeVisual from './AvaSkyeVisual';
 
 const starters = [
-  'Build me a launch plan',
-  'Write a 7-day email sequence',
-  'Improve my offer positioning',
+  'Give me a launch plan',
+  'Write my 7-day email flow',
+  'Sharpen my offer in plain English',
 ];
 
 export default function AvaChatModal() {
@@ -15,7 +15,7 @@ export default function AvaChatModal() {
     {
       role: 'assistant',
       content:
-        'I am Ava Skye, your DigiMark101 AI Chief of Staff. Ask me to plan a campaign, funnel, content system, or lead-generation sprint.',
+        "Hi, I'm Ava Skye. Tell me what you sell and who you want to reach, and I'll turn it into a clear campaign, funnel, or follow-up plan.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ export default function AvaChatModal() {
         <span className="launcher-orb"><AvaSkyeVisual compact /></span>
         <span>
           Ask Ava
-          <small>AI Gateway online</small>
+          <small>Human-feeling strategy help</small>
         </span>
       </button>
 
@@ -70,7 +70,7 @@ export default function AvaChatModal() {
               <div className="avatar"><AvaSkyeVisual compact /></div>
               <div>
                 <strong>Ava Skye</strong>
-                <span>Powered by Vercel AI Gateway</span>
+                <span>Your DigiMark101 growth strategist</span>
               </div>
               <button className="close" onClick={() => setOpen(false)} aria-label="Close Ava chat">
                 <X size={18} />
@@ -103,7 +103,7 @@ export default function AvaChatModal() {
               <input
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder="Ask Ava to build your next growth move..."
+                placeholder="Tell Ava what you want to grow..."
                 aria-label="Message Ava"
               />
               <button type="submit" disabled={loading || !input.trim()} aria-label="Send message">
@@ -120,15 +120,15 @@ export default function AvaChatModal() {
           right: 22px;
           bottom: 22px;
           z-index: 40;
-          border: 1px solid rgba(192, 132, 252, 0.38);
+          border: 1px solid rgba(63, 114, 130, 0.22);
           border-radius: 999px;
           padding: 10px 16px 10px 10px;
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          color: #fff;
-          background: rgba(15, 23, 42, 0.9);
-          box-shadow: 0 24px 70px rgba(79, 70, 229, 0.42);
+          color: #122f3c;
+          background: rgba(244, 248, 249, 0.94);
+          box-shadow: 0 24px 70px rgba(35, 76, 92, 0.2);
           backdrop-filter: blur(18px);
           cursor: pointer;
           font-weight: 900;
@@ -138,21 +138,21 @@ export default function AvaChatModal() {
         .avatar {
           display: grid;
           place-items: center;
-          color: #fff;
+          color: #122f3c;
         }
 
         .launcher-orb {
           width: 46px;
           height: 46px;
           border-radius: 999px;
-          box-shadow: 0 0 32px rgba(168, 85, 247, 0.65);
+          box-shadow: 0 0 32px rgba(63, 114, 130, 0.28);
           overflow: hidden;
         }
 
         .launcher small,
         header span {
           display: block;
-          color: #c4b5fd;
+          color: #3f7282;
           font-size: 0.72rem;
           font-weight: 800;
           margin-top: 2px;
@@ -165,7 +165,7 @@ export default function AvaChatModal() {
           display: grid;
           place-items: end;
           padding: 24px;
-          background: rgba(2, 6, 23, 0.44);
+          background: rgba(16, 42, 54, 0.24);
           backdrop-filter: blur(8px);
         }
 
@@ -175,10 +175,10 @@ export default function AvaChatModal() {
           border: 1px solid rgba(148, 163, 184, 0.24);
           border-radius: 28px;
           background:
-            radial-gradient(circle at 25% 0%, rgba(99, 102, 241, 0.22), transparent 18rem),
-            rgba(15, 23, 42, 0.96);
-          box-shadow: 0 30px 110px rgba(2, 6, 23, 0.72);
-          color: #fff;
+            radial-gradient(circle at 25% 0%, rgba(95, 142, 160, 0.2), transparent 18rem),
+            rgba(244, 248, 249, 0.98);
+          box-shadow: 0 30px 110px rgba(35, 76, 92, 0.22);
+          color: #122f3c;
         }
 
         header {
@@ -186,7 +186,7 @@ export default function AvaChatModal() {
           align-items: center;
           gap: 12px;
           padding: 18px;
-          border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+          border-bottom: 1px solid rgba(63, 114, 130, 0.16);
         }
 
         .avatar {
@@ -204,8 +204,8 @@ export default function AvaChatModal() {
           border-radius: 999px;
           display: grid;
           place-items: center;
-          color: #cbd5e1;
-          background: rgba(30, 41, 59, 0.9);
+          color: #456775;
+          background: rgba(215, 233, 238, 0.9);
           cursor: pointer;
         }
 
@@ -222,7 +222,7 @@ export default function AvaChatModal() {
           max-width: 88%;
           border-radius: 18px;
           padding: 12px 14px;
-          color: #e2e8f0;
+          color: #173543;
           line-height: 1.5;
           font-size: 0.92rem;
           white-space: pre-wrap;
@@ -231,17 +231,17 @@ export default function AvaChatModal() {
         .assistant {
           align-self: flex-start;
           border: 1px solid rgba(148, 163, 184, 0.18);
-          background: rgba(30, 41, 59, 0.86);
+          background: rgba(255, 255, 255, 0.78);
         }
 
         .user {
           align-self: flex-end;
-          background: linear-gradient(135deg, #4f46e5, #a855f7);
-          color: #fff;
+          background: linear-gradient(135deg, #234c5c, #5f8ea0);
+          color: #ffffff;
         }
 
         .loading {
-          color: #c4b5fd;
+          color: #3f7282;
         }
 
         .starters {
@@ -253,10 +253,10 @@ export default function AvaChatModal() {
 
         .starters button {
           flex: 0 0 auto;
-          border: 1px solid rgba(129, 140, 248, 0.28);
+          border: 1px solid rgba(63, 114, 130, 0.22);
           border-radius: 999px;
-          background: rgba(79, 70, 229, 0.14);
-          color: #c4b5fd;
+          background: rgba(255, 255, 255, 0.7);
+          color: #3f7282;
           padding: 8px 10px;
           cursor: pointer;
           font-size: 0.76rem;
@@ -267,15 +267,15 @@ export default function AvaChatModal() {
           display: flex;
           gap: 10px;
           padding: 16px;
-          border-top: 1px solid rgba(148, 163, 184, 0.16);
+          border-top: 1px solid rgba(63, 114, 130, 0.16);
         }
 
         input {
           width: 100%;
-          border: 1px solid rgba(148, 163, 184, 0.2);
+          border: 1px solid rgba(63, 114, 130, 0.2);
           border-radius: 999px;
-          background: rgba(2, 6, 23, 0.64);
-          color: #fff;
+          background: rgba(255, 255, 255, 0.74);
+          color: #122f3c;
           min-height: 46px;
           padding: 0 15px;
           outline: none;
@@ -289,8 +289,8 @@ export default function AvaChatModal() {
           border-radius: 999px;
           display: grid;
           place-items: center;
-          color: #fff;
-          background: linear-gradient(135deg, #6366f1, #a855f7);
+          color: #ffffff;
+          background: linear-gradient(135deg, #234c5c, #5f8ea0);
           cursor: pointer;
         }
 
