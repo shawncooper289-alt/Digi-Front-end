@@ -25,7 +25,7 @@ const seatTiers = [
     seats: '1 seat',
     price: '$97/mo',
     icon: Users,
-    description: 'Launch a polished AI marketing command center for one founder or creator.',
+    description: 'Launch a premium AI marketing command center for one founder or creator.',
     highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates'],
   },
   {
@@ -34,7 +34,7 @@ const seatTiers = [
     seats: '3 seats',
     price: '$297/mo',
     icon: Rocket,
-    description: 'Run daily acquisition, content, email, and follow-up systems as a team.',
+    description: 'Run acquisition, content, email, and follow-up systems with a focused growth team.',
     highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Supabase-backed onboarding'],
     featured: true,
   },
@@ -44,7 +44,7 @@ const seatTiers = [
     seats: '10 seats',
     price: '$997/mo',
     icon: Crown,
-    description: 'Operate a client-ready acquisition and delivery hub with Ava at the center.',
+    description: 'Operate a cinematic client-ready acquisition hub with Ava at the center.',
     highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff'],
   },
 ];
@@ -63,18 +63,18 @@ const operatingSystem = [
   {
     icon: Bot,
     title: 'Ava Skye Assistant',
-    copy: 'Ava Skye guides the next best move across every growth workflow as a professional AI marketing strategist.',
+    copy: 'Ava guides the next best move across every growth workflow as a professional AI marketing strategist.',
   },
   {
     icon: Database,
-    title: 'Supabase Backend',
+    title: 'Connected Backend',
     copy: 'Leads and purchase handoffs connect to Supabase tables without exposing service keys.',
   },
 ];
 
 const dashboardCards = [
   ['Campaigns', '12 active', '+28% pipeline'],
-  ['Lead Capture', 'Supabase live', 'Realtime ready'],
+  ['Lead Capture', 'Live intake', 'Realtime ready'],
   ['Email Flow', '7-day sequence', 'Ava drafted'],
   ['Growth Score', '91%', 'Ready to scale'],
 ];
@@ -167,7 +167,7 @@ export default function LandingPage() {
         <title>DigiMark101 | Ava Skye AI Marketing OS</title>
         <meta
           name="description"
-          content="DigiMark101 is a Base44-inspired AI marketing frontend powered by Ava Skye and connected to a Supabase backend."
+          content="DigiMark101 is a cinematic AI marketing command center powered by Ava Skye and connected to a secure Supabase backend."
         />
       </Head>
 
@@ -189,14 +189,14 @@ export default function LandingPage() {
 
         <section className="hero">
           <div className="hero-copy-panel">
-            <span className="pill"><Sparkles size={15} /> Base44-style DigiMark101 frontend</span>
+            <span className="pill"><Sparkles size={15} /> Cinematic AI growth studio</span>
             <h1>
-              AI marketing that feels personal, polished, and ready to sell.
+              Premium marketing strategy, guided by Ava Skye.
             </h1>
             <p>
-              Ava Skye introduces DigiMark101 as a polished AI marketing strategist for campaigns, funnels,
-              content, lead capture, and customer acquisition. The frontend is now styled like a modern
-              Base44 product experience while keeping Supabase as the backend layer.
+              DigiMark101 brings campaigns, funnels, content, lead capture, and client acquisition into one
+              polished command center. Ava Skye gives every visitor the feel of a high-end strategist ready to
+              plan the next revenue move.
             </p>
 
             <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
@@ -215,8 +215,8 @@ export default function LandingPage() {
             {message && <p className="message">{message}</p>}
 
             <div className="trust-row" aria-label="Platform highlights">
-              <span><CheckCircle2 size={16} /> Professional Ava Skye</span>
-              <span><CheckCircle2 size={16} /> Supabase connected</span>
+              <span><CheckCircle2 size={16} /> Cinematic Ava Skye</span>
+              <span><CheckCircle2 size={16} /> Secure lead capture</span>
               <span><CheckCircle2 size={16} /> Vercel deployed</span>
             </div>
           </div>
@@ -229,9 +229,10 @@ export default function LandingPage() {
         <section id="platform" className="section platform-section">
           <div className="section-heading">
             <span className="eyebrow">DigiMark101 Operating System</span>
-            <h2>Every Base44-style page section now points to the same growth command center.</h2>
+            <h2>A premium growth command center built around one strategic AI guide.</h2>
             <p>
-              The frontend presents a full product experience, and the live forms still hand data to Supabase.
+              Every section is designed to look polished, focused, and ready for conversion while the live forms
+              still hand data to the connected backend.
             </p>
           </div>
 
@@ -253,10 +254,10 @@ export default function LandingPage() {
           <div className="dashboard-panel">
             <div>
               <span className="eyebrow">Command Dashboard</span>
-              <h2>A polished growth workspace for campaigns, leads, and client acquisition.</h2>
+              <h2>Campaigns, leads, and revenue actions presented like a premium workspace.</h2>
               <p>
-                This mirrors the Base44 product-page feel: clear cards, soft gradients, Ava Skye guidance,
-                and conversion-focused actions backed by the Supabase tables already wired into the app.
+                Clean cards, strong contrast, soft light, and direct calls to action keep the site feeling like a
+                high-end product instead of a template.
               </p>
             </div>
             <div className="dashboard-card-grid">
@@ -273,12 +274,12 @@ export default function LandingPage() {
 
         <section className="section backend-section">
           <div className="backend-copy">
-            <span className="eyebrow">Supabase backend</span>
-            <h2>Base44-inspired frontend. Supabase-powered data layer.</h2>
+            <span className="eyebrow">Backend ready</span>
+            <h2>Connected forms, clean handoffs, and protected service keys.</h2>
             <p>
               Lead capture writes to the <strong>leads</strong> table. Seat-tier purchase handoffs post through
-              <strong> /api/purchase</strong> and save to <strong>purchase_handoffs</strong>. Public Supabase browser
-              keys stay in environment variables, while service-role keys remain out of the frontend.
+              <strong> /api/purchase</strong> and save to <strong>purchase_handoffs</strong>. Public browser keys stay
+              in environment variables, while service-role keys remain out of the frontend.
             </p>
           </div>
           <div className="backend-stack" aria-label="Supabase connection requirements">
@@ -291,7 +292,7 @@ export default function LandingPage() {
         <section className="section pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
           <div className="section-heading">
             <span className="eyebrow">Choose seats</span>
-            <h2>Select a plan and enter the Supabase purchase handoff flow.</h2>
+            <h2>Select the growth seat package that matches your next launch.</h2>
             <p>
               Each selection is saved so the backend knows the buyer, package, and onboarding path.
             </p>
@@ -348,10 +349,10 @@ export default function LandingPage() {
 
         <section className="section closing-section">
           <BarChart3 size={28} />
-          <h2>Ava Skye is the professional AI face of the DigiMark101 growth system.</h2>
+          <h2>Ava Skye gives DigiMark101 a memorable, premium AI identity.</h2>
           <p>
-            Visitors see a clean Base44-style website. Underneath, Vercel serves the frontend,
-            Supabase receives the data, and Ava Skye guides the marketing workflow.
+            Visitors meet a cinematic strategist, the frontend stays fast on Vercel, and every conversion path
+            stays connected to the backend workflow.
           </p>
         </section>
       </main>
@@ -365,8 +366,8 @@ export default function LandingPage() {
 
         :global(body) {
           margin: 0;
-          background: #eef5f7;
-          color: #102a36;
+          background: #07111d;
+          color: #f8fafc;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
@@ -374,19 +375,33 @@ export default function LandingPage() {
           min-height: 100vh;
           overflow: hidden;
           background:
-            radial-gradient(circle at 12% 8%, rgba(104, 157, 174, 0.32), transparent 28rem),
-            radial-gradient(circle at 84% 20%, rgba(217, 197, 174, 0.32), transparent 26rem),
-            linear-gradient(180deg, #f4f8f9 0%, #e7f0f3 46%, #dce9ed 100%);
+            radial-gradient(circle at 16% 8%, rgba(255, 214, 167, 0.18), transparent 28rem),
+            radial-gradient(circle at 84% 16%, rgba(83, 166, 255, 0.18), transparent 32rem),
+            linear-gradient(180deg, #050816 0%, #07111d 46%, #0d1b2a 100%);
+        }
+
+        .site-shell::before {
+          content: '';
+          position: fixed;
+          inset: 0;
+          pointer-events: none;
+          background:
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+          background-size: 82px 82px;
+          mask-image: radial-gradient(circle at 50% 20%, black, transparent 72%);
         }
 
         .nav {
           width: min(1180px, calc(100% - 40px));
           margin: 0 auto;
-          padding: 22px 0;
+          padding: 24px 0;
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 18px;
+          position: relative;
+          z-index: 1;
         }
 
         .brand,
@@ -399,7 +414,7 @@ export default function LandingPage() {
         .nav-links {
           display: flex;
           gap: 24px;
-          color: #456775;
+          color: #b6c6d8;
           font-weight: 750;
         }
 
@@ -412,11 +427,11 @@ export default function LandingPage() {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          background: #234c5c;
-          color: #fff;
-          font-weight: 900;
+          background: linear-gradient(135deg, #f7c873, #e88d4a 52%, #b45cff);
+          color: #07111d;
+          font-weight: 950;
           cursor: pointer;
-          box-shadow: 0 18px 38px rgba(35, 76, 92, 0.22);
+          box-shadow: 0 20px 56px rgba(232, 141, 74, 0.28);
         }
 
         .nav-button {
@@ -427,15 +442,17 @@ export default function LandingPage() {
         .section {
           width: min(1180px, calc(100% - 40px));
           margin: 0 auto;
+          position: relative;
+          z-index: 1;
         }
 
         .hero {
-          min-height: calc(100vh - 92px);
+          min-height: calc(100vh - 96px);
           display: grid;
           grid-template-columns: 0.92fr 0.78fr;
           align-items: center;
-          gap: 52px;
-          padding: 28px 0 72px;
+          gap: 56px;
+          padding: 30px 0 78px;
         }
 
         .pill,
@@ -443,7 +460,7 @@ export default function LandingPage() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          color: #3f7282;
+          color: #f7c873;
           font-size: 0.78rem;
           font-weight: 950;
           letter-spacing: 0.16em;
@@ -451,11 +468,12 @@ export default function LandingPage() {
         }
 
         .pill {
-          border: 1px solid rgba(63, 114, 130, 0.2);
+          border: 1px solid rgba(247, 200, 115, 0.24);
           border-radius: 999px;
           padding: 9px 14px;
-          background: rgba(255, 255, 255, 0.58);
-          box-shadow: 0 18px 44px rgba(35, 76, 92, 0.08);
+          background: rgba(255, 255, 255, 0.07);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+          backdrop-filter: blur(18px);
         }
 
         h1,
@@ -467,24 +485,26 @@ export default function LandingPage() {
 
         h1 {
           margin: 24px 0;
-          font-size: clamp(3.6rem, 8vw, 7.6rem);
+          font-size: clamp(3.6rem, 8vw, 7.4rem);
           line-height: 0.88;
           letter-spacing: -0.085em;
-          color: #122f3c;
+          color: #ffffff;
+          text-shadow: 0 28px 80px rgba(0,0,0,0.42);
         }
 
         h2 {
           margin: 12px 0 16px;
-          font-size: clamp(2.2rem, 5vw, 4.6rem);
+          font-size: clamp(2.2rem, 5vw, 4.4rem);
           line-height: 0.94;
           letter-spacing: -0.075em;
-          color: #122f3c;
+          color: #ffffff;
         }
 
         h3 {
           margin-bottom: 10px;
           font-size: 1.2rem;
           letter-spacing: -0.035em;
+          color: #ffffff;
         }
 
         .hero-copy-panel p,
@@ -492,7 +512,7 @@ export default function LandingPage() {
         .dashboard-panel p,
         .backend-copy p,
         .closing-section p {
-          color: #456775;
+          color: #b6c6d8;
           font-size: 1.08rem;
           line-height: 1.75;
         }
@@ -504,10 +524,11 @@ export default function LandingPage() {
           display: grid;
           grid-template-columns: 1fr auto;
           gap: 8px;
-          border: 1px solid rgba(63, 114, 130, 0.18);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.74);
-          box-shadow: 0 24px 70px rgba(35, 76, 92, 0.12);
+          background: rgba(255, 255, 255, 0.08);
+          box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+          backdrop-filter: blur(20px);
         }
 
         .lead-form input,
@@ -516,9 +537,14 @@ export default function LandingPage() {
           border: 0;
           outline: none;
           background: transparent;
-          color: #122f3c;
+          color: #ffffff;
           padding: 0 18px;
           font: inherit;
+        }
+
+        .lead-form input::placeholder,
+        .purchase-form input::placeholder {
+          color: #8ea1b7;
         }
 
         .lead-form button,
@@ -534,7 +560,7 @@ export default function LandingPage() {
 
         .message,
         .purchase-message {
-          color: #2f6f7f;
+          color: #f7c873;
           font-weight: 850;
         }
 
@@ -542,7 +568,7 @@ export default function LandingPage() {
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
-          color: #456775;
+          color: #dbe7f5;
           font-size: 0.92rem;
           font-weight: 850;
         }
@@ -554,7 +580,7 @@ export default function LandingPage() {
         }
 
         .trust-row :global(svg) {
-          color: #2f8f75;
+          color: #65d6ad;
         }
 
         .ava-stage {
@@ -589,10 +615,10 @@ export default function LandingPage() {
         .purchase-form,
         .closing-section,
         .dashboard-panel {
-          border: 1px solid rgba(63, 114, 130, 0.16);
-          background: rgba(255, 255, 255, 0.68);
-          box-shadow: 0 24px 80px rgba(35, 76, 92, 0.11);
-          backdrop-filter: blur(18px);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.045));
+          box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+          backdrop-filter: blur(22px);
         }
 
         .module-card {
@@ -608,8 +634,8 @@ export default function LandingPage() {
           border-radius: 18px;
           display: grid;
           place-items: center;
-          background: #d7e9ee;
-          color: #234c5c;
+          background: rgba(247, 200, 115, 0.13);
+          color: #f7c873;
         }
 
         .module-card p,
@@ -617,7 +643,7 @@ export default function LandingPage() {
         .tier-seats,
         .tier-list,
         .metric-card small {
-          color: #52717c;
+          color: #b6c6d8;
           line-height: 1.62;
         }
 
@@ -637,12 +663,12 @@ export default function LandingPage() {
         .metric-card {
           border-radius: 28px;
           padding: 24px;
-          background: rgba(255, 255, 255, 0.78);
+          background: rgba(255, 255, 255, 0.075);
         }
 
         .metric-card span,
         .tier-name {
-          color: #3f7282;
+          color: #f7c873;
           font-weight: 950;
         }
 
@@ -651,6 +677,7 @@ export default function LandingPage() {
           margin: 12px 0 6px;
           font-size: 2rem;
           letter-spacing: -0.06em;
+          color: #ffffff;
         }
 
         .backend-section {
@@ -672,8 +699,8 @@ export default function LandingPage() {
           display: block;
           padding: 14px 16px;
           border-radius: 16px;
-          background: #173543;
-          color: #dff5fb;
+          background: rgba(5, 8, 22, 0.72);
+          color: #dbeafe;
           font-size: 0.9rem;
         }
 
@@ -689,17 +716,15 @@ export default function LandingPage() {
           flex-direction: column;
           align-items: flex-start;
           gap: 10px;
-          color: #122f3c;
+          color: #ffffff;
           text-align: left;
           cursor: pointer;
-          transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
         }
 
         .tier-card:hover,
         .tier-card.active {
-          transform: translateY(-5px);
-          border-color: rgba(35, 76, 92, 0.38);
-          box-shadow: 0 28px 90px rgba(35, 76, 92, 0.18);
+          border-color: rgba(247, 200, 115, 0.48);
+          box-shadow: 0 28px 90px rgba(232, 141, 74, 0.18);
         }
 
         .tier-card.featured::after {
@@ -709,8 +734,8 @@ export default function LandingPage() {
           right: 18px;
           border-radius: 999px;
           padding: 7px 10px;
-          background: #234c5c;
-          color: #fff;
+          background: #f7c873;
+          color: #07111d;
           font-size: 0.68rem;
           font-weight: 950;
           letter-spacing: 0.08em;
@@ -753,7 +778,7 @@ export default function LandingPage() {
         }
 
         .purchase-form div span {
-          color: #52717c;
+          color: #8ea1b7;
           font-size: 0.85rem;
           font-weight: 850;
         }

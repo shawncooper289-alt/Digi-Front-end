@@ -18,8 +18,8 @@ export default function AvaSkyeVisual({ compact = false }) {
             display: block;
             overflow: hidden;
             border-radius: 999px;
-            background: linear-gradient(145deg, #d9eef5, #234c5c 72%);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.52), 0 18px 44px rgba(35, 76, 92, 0.28);
+            background: linear-gradient(145deg, #f7c873, #111827 72%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.52), 0 18px 44px rgba(0, 0, 0, 0.34);
           }
 
           .mini-hair {
@@ -84,8 +84,10 @@ export default function AvaSkyeVisual({ compact = false }) {
             </filter>
           </defs>
 
-          <rect width="980" height="1320" rx="48" fill="url(#officeWindow)" />
-          <path d="M0 0 H980 V1320 H0 Z" fill="#ffffff" opacity="0.18" />
+          <rect width="980" height="1320" rx="48" fill="#050816" />
+          <rect width="980" height="1320" rx="48" fill="url(#officeWindow)" opacity="0.58" />
+          <path d="M0 0 H980 V1320 H0 Z" fill="#000000" opacity="0.18" />
+          <circle cx="690" cy="212" r="310" fill="#f7c873" opacity="0.16" />
           <path d="M116 0 V760 M498 0 V698 M830 0 V1320" stroke="#f8fafc" strokeWidth="16" opacity="0.42" />
           <path d="M0 342 H980 M0 632 H980" stroke="#f8fafc" strokeWidth="12" opacity="0.24" />
 
@@ -135,8 +137,8 @@ export default function AvaSkyeVisual({ compact = false }) {
 
       <div className="ava-copy">
         <span>Meet Ava Skye</span>
-        <strong>Professional AI marketing strategist for DigiMark101</strong>
-        <p>Ava Skye keeps the same face and dark wavy hair across DigiMark101. Her business suit can vary for cinematic videos and ads, but her identity stays consistent.</p>
+        <strong>Cinematic AI strategist for DigiMark101</strong>
+        <p>Ava Skye presents the brand with a premium, confident cinematic look built for campaigns, funnels, and client acquisition.</p>
       </div>
 
       <style jsx>{`
@@ -146,8 +148,8 @@ export default function AvaSkyeVisual({ compact = false }) {
           border: 1px solid rgba(226, 232, 240, 0.28);
           border-radius: 34px;
           padding: 14px;
-          background: linear-gradient(145deg, rgba(35, 67, 83, 0.96), rgba(15, 23, 42, 0.86));
-          box-shadow: 0 34px 120px rgba(2, 6, 23, 0.52), 0 0 80px rgba(95, 142, 160, 0.18);
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(5, 8, 22, 0.88));
+          box-shadow: 0 34px 120px rgba(0, 0, 0, 0.58), 0 0 90px rgba(247, 200, 115, 0.18);
           backdrop-filter: blur(22px);
           color: #ffffff;
         }
@@ -155,7 +157,7 @@ export default function AvaSkyeVisual({ compact = false }) {
         .portrait-frame {
           overflow: hidden;
           border-radius: 26px;
-          background: #d9eef5;
+          background: #050816;
         }
 
         svg {
@@ -170,7 +172,7 @@ export default function AvaSkyeVisual({ compact = false }) {
 
         .ava-copy span {
           display: block;
-          color: #bae6fd;
+          color: #f7c873;
           font-size: 0.78rem;
           font-weight: 950;
           letter-spacing: 0.16em;
@@ -188,7 +190,7 @@ export default function AvaSkyeVisual({ compact = false }) {
 
         .ava-copy p {
           margin: 12px 0 0;
-          color: #dbeafe;
+          color: #c9d7e8;
           line-height: 1.65;
         }
       `}</style>

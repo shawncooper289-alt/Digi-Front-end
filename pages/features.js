@@ -33,7 +33,7 @@ const features = [
   },
   {
     title: 'Growth Dashboard',
-    description: 'Present a clean Base44-style workspace for activity, funnel status, and next actions.',
+    description: 'Present a clean premium growth workspace for activity, funnel status, and next actions.',
     icon: MonitorSmartphone,
   },
 ];
@@ -52,7 +52,7 @@ export default function Features() {
         <title>Features | DigiMark101</title>
         <meta
           name="description"
-          content="Base44-inspired DigiMark101 features powered by Ava Skye and connected to Supabase."
+          content="Cinematic DigiMark101 features powered by Ava Skye and connected to Supabase."
         />
       </Head>
 
@@ -72,9 +72,9 @@ export default function Features() {
           <div className="hero-grid">
             <div>
               <span className="pill"><CalendarDays size={15} /> Ava Skye + Supabase</span>
-              <h1>All the Base44-style pages point to one AI growth system.</h1>
+              <h1>Every premium page points to one AI growth system.</h1>
               <p className="hero-copy">
-                DigiMark101 now reads like a full product website: professional Ava Skye intro, feature cards,
+                DigiMark101 now reads like a polished product website: cinematic Ava Skye intro, feature cards,
                 command dashboard, backend status, and purchase flow. Supabase remains the connected backend.
               </p>
               <div className="actions">
@@ -114,8 +114,8 @@ export default function Features() {
             <span className="eyebrow">Growth workflow</span>
             <h2>From visitor to campaign launch, the frontend stays connected to Supabase.</h2>
             <p>
-              The old Base44-style experience is now represented as a Vercel-hosted frontend with the data layer
-              moved to Supabase. Ava Skye remains the strategic guide inside the same DigiMark101 project.
+              The experience is now represented as a Vercel-hosted frontend with the data layer
+              connected to Supabase. Ava Skye remains the strategic guide inside the same DigiMark101 project.
             </p>
           </div>
           <div className="timeline">
@@ -134,7 +134,7 @@ export default function Features() {
         <section className="integration-section">
           <div>
             <span className="eyebrow">Backend ready</span>
-            <h2>Supabase replaces the Base44 backend layer.</h2>
+            <h2>Supabase powers the connected backend layer.</h2>
             <p>
               Keep public Supabase connection variables in Vercel, store records in Supabase tables,
               and keep sensitive service-role keys out of browser code.
@@ -157,17 +157,17 @@ export default function Features() {
 
         :global(body) {
           margin: 0;
-          background: #eef5f7;
-          color: #102a36;
+          background: #07111d;
+          color: #f8fafc;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         .page-shell {
           min-height: 100vh;
           background:
-            radial-gradient(circle at 12% 8%, rgba(104, 157, 174, 0.32), transparent 28rem),
-            radial-gradient(circle at 84% 20%, rgba(217, 197, 174, 0.32), transparent 26rem),
-            linear-gradient(180deg, #f4f8f9 0%, #e7f0f3 46%, #dce9ed 100%);
+            radial-gradient(circle at 16% 8%, rgba(255, 214, 167, 0.18), transparent 28rem),
+            radial-gradient(circle at 84% 16%, rgba(83, 166, 255, 0.18), transparent 32rem),
+            linear-gradient(180deg, #050816 0%, #07111d 46%, #0d1b2a 100%);
           overflow: hidden;
         }
 
@@ -207,7 +207,7 @@ export default function Features() {
 
         .nav-links {
           gap: 24px;
-          color: #456775;
+          color: #b6c6d8;
           font-weight: 750;
         }
 
@@ -218,10 +218,10 @@ export default function Features() {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          background: #234c5c;
-          color: #fff;
+          background: linear-gradient(135deg, #f7c873, #e88d4a 52%, #b45cff);
+          color: #07111d;
           font-weight: 900;
-          box-shadow: 0 18px 38px rgba(35, 76, 92, 0.22);
+          box-shadow: 0 20px 56px rgba(232, 141, 74, 0.28);
         }
 
         .nav-button {
@@ -244,7 +244,7 @@ export default function Features() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          color: #3f7282;
+          color: #f7c873;
           font-size: 0.78rem;
           font-weight: 950;
           letter-spacing: 0.16em;
@@ -252,11 +252,12 @@ export default function Features() {
         }
 
         .pill {
-          border: 1px solid rgba(63, 114, 130, 0.2);
+          border: 1px solid rgba(247, 200, 115, 0.24);
           border-radius: 999px;
           padding: 9px 14px;
-          background: rgba(255, 255, 255, 0.58);
-          box-shadow: 0 18px 44px rgba(35, 76, 92, 0.08);
+          background: rgba(255, 255, 255, 0.07);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+          backdrop-filter: blur(18px);
         }
 
         h1,
@@ -271,7 +272,7 @@ export default function Features() {
           font-size: clamp(3.4rem, 8vw, 7.2rem);
           line-height: 0.88;
           letter-spacing: -0.085em;
-          color: #122f3c;
+          color: #ffffff;
         }
 
         h2 {
@@ -279,14 +280,14 @@ export default function Features() {
           font-size: clamp(2.2rem, 5vw, 4.6rem);
           line-height: 0.94;
           letter-spacing: -0.075em;
-          color: #122f3c;
+          color: #ffffff;
         }
 
         .hero-copy,
         .section-heading p,
         .workflow-section p,
         .integration-section p {
-          color: #456775;
+          color: #b6c6d8;
           font-size: 1.08rem;
           line-height: 1.75;
         }
@@ -304,15 +305,15 @@ export default function Features() {
         }
 
         .secondary {
-          border: 1px solid rgba(63, 114, 130, 0.24);
+          border: 1px solid rgba(247, 200, 115, 0.24);
           border-radius: 999px;
-          color: #234c5c;
-          background: rgba(255, 255, 255, 0.62);
+          color: #f7c873;
+          background: rgba(255, 255, 255, 0.07);
         }
 
         .status-pill {
           gap: 10px;
-          color: #456775;
+          color: #b6c6d8;
           font-weight: 850;
         }
 
@@ -351,9 +352,9 @@ export default function Features() {
         .workflow-section,
         .integration-section,
         .timeline-row {
-          border: 1px solid rgba(63, 114, 130, 0.16);
-          background: rgba(255, 255, 255, 0.68);
-          box-shadow: 0 24px 80px rgba(35, 76, 92, 0.11);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.045));
+          box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
           backdrop-filter: blur(18px);
         }
 
@@ -369,13 +370,13 @@ export default function Features() {
           border-radius: 18px;
           display: grid;
           place-items: center;
-          background: #d7e9ee;
-          color: #234c5c;
+          background: rgba(247, 200, 115, 0.13);
+          color: #f7c873;
         }
 
         .feature-card p,
         .timeline-row small {
-          color: #52717c;
+          color: #b6c6d8;
           line-height: 1.62;
         }
 
@@ -415,7 +416,7 @@ export default function Features() {
 
         .timeline-row b,
         .feature-card h3 {
-          color: #122f3c;
+          color: #ffffff;
         }
 
         .timeline-row small {
@@ -426,8 +427,8 @@ export default function Features() {
           display: block;
           padding: 14px 16px;
           border-radius: 16px;
-          background: #173543;
-          color: #dff5fb;
+          background: rgba(5, 8, 22, 0.72);
+          color: #dbeafe;
           font-size: 0.9rem;
         }
 

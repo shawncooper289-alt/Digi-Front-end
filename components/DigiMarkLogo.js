@@ -4,7 +4,7 @@ export default function DigiMarkLogo({ compact = false }) {
       <span className="mark" aria-hidden="true">D</span>
       <span className="wordmark">
         <strong>DigiMark<span>101</span></strong>
-        {!compact && <small>Ava Skye Marketing OS</small>}
+        {!compact && <small>AI Marketing OS</small>}
       </span>
 
       <style jsx>{`
@@ -12,7 +12,7 @@ export default function DigiMarkLogo({ compact = false }) {
           display: inline-flex;
           align-items: center;
           gap: 12px;
-          color: #122f3c;
+          color: #ffffff;
           line-height: 1;
         }
 
@@ -23,12 +23,12 @@ export default function DigiMarkLogo({ compact = false }) {
           display: grid;
           place-items: center;
           flex: 0 0 auto;
-          background: linear-gradient(145deg, #234c5c, #5f8ea0);
-          color: #ffffff;
+          background: linear-gradient(145deg, #f7c873, #e88d4a 58%, #b45cff);
+          color: #07111d;
           font-size: 1.55rem;
           font-weight: 950;
           letter-spacing: -0.08em;
-          box-shadow: 0 18px 38px rgba(35, 76, 92, 0.24);
+          box-shadow: 0 20px 48px rgba(232, 141, 74, 0.25);
         }
 
         .wordmark {
@@ -37,7 +37,7 @@ export default function DigiMarkLogo({ compact = false }) {
         }
 
         .wordmark strong {
-          color: #122f3c;
+          color: #ffffff;
           font-size: clamp(1.35rem, 2.2vw, 1.9rem);
           font-weight: 950;
           letter-spacing: -0.07em;
@@ -45,11 +45,11 @@ export default function DigiMarkLogo({ compact = false }) {
         }
 
         .wordmark strong span {
-          color: #3f7282;
+          color: #f7c873;
         }
 
         .wordmark small {
-          color: #63808a;
+          color: #b6c6d8;
           font-size: 0.62rem;
           font-weight: 950;
           letter-spacing: 0.28em;
