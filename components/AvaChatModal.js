@@ -3,9 +3,9 @@ import { Send, X } from 'lucide-react';
 import AvaSkyeVisual from './AvaSkyeVisual';
 
 const starters = [
-  'Build me a launch plan',
-  'Write a 7-day email sequence',
-  'Improve my offer positioning',
+  'Give me a launch plan',
+  'Write my 7-day email flow',
+  'Sharpen my offer in plain English',
 ];
 
 export default function AvaChatModal() {
@@ -15,7 +15,7 @@ export default function AvaChatModal() {
     {
       role: 'assistant',
       content:
-        "Hi, I'm Ava Skye, your DigiMark101 AI growth assistant. Ask me to plan a campaign, funnel, content system, or lead-generation sprint.",
+        "Hi, I'm Ava Skye. Tell me what you sell and who you want to reach, and I'll turn it into a clear campaign, funnel, or follow-up plan.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ export default function AvaChatModal() {
         <span className="launcher-orb"><AvaSkyeVisual compact /></span>
         <span>
           Ask Ava
-          <small>AI Gateway online</small>
+          <small>Human-feeling strategy help</small>
         </span>
       </button>
 
@@ -70,7 +70,7 @@ export default function AvaChatModal() {
               <div className="avatar"><AvaSkyeVisual compact /></div>
               <div>
                 <strong>Ava Skye</strong>
-                <span>Powered by Vercel AI Gateway</span>
+                <span>Your DigiMark101 growth strategist</span>
               </div>
               <button className="close" onClick={() => setOpen(false)} aria-label="Close Ava chat">
                 <X size={18} />
@@ -103,7 +103,7 @@ export default function AvaChatModal() {
               <input
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder="Ask Ava to build your next growth move..."
+                placeholder="Tell Ava what you want to grow..."
                 aria-label="Message Ava"
               />
               <button type="submit" disabled={loading || !input.trim()} aria-label="Send message">

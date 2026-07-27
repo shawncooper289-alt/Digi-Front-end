@@ -79,6 +79,18 @@ const dashboardCards = [
   ['Growth Score', '91%', 'Ready to scale'],
 ];
 
+const humanSignals = [
+  ['Warm first impression', 'Ava introduces herself like a real strategist, not a generic chatbot.'],
+  ['Consistent identity', 'Her face, hair, tone, and role stay locked across the homepage, chat, and feature flow.'],
+  ['Actionable guidance', 'Every prompt moves the visitor toward a campaign, funnel, content plan, or purchase handoff.'],
+];
+
+const journeySteps = [
+  ['01', 'Meet Ava', 'Visitors see the premium strategist behind the platform before they are asked to buy.'],
+  ['02', 'Choose a growth path', 'Clear seat tiers explain who the package is for and what Ava helps them launch.'],
+  ['03', 'Capture the buyer', 'Lead and purchase forms stay connected to Supabase for follow-up and onboarding.'],
+];
+
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -191,12 +203,12 @@ export default function LandingPage() {
           <div className="hero-copy-panel">
             <span className="pill"><Sparkles size={15} /> Cinematic AI growth studio</span>
             <h1>
-              Premium marketing strategy, guided by Ava Skye.
+              A premium AI marketing website with a human face.
             </h1>
             <p>
-              DigiMark101 brings campaigns, funnels, content, lead capture, and client acquisition into one
-              polished command center. Ava Skye gives every visitor the feel of a high-end strategist ready to
-              plan the next revenue move.
+              DigiMark101 presents Ava Skye as a warm, consistent, human-feeling growth strategist. Visitors
+              can meet her, ask for a practical marketing plan, join early access, and choose the seat package
+              that fits their next launch.
             </p>
 
             <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
@@ -215,7 +227,7 @@ export default function LandingPage() {
             {message && <p className="message">{message}</p>}
 
             <div className="trust-row" aria-label="Platform highlights">
-              <span><CheckCircle2 size={16} /> Cinematic Ava Skye</span>
+              <span><CheckCircle2 size={16} /> Human Ava Skye presence</span>
               <span><CheckCircle2 size={16} /> Secure lead capture</span>
               <span><CheckCircle2 size={16} /> Vercel deployed</span>
             </div>
@@ -223,6 +235,28 @@ export default function LandingPage() {
 
           <div className="ava-stage">
             <AvaSkyeVisual />
+          </div>
+        </section>
+
+        <section className="section human-section" aria-label="Human Ava Skye experience">
+          <div className="human-panel">
+            <div>
+              <span className="eyebrow">Human Ava experience</span>
+              <h2>Ava feels like a focused marketing partner from the first scroll.</h2>
+              <p>
+                The site now frames Ava as the recognizable face of DigiMark101: professional, approachable,
+                and ready with specific campaign advice instead of vague automation claims.
+              </p>
+            </div>
+            <div className="human-grid">
+              {humanSignals.map(([title, copy]) => (
+                <article className="human-card" key={title}>
+                  <CheckCircle2 size={18} />
+                  <strong>{title}</strong>
+                  <span>{copy}</span>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -269,6 +303,22 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="section journey-section">
+          <div className="section-heading">
+            <span className="eyebrow">Visitor journey</span>
+            <h2>A complete path from first impression to buyer handoff.</h2>
+          </div>
+          <div className="journey-grid">
+            {journeySteps.map(([number, title, copy]) => (
+              <article className="journey-card" key={title}>
+                <span>{number}</span>
+                <strong>{title}</strong>
+                <p>{copy}</p>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -349,10 +399,10 @@ export default function LandingPage() {
 
         <section className="section closing-section">
           <BarChart3 size={28} />
-          <h2>Ava Skye gives DigiMark101 a memorable, premium AI identity.</h2>
+          <h2>DigiMark101 is ready to feel like a real product, not a placeholder.</h2>
           <p>
-            Visitors meet a cinematic strategist, the frontend stays fast on Vercel, and every conversion path
-            stays connected to the backend workflow.
+            Ava gives the brand a human-feeling guide, the page explains the offer, and the conversion paths
+            stay connected to the backend workflow for follow-up, checkout, and onboarding.
           </p>
         </section>
       </main>
@@ -599,7 +649,9 @@ export default function LandingPage() {
 
         .module-grid,
         .tier-grid,
-        .dashboard-card-grid {
+        .dashboard-card-grid,
+        .human-grid,
+        .journey-grid {
           display: grid;
           gap: 18px;
         }
@@ -614,16 +666,72 @@ export default function LandingPage() {
         .tier-card,
         .purchase-form,
         .closing-section,
-        .dashboard-panel {
+        .dashboard-panel,
+        .human-panel,
+        .human-card,
+        .journey-card {
           border: 1px solid rgba(255, 255, 255, 0.12);
           background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.045));
           box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
           backdrop-filter: blur(22px);
         }
 
-        .module-card {
+        .module-card,
+        .human-card,
+        .journey-card {
           border-radius: 30px;
           padding: 26px;
+        }
+
+        .human-panel {
+          border-radius: 42px;
+          padding: 34px;
+          display: grid;
+          grid-template-columns: 0.8fr 1fr;
+          gap: 30px;
+          align-items: center;
+        }
+
+        .human-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .human-card {
+          display: grid;
+          gap: 10px;
+          background: rgba(255, 255, 255, 0.065);
+        }
+
+        .human-card :global(svg) {
+          color: #65d6ad;
+        }
+
+        .human-card strong,
+        .journey-card strong {
+          color: #ffffff;
+          font-size: 1.08rem;
+        }
+
+        .human-card span,
+        .journey-card p {
+          color: #b6c6d8;
+          line-height: 1.65;
+          margin: 0;
+        }
+
+        .journey-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .journey-card span {
+          display: inline-grid;
+          place-items: center;
+          width: 46px;
+          height: 46px;
+          border-radius: 999px;
+          background: rgba(247, 200, 115, 0.16);
+          color: #f7c873;
+          font-weight: 950;
         }
 
         .module-card span,
@@ -807,12 +915,15 @@ export default function LandingPage() {
           .hero,
           .dashboard-panel,
           .backend-section,
-          .purchase-form {
+          .purchase-form,
+          .human-panel {
             grid-template-columns: 1fr;
           }
 
           .module-grid,
-          .tier-grid {
+          .tier-grid,
+          .human-grid,
+          .journey-grid {
             grid-template-columns: repeat(2, 1fr);
           }
 
@@ -835,6 +946,8 @@ export default function LandingPage() {
           .module-grid,
           .tier-grid,
           .dashboard-card-grid,
+          .human-grid,
+          .journey-grid,
           .lead-form {
             grid-template-columns: 1fr;
           }

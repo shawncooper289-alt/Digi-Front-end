@@ -137,8 +137,8 @@ export default function AvaSkyeVisual({ compact = false }) {
 
       <div className="ava-copy">
         <span>Meet Ava Skye</span>
-        <strong>Cinematic AI strategist for DigiMark101</strong>
-        <p>Ava Skye presents the brand with a premium, confident cinematic look built for campaigns, funnels, and client acquisition.</p>
+        <strong>Human-feeling AI strategist for DigiMark101</strong>
+        <p>Ava Skye gives the brand a consistent professional face: warm, confident, and ready to guide campaigns, funnels, and client acquisition.</p>
       </div>
 
       <style jsx>{`
