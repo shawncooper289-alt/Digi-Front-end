@@ -60,10 +60,13 @@ export default function Features() {
         <nav className="nav">
           <a href="/" className="brand" aria-label="DigiMark101 home"><DigiMarkLogo compact /></a>
           <div className="nav-links">
-            <a href="/#platform">Platform</a>
-            <a href="/#dashboard">Dashboard</a>
             <a href="/features">Features</a>
-            <a href="/#seat-tiers">Pricing</a>
+            <a href="/campaigns">Campaigns</a>
+            <a href="/social-media">Social</a>
+            <a href="/email-marketing">Email</a>
+            <a href="/lead-capture">Leads</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/ava-skye">Ava Skye</a>
           </div>
           <a className="nav-button" href="/#early-access">Start with Ava <ArrowRight size={16} /></a>
         </nav>
@@ -206,9 +209,12 @@ export default function Features() {
         }
 
         .nav-links {
-          gap: 24px;
+          gap: 14px;
           color: #b6c6d8;
-          font-weight: 750;
+          font-size: 0.9rem;
+          font-weight: 800;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
         .nav-button,
