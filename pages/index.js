@@ -102,7 +102,10 @@ export default function Home() {
       <div className="mesh meshOne" />
       <div className="mesh meshTwo" />
       <nav className="nav">
-        <div className="logoMark">DigiMark101</div>
+        <div className="logoMark">
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <span>DigiMark101</span>
+        </div>
         <div className="navLinks">
           <a href="#ava-video">Ava Skye</a>
           <a href="#workflow">Workflow</a>
@@ -238,7 +241,7 @@ export default function Home() {
         <div className="sectionHeader">
           <div>
             <p className="eyebrow">Stripe checkout pricing</p>
-            <h2>More capability for less, priced to stay profitable.</h2>
+            <h2>More capability for less, built for high-margin recurring revenue.</h2>
           </div>
           <p className="pricingIntro">Seat prices are structured for recurring revenue, higher-value upgrades, and simple Stripe Checkout wiring once price IDs are added.</p>
         </div>
@@ -288,7 +291,9 @@ export default function Home() {
         .meshOne { width: 480px; height: 480px; left: -180px; top: -120px; background: #2563eb; }
         .meshTwo { width: 520px; height: 520px; right: -180px; top: 180px; background: #db2777; }
         .nav { position: relative; z-index: 2; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0; display: flex; align-items: center; justify-content: space-between; }
-        .logoMark { font-weight: 950; letter-spacing: -.04em; font-size: 1.1rem; }
+        .logoMark { display: flex; align-items: center; gap: .7rem; font-weight: 950; letter-spacing: -.04em; font-size: 1.1rem; }
+        .logoMark img { width: 46px; height: 46px; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 12px 28px rgba(168,85,247,.38)); }
+        .logoMark span { color: #fff; }
         .navLinks { display: flex; align-items: center; gap: 1rem; font-size: .92rem; }
         .navLinks a { color: rgba(248,251,255,.72); text-decoration: none; font-weight: 750; }
         .navCta { color: #fff !important; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: .7rem 1rem; background: rgba(255,255,255,.07); backdrop-filter: blur(14px); }

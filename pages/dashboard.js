@@ -39,7 +39,10 @@ export default function Dashboard() {
   return (
     <main className="console">
       <aside className="rail">
-        <a className="home" href="/">DigiMark101</a>
+        <a className="home" href="/">
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <span>DigiMark101</span>
+        </a>
         <nav>
           <span className="active">Onboarding</span>
           <span>Agents</span>
@@ -123,7 +126,8 @@ export default function Dashboard() {
       <style jsx>{`
         .console { min-height: 100vh; display: grid; grid-template-columns: 260px 1fr; background: radial-gradient(circle at 15% 10%, rgba(37,99,235,.2), transparent 24rem), radial-gradient(circle at 90% 20%, rgba(219,39,119,.18), transparent 26rem), #020617; color: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
         .rail { border-right: 1px solid rgba(148,163,184,.16); background: rgba(2,6,23,.52); backdrop-filter: blur(20px); padding: 1.5rem; }
-        .home { display: block; color: #fff; text-decoration: none; font-weight: 1000; letter-spacing: -.04em; margin-bottom: 2rem; }
+        .home { display: flex; align-items: center; gap: .7rem; color: #fff; text-decoration: none; font-weight: 1000; letter-spacing: -.04em; margin-bottom: 2rem; }
+        .home img { width: 48px; height: 48px; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 12px 28px rgba(168,85,247,.38)); }
         nav { display: grid; gap: .65rem; }
         nav span { padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.65); font-weight: 850; }
         nav .active { color: #fff; background: linear-gradient(135deg, rgba(37,99,235,.32), rgba(219,39,119,.22)); border: 1px solid rgba(147,197,253,.22); }
