@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
+const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
+
 const questions = [
   'What business are we building and who is it for?',
   'What offer, pricing, and seat tier should Ava Skye optimize around?',
@@ -85,7 +87,7 @@ export default function Dashboard() {
             <div className="studioPreview">
               {avatarLoaded && (
                 <img
-                  src="/ava-skye-avatar.jpg"
+                  src={AVA_SKYE_IMAGE_URL}
                   alt="Ava Skye AI executive avatar"
                   onError={() => setAvatarLoaded(false)}
                 />
