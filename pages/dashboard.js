@@ -19,6 +19,7 @@ const workstreams = [
 
 export default function Dashboard() {
   const [status, setStatus] = useState('Opening Ava Skye command center...');
+  const [avatarLoaded, setAvatarLoaded] = useState(true);
   const ready = hasSupabaseConfig();
   const supabase = useMemo(() => createSupabaseClient(), []);
 
@@ -78,6 +79,20 @@ export default function Dashboard() {
           </div>
 
           <div className="missionPanel">
+            <div className="studioPreview">
+              {avatarLoaded && (
+                <img
+                  src="/ava-skye-avatar.jpg"
+                  alt="Ava Skye AI executive avatar"
+                  onError={() => setAvatarLoaded(false)}
+                />
+              )}
+              {!avatarLoaded && <div className="studioFallback">Ava Skye</div>}
+              <div>
+                <strong>Cinematic dashboard host</strong>
+                <span>Video-ready Ava intro, client briefing, and task delegation preview.</span>
+              </div>
+            </div>
             <h2>Launch Mission</h2>
             <div className="missionGrid">
               <div><span>Client</span><strong>New brand buildout</strong></div>
@@ -131,6 +146,12 @@ export default function Dashboard() {
         button { border: 1px solid rgba(147,197,253,.2); color: #e0f2fe; background: rgba(2,6,23,.55); border-radius: 1rem; padding: 1rem; text-align: left; display: flex; gap: .75rem; align-items: center; font-weight: 850; cursor: pointer; }
         button span { width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; background: rgba(37,99,235,.28); color: #bfdbfe; flex: 0 0 auto; }
         .missionPanel { padding: 1.4rem; background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.12)); }
+        .studioPreview { display: grid; grid-template-columns: 92px 1fr; gap: 1rem; align-items: center; margin-bottom: 1.25rem; padding: .85rem; border-radius: 1.15rem; background: rgba(2,6,23,.48); border: 1px solid rgba(148,163,184,.18); }
+        .studioPreview img, .studioFallback { width: 92px; height: 92px; border-radius: 1rem; object-fit: cover; border: 1px solid rgba(255,255,255,.18); }
+        .studioFallback { display: grid; place-items: center; text-align: center; color: #fff; font-weight: 1000; background: linear-gradient(135deg, #2563eb, #db2777); }
+        .studioPreview strong, .studioPreview span { display: block; }
+        .studioPreview strong { margin-bottom: .3rem; }
+        .studioPreview span { color: rgba(226,232,240,.72); line-height: 1.45; }
         .missionGrid { display: grid; gap: .85rem; margin-top: 1.5rem; }
         .missionGrid div { display: grid; gap: .35rem; padding: 1rem; border-radius: 1rem; background: rgba(2,6,23,.42); }
         .missionGrid span, article span { color: #93c5fd; font-size: .78rem; font-weight: 950; text-transform: uppercase; letter-spacing: .1em; }

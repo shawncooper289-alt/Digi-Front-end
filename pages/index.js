@@ -18,6 +18,13 @@ const outcomes = [
   'Sales pages, banners, videos, ads, and monetization assets built by specialist AI agents.',
 ];
 
+const backendPowers = [
+  'Onboard socials, Meta business pages, paid communities, YouTube channels, WhatsApp, and client profiles.',
+  'Build websites, banners, sales pages, lead magnets, brand kits, funnels, and monetization paths.',
+  'Command a virtual studio for long-form videos, shorts, cinematic spots, animated ads, and TV-ready placements.',
+  'Deploy specialized brand-aware bots for communities, pages, sites, channels, and client support flows.',
+];
+
 const tiers = [
   { name: 'Launch Seat', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
   { name: 'Growth Seat', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
@@ -27,6 +34,7 @@ const tiers = [
 export default function Home() {
   const [message, setMessage] = useState('Ava Skye is preparing your launch room...');
   const [loading, setLoading] = useState(true);
+  const [avatarLoaded, setAvatarLoaded] = useState(true);
   const supabaseReady = hasSupabaseConfig();
 
   useEffect(() => {
@@ -49,6 +57,7 @@ export default function Home() {
       <nav className="nav">
         <div className="logoMark">DigiMark101</div>
         <div className="navLinks">
+          <a href="#ava-video">Ava Skye</a>
           <a href="#workflow">Workflow</a>
           <a href="#agents">AI Agents</a>
           <a href="#tiers">Seat Tiers</a>
@@ -61,11 +70,11 @@ export default function Home() {
           <p className="eyebrow">Ava Skye Command System</p>
           <h1>The AI-powered all-in-one digital marketing agency.</h1>
           <p className="lead">
-            Ava Skye asks the right questions, fills in the blanks, delegates the work to specialist AI agents, and guides every client from blank slate to brand, website, content, community, sales pages, ads, and monetization workflows.
+            Ava Skye asks the right questions, fills in the blanks, delegates the work to specialist AI agents, and guides every client from blank slate to brand, website, content, community, sales pages, ads, monetization, and automation workflows.
           </p>
           <div className="heroActions">
             <a className="primary" href="/dashboard">Start guided onboarding</a>
-            <a className="secondary" href="#workflow">See the workflow</a>
+            <a className="secondary" href="#ava-video">Meet Ava Skye</a>
           </div>
           <div className="signalBar">
             <span>{loading ? 'Initializing system...' : message}</span>
@@ -80,14 +89,58 @@ export default function Home() {
             <strong>Executive AI Producer</strong>
           </div>
           <div className="promptBox">
-            <p>Tell me your business, audience, offer, tone, and seat tier. I will build the workflow and assign the right agents.</p>
+            <p>Tell me your business, audience, offer, voice, and seat tier. I will design the launch plan and assign the right AI agents.</p>
           </div>
           <div className="steps">
             <div><span>01</span> Brand DNA intake</div>
-            <div><span>02</span> Social + Meta onboarding</div>
-            <div><span>03</span> Website, funnel, and sales pages</div>
-            <div><span>04</span> Bots, communities, video, ads</div>
+            <div><span>02</span> Social, Meta, YouTube, WhatsApp onboarding</div>
+            <div><span>03</span> Website, funnel, sales pages, banners</div>
+            <div><span>04</span> Bots, communities, videos, ads, monetization</div>
           </div>
+        </div>
+      </section>
+
+      <section id="ava-video" className="section cinema">
+        <div className="videoStage">
+          <div className="avatarFrame">
+            {avatarLoaded && (
+              <img
+                src="/ava-skye-avatar.jpg"
+                alt="Ava Skye AI executive avatar"
+                onError={() => setAvatarLoaded(false)}
+              />
+            )}
+            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
+            <div className="scanLine" />
+          </div>
+          <div className="playOrb">▶</div>
+          <div className="captionStrip">Cinematic intro video placeholder • replace with Ava Skye narration asset</div>
+        </div>
+        <div className="videoCopy">
+          <p className="eyebrow">Cinematic front-end story</p>
+          <h2>Ava Skye tells clients what happens after they enter the backend dashboard.</h2>
+          <p>
+            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the chosen seat tier into a full marketing operating system.
+          </p>
+          <div className="scriptCard">
+            <strong>Intro script direction</strong>
+            <span>“Welcome to DigiMark101. I’m Ava Skye. Once you enter your dashboard, I’ll learn your business, connect your socials, build your brand systems, launch your pages, coordinate your content studio, and delegate every task to the right AI specialist until your digital agency engine is ready.”</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="backend" className="section backendPreview">
+        <div className="sectionHeader">
+          <p className="eyebrow">Inside the backend dashboard</p>
+          <h2>Every capability is organized into a guided professional workflow.</h2>
+        </div>
+        <div className="backendGrid">
+          {backendPowers.map((power, index) => (
+            <article key={power}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{power}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -169,8 +222,24 @@ export default function Home() {
         .promptBox p { margin: 0; color: #e0f2fe; font-size: 1.15rem; line-height: 1.65; }
         .steps { display: grid; gap: .75rem; }
         .steps div { display: flex; gap: .8rem; align-items: center; padding: 1rem; border-radius: 1rem; background: rgba(255,255,255,.045); color: rgba(248,250,252,.86); }
-        .steps span, .workflowList span { color: #f0abfc; font-weight: 950; }
+        .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
         .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
+        .cinema { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
+        .videoStage { min-height: 560px; position: relative; display: grid; place-items: center; border-radius: 2.2rem; overflow: hidden; border: 1px solid rgba(148,163,184,.22); background: radial-gradient(circle at 50% 20%, rgba(59,130,246,.28), transparent 34rem), linear-gradient(145deg, rgba(15,23,42,.96), rgba(2,6,23,.82)); box-shadow: 0 40px 130px rgba(2,6,23,.72); }
+        .videoStage:before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0 40%, rgba(255,255,255,.1) 50%, transparent 60%); transform: translateX(-120%); animation: sweep 5s infinite; }
+        .avatarFrame { width: min(360px, 72vw); aspect-ratio: 1; border-radius: 2rem; overflow: hidden; display: grid; place-items: center; position: relative; border: 1px solid rgba(255,255,255,.22); background: linear-gradient(145deg, rgba(15,23,42,.7), rgba(37,99,235,.22)); box-shadow: 0 24px 80px rgba(0,0,0,.48); }
+        .avatarFrame img { width: 100%; height: 100%; object-fit: cover; }
+        .avatarFallback { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 3.5rem; line-height: .9; font-weight: 1000; letter-spacing: -.08em; background: radial-gradient(circle at 50% 15%, rgba(240,171,252,.35), transparent 16rem), linear-gradient(145deg, #0f172a, #1e3a8a 52%, #831843); }
+        .scanLine { position: absolute; left: 0; right: 0; height: 2px; top: 50%; background: linear-gradient(90deg, transparent, #93c5fd, transparent); box-shadow: 0 0 24px #60a5fa; opacity: .8; animation: scan 3s infinite; }
+        .playOrb { position: absolute; width: 76px; height: 76px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(16px); box-shadow: 0 20px 60px rgba(37,99,235,.32); }
+        .captionStrip { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.8); background: rgba(2,6,23,.72); border: 1px solid rgba(148,163,184,.18); }
+        .videoCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; }
+        .scriptCard { display: grid; gap: .6rem; padding: 1.2rem; border-radius: 1.2rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); color: rgba(226,232,240,.8); }
+        .scriptCard strong { color: #f0abfc; }
+        .backendPreview { padding-top: 2rem; }
+        .backendGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .backendGrid article { padding: 1.2rem; min-height: 190px; border-radius: 1.25rem; background: linear-gradient(145deg, rgba(15,23,42,.72), rgba(37,99,235,.12)); border: 1px solid rgba(148,163,184,.2); }
+        .backendGrid p { margin: 1rem 0 0; color: rgba(226,232,240,.78); line-height: 1.6; }
         .gridTwo { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; align-items: start; }
         h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; letter-spacing: -.055em; max-width: 760px; }
         .workflowList { display: grid; gap: 1rem; }
@@ -185,8 +254,10 @@ export default function Home() {
         .tiers h3 { font-size: 1.35rem; margin-bottom: .7rem; }
         .tiers p { color: rgba(226,232,240,.76); line-height: 1.65; }
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
-        @media (max-width: 900px) { .hero, .gridTwo { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .agentGrid, .tiers { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .primary, .secondary { text-align: center; } }
+        @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
+        @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .agentGrid, .tiers, .backendGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
       `}</style>
     </main>
   );
