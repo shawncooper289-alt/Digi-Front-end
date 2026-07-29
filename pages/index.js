@@ -25,6 +25,53 @@ const backendPowers = [
   'Deploy specialized brand-aware bots for communities, pages, sites, channels, and client support flows.',
 ];
 
+
+const pricingPlans = [
+  {
+    name: 'Startup Seat',
+    slug: 'startup',
+    price: '$97/mo',
+    note: 'For beginners launching the first digital dynasty.',
+    features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
+  },
+  {
+    name: 'Growth Seat',
+    slug: 'growth',
+    price: '$197/mo',
+    note: 'For creators and small businesses ready to grow faster.',
+    features: ['Everything in Startup', 'Meta + social onboarding', 'Sales page workflow', 'WhatsApp sales flow', 'Community launch plan'],
+    highlight: true,
+  },
+  {
+    name: 'Pro Seat',
+    slug: 'pro',
+    price: '$397/mo',
+    note: 'For operators who want more automation and content output.',
+    features: ['Everything in Growth', 'YouTube channel support', 'Brand-aware client bot plan', 'Campaign builder', 'Video studio briefs'],
+  },
+  {
+    name: 'Elite Team Seat',
+    slug: 'elite-team',
+    price: '$797/mo',
+    note: 'For teams needing multi-channel execution and deeper support.',
+    features: ['Everything in Pro', 'Team workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
+  },
+  {
+    name: 'White Label Partner',
+    slug: 'white-label-partner',
+    price: '$1,497/mo',
+    note: 'For agencies reselling DigiMark101 workflows under their brand.',
+    features: ['Partner dashboard direction', 'Client workspace model', 'Reusable onboarding flows', 'Agency delivery templates', 'Priority roadmap access'],
+  },
+  {
+    name: 'White Label Enterprise',
+    slug: 'white-label-enterprise',
+    price: '$2,997/mo',
+    note: 'For serious agencies building a branded AI marketing platform.',
+    features: ['Everything in Partner', 'Multi-client operating model', 'Custom bot strategy', 'Studio production workflows', 'Premium implementation planning'],
+  },
+];
+
 const tiers = [
   { name: 'Launch Seat', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
   { name: 'Growth Seat', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
@@ -67,8 +114,23 @@ export default function Home() {
 
       <section className="hero">
         <div className="heroCopy">
-          <p className="eyebrow">Ava Skye Command System</p>
-          <h1>The AI-powered all-in-one digital marketing agency.</h1>
+          <div className="welcomeLockup">
+            <span>Welcome To</span>
+            <h1>DigiMark101</h1>
+            <div className="dynastyLine">
+              <p>Your Digital Dynasty Starts Here!</p>
+              <div className="miniAva">
+                {avatarLoaded && (
+                  <img
+                    src="/ava-skye-avatar.jpg"
+                    alt="Ava Skye AI executive avatar"
+                    onError={() => setAvatarLoaded(false)}
+                  />
+                )}
+                {!avatarLoaded && <strong>AS</strong>}
+              </div>
+            </div>
+          </div>
           <p className="lead">
             Ava Skye asks the right questions, fills in the blanks, delegates the work to specialist AI agents, and guides every client from blank slate to brand, website, content, community, sales pages, ads, monetization, and automation workflows.
           </p>
@@ -171,6 +233,34 @@ export default function Home() {
         </div>
       </section>
 
+
+      <section id="pricing" className="section pricingSection">
+        <div className="sectionHeader">
+          <div>
+            <p className="eyebrow">Stripe checkout pricing</p>
+            <h2>More capability for less, priced to stay profitable.</h2>
+          </div>
+          <p className="pricingIntro">Seat prices are structured for recurring revenue, higher-value upgrades, and simple Stripe Checkout wiring once price IDs are added.</p>
+        </div>
+        <div className="pricingGrid">
+          {pricingPlans.map((plan) => (
+            <article className={plan.highlight ? 'priceCard featured' : 'priceCard'} key={plan.name}>
+              <div>
+                <span className="planName">{plan.name}</span>
+                <strong className="planPrice">{plan.price}</strong>
+                <p>{plan.note}</p>
+              </div>
+              <ul>
+                {plan.features.map((feature) => <li key={feature}>{feature}</li>)}
+              </ul>
+              <a className="checkoutBtn" href={`/api/checkout?plan=${plan.slug}`}>
+                Start checkout
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="tiers" className="section tierWrap">
         <div className="sectionHeader">
           <p className="eyebrow">Seat-tier controlled capability</p>
@@ -205,7 +295,14 @@ export default function Home() {
         .hero { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; min-height: 760px; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 3rem; }
         .eyebrow { margin: 0 0 1rem; color: #93c5fd; font-size: .78rem; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; }
         h1, h2, h3, p { margin-top: 0; }
-        h1 { max-width: 760px; margin-bottom: 1.25rem; font-size: clamp(3rem, 7vw, 6.9rem); line-height: .88; letter-spacing: -.08em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 8%, #93c5fd 38%, #f0abfc 78%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .welcomeLockup { margin-bottom: 1.25rem; }
+        .welcomeLockup > span { display: block; margin-bottom: .35rem; color: #93c5fd; font-size: clamp(1rem, 2vw, 1.45rem); font-weight: 950; letter-spacing: .22em; text-transform: uppercase; }
+        h1 { max-width: 760px; margin: 0; font-size: clamp(4rem, 10vw, 9rem); line-height: .82; letter-spacing: -.09em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 8%, #93c5fd 38%, #f0abfc 78%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .dynastyLine { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
+        .dynastyLine p { margin: 0; color: #fff; font-size: clamp(1.45rem, 3vw, 2.7rem); line-height: 1; font-weight: 1000; letter-spacing: -.045em; }
+        .miniAva { width: 82px; height: 82px; border-radius: 1.2rem; flex: 0 0 auto; overflow: hidden; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.26); background: linear-gradient(135deg, rgba(37,99,235,.5), rgba(219,39,119,.45)); box-shadow: 0 18px 55px rgba(37,99,235,.28); }
+        .miniAva img { width: 100%; height: 100%; object-fit: cover; }
+        .miniAva strong { font-size: 1.35rem; }
         .lead { max-width: 740px; color: rgba(226,232,240,.78); font-size: clamp(1.08rem, 2vw, 1.32rem); line-height: 1.75; }
         .heroActions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
         .primary, .secondary { border-radius: 999px; padding: 1rem 1.35rem; text-decoration: none; font-weight: 950; transition: .25s ease; }
@@ -248,6 +345,20 @@ export default function Home() {
         .sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
         .agentGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
         .agent { min-height: 130px; display: flex; align-items: end; padding: 1rem; border-radius: 1.3rem; border: 1px solid rgba(148,163,184,.2); background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.11)); font-weight: 950; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+
+        .pricingSection { padding-top: 2rem; }
+        .pricingIntro { max-width: 430px; color: rgba(226,232,240,.72); line-height: 1.6; margin: 0; }
+        .pricingGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .priceCard { display: flex; flex-direction: column; justify-content: space-between; gap: 1.2rem; min-height: 430px; padding: 1.25rem; border-radius: 1.35rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+        .priceCard.featured { background: linear-gradient(145deg, rgba(37,99,235,.28), rgba(219,39,119,.18)); border-color: rgba(147,197,253,.38); box-shadow: 0 28px 90px rgba(37,99,235,.22); }
+        .planName { display: block; color: #93c5fd; font-size: .78rem; font-weight: 1000; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .75rem; }
+        .planPrice { display: block; color: #fff; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1; letter-spacing: -.06em; }
+        .priceCard p { color: rgba(226,232,240,.74); line-height: 1.55; margin: .9rem 0 0; }
+        .priceCard ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; color: rgba(226,232,240,.8); }
+        .priceCard li { position: relative; padding-left: 1.25rem; line-height: 1.4; }
+        .priceCard li:before { content: '✓'; position: absolute; left: 0; color: #86efac; font-weight: 1000; }
+        .checkoutBtn { display: block; text-align: center; text-decoration: none; color: #fff; border-radius: 999px; padding: .95rem 1rem; font-weight: 1000; background: linear-gradient(135deg, #2563eb, #db2777); box-shadow: 0 18px 50px rgba(37,99,235,.22); }
+
         .tierWrap { padding-bottom: 3rem; }
         .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
         .tiers article { padding: 1.4rem; border-radius: 1.3rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); }
@@ -256,8 +367,8 @@ export default function Home() {
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
         @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
         @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
-        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .agentGrid, .tiers, .backendGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .dynastyLine { align-items: flex-start; } .miniAva { width: 66px; height: 66px; } .heroActions { flex-direction: column; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
       `}</style>
     </main>
   );
