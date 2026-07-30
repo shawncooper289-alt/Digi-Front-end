@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
@@ -52,10 +54,10 @@ export default function Login() {
   return (
     <main className="loginPage">
       <section className="loginCard">
-        <a className="brand" href="/">
-          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+        <Link className="brand" href="/">
+          <Image src="/digimark101-logo.svg" alt="DigiMark101 logo" width={48} height={48} priority />
           <span>DigiMark101</span>
-        </a>
+        </Link>
         <p className="eyebrow">Founder access</p>
         <h1>Enter the DigiMark101 backend.</h1>
         <p className="intro">Ava Skye opens the private command center for founder and premium accounts only.</p>

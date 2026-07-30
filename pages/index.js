@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { hasSupabaseConfig } from '../lib/supabaseClient';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
 
@@ -33,8 +34,8 @@ const pricingPlans = [
     name: 'Launch Account',
     slug: 'launch',
     price: '$97/mo',
-    note: 'For a founder starting their digital presence with a guided premium launch path.',
-    features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
+    note: 'For a founder starting their digital presence with a guided launch path.',
+    features: ['Ava Skye guided intake', 'Brand foundation', 'Website launch plan', 'Social profile checklist', 'Content direction prompts'],
   },
   {
     name: 'Growth Account',
@@ -55,7 +56,7 @@ const pricingPlans = [
     name: 'Elite Account',
     slug: 'elite',
     price: '$797/mo',
-    note: 'For high-touch clients needing deeper multi-channel execution and premium support.',
+    note: 'For high-touch clients needing deeper multi-channel execution and hands-on support.',
     features: ['Everything in Premium', 'Advanced workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
   },
   {
@@ -70,7 +71,7 @@ const pricingPlans = [
     slug: 'white-label-enterprise',
     price: '$2,997/mo',
     note: 'For serious agencies building a branded AI marketing platform.',
-    features: ['Everything in Partner', 'Multi-client operating model', 'Custom bot strategy', 'Studio production workflows', 'Premium implementation planning'],
+    features: ['Everything in Partner', 'Multi-client operating model', 'Custom bot strategy', 'Studio production workflows', 'Implementation planning'],
   },
 ];
 
@@ -81,23 +82,7 @@ const tiers = [
 ];
 
 export default function Home() {
-  const [message, setMessage] = useState('Ava Skye is preparing your launch room...');
-  const [loading, setLoading] = useState(true);
   const [avatarLoaded, setAvatarLoaded] = useState(true);
-  const supabaseReady = hasSupabaseConfig();
-
-  useEffect(() => {
-    fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setMessage('Ava Skye is ready to build your digital agency stack.');
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <main className="page">
@@ -105,36 +90,36 @@ export default function Home() {
       <div className="mesh meshTwo" />
       <nav className="nav">
         <div className="logoMark">
-          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <Image src="/digimark101-logo.svg" alt="DigiMark101 logo" width={46} height={46} priority />
           <span>DigiMark101</span>
         </div>
         <div className="navLinks">
-          <a href="#ava-video">Ava Skye</a>
+          <a href="#ava-guide">Ava Skye</a>
           <a href="#workflow">Workflow</a>
           <a href="#agents">AI Agents</a>
           <a href="#tiers">Client Plans</a>
-          <a className="navCta" href="/dashboard">Launch Console</a>
+          <Link className="navCta" href="/dashboard">Launch Console</Link>
         </div>
       </nav>
 
       <section className="hero">
         <div className="heroCopy">
-          <div className="premiumBadge">Premium digital marketing agency</div>
+          <div className="premiumBadge">AI-guided digital marketing agency</div>
           <div className="welcomeLockup">
             <span>Welcome to</span>
             <h1>DigiMark101</h1>
             <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
           </div>
           <p className="lead">
-            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one premium command center.
+            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one polished command center.
           </p>
           <div className="heroActions">
-            <a className="primary" href="/dashboard">Start your dynasty build</a>
-            <a className="secondary" href="#ava-video">Meet Ava Skye</a>
+            <Link className="primary" href="/dashboard">Start your dynasty build</Link>
+            <a className="secondary" href="#ava-guide">Meet Ava Skye</a>
           </div>
           <div className="signalBar">
-            <span>{loading ? 'Preparing your agency command room...' : message}</span>
-            <strong>{supabaseReady ? 'Backend live' : 'Backend syncing'}</strong>
+            <span>Ava turns each answer into the next clear step for your brand, website, content, and growth plan.</span>
+            <strong>Guided onboarding</strong>
           </div>
         </div>
 
@@ -142,9 +127,12 @@ export default function Home() {
           <div className="portraitHalo" />
           <div className="portraitCard">
             {avatarLoaded && (
-              <img
+              <Image
                 src={AVA_SKYE_IMAGE_URL}
                 alt="Ava Skye, AI chief of staff"
+                width={860}
+                height={1049}
+                priority
                 onError={() => setAvatarLoaded(false)}
               />
             )}
@@ -152,12 +140,12 @@ export default function Home() {
           </div>
           <div className="chiefCard">
             <span>Meet your AI chief of staff.</span>
-            <p>Ava Skye turns your ideas into a premium marketing operating system.</p>
+            <p>Ava Skye turns your ideas into a complete marketing operating system.</p>
           </div>
         </div>
       </section>
 
-      <section id="ava-video" className="section cinema">
+      <section id="ava-guide" className="section cinema">
         <div className="videoCopy polishedSetup">
           <p className="eyebrow">Guided setup experience</p>
           <h2>Ava Skye guides every client through a focused launch plan.</h2>
@@ -172,7 +160,7 @@ export default function Home() {
 
       <section id="backend" className="section backendPreview">
         <div className="sectionHeader">
-          <p className="eyebrow">Inside the backend dashboard</p>
+          <p className="eyebrow">Inside the client dashboard</p>
           <h2>Every capability is organized into a guided professional workflow.</h2>
         </div>
         <div className="backendGrid">
@@ -217,7 +205,7 @@ export default function Home() {
         <div className="sectionHeader">
           <div>
             <p className="eyebrow">Client account pricing</p>
-            <h2>Premium client plans built for clear outcomes and smooth account setup.</h2>
+            <h2>Client plans built for clear outcomes and smooth account setup.</h2>
           </div>
           <p className="pricingIntro">After checkout, clients are sent to create their login and enter the DigiMark101 dashboard. No team account is required.</p>
         </div>
@@ -257,7 +245,7 @@ export default function Home() {
 
       <footer>
         <strong>DigiMark101</strong>
-        <span>Vercel front end • Supabase-ready data layer • Ava Skye AI agency workflow</span>
+        <span>Guided setup • AI-assisted marketing workflows • Clear next steps from account creation to launch</span>
       </footer>
 
       <style jsx>{`

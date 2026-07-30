@@ -1,7 +1,7 @@
 {
   "name": "digi-front-end",
   "version": "1.0.0",
-  "description": "DigiMark101 front end rebuilt for Vercel with Supabase-ready integration",
+  "description": "DigiMark101 guided marketing front end",
   "private": true,
   "scripts": {
     "dev": "next dev",

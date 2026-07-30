@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
@@ -176,7 +178,7 @@ export default function Dashboard() {
     return (
       <main className="gate">
         <div>
-          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <Image src="/digimark101-logo.svg" alt="DigiMark101 logo" width={76} height={76} priority />
           <p>Opening Ava Skye command center...</p>
         </div>
         <style jsx>{`
@@ -193,12 +195,12 @@ export default function Dashboard() {
     return (
       <main className="gate denied">
         <section>
-          <a href="/" className="home">DigiMark101</a>
+          <Link href="/" className="home">DigiMark101</Link>
           <p className="eyebrow">Private dashboard</p>
           <h1>Founder or premium access required.</h1>
           <p>{status}</p>
           <div className="actions">
-            <a href="/login">Use another account</a>
+            <Link href="/login">Use another account</Link>
             <button type="button" onClick={signOut}>Sign out</button>
           </div>
         </section>
@@ -220,10 +222,10 @@ export default function Dashboard() {
   return (
     <main className="console">
       <aside className="rail">
-        <a className="home" href="/">
-          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+        <Link className="home" href="/">
+          <Image src="/digimark101-logo.svg" alt="DigiMark101 logo" width={48} height={48} priority />
           <span>DigiMark101</span>
-        </a>
+        </Link>
         <nav>
           <span className="active">Onboarding</span>
           <span>Agents</span>
@@ -267,22 +269,24 @@ export default function Dashboard() {
           <div className="missionPanel">
             <div className="studioPreview">
               {avatarLoaded && (
-                <img
+                <Image
                   src={AVA_SKYE_IMAGE_URL}
                   alt="Ava Skye AI executive avatar"
+                  width={92}
+                  height={92}
                   onError={() => setAvatarLoaded(false)}
                 />
               )}
               {!avatarLoaded && <div className="studioFallback">Ava Skye</div>}
               <div>
-                <strong>Cinematic dashboard host</strong>
-                <span>Video-ready Ava intro, client briefing, and task delegation preview.</span>
+                <strong>Ava setup guide</strong>
+                <span>Client briefing, goal mapping, and task delegation in one guided workspace.</span>
               </div>
             </div>
             <h2>Launch Mission</h2>
             <div className="missionGrid">
               <div><span>Client</span><strong>New brand buildout</strong></div>
-              <div><span>Client Plan</span><strong>Growth / Premium ready</strong></div>
+              <div><span>Client Plan</span><strong>Plan-aligned setup</strong></div>
               <div><span>Channels</span><strong>Meta, YouTube, WhatsApp, Web</strong></div>
               <div><span>Output</span><strong>Agency-in-a-box workflow</strong></div>
             </div>

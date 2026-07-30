@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const planLabels = {
@@ -20,18 +22,18 @@ export default function CheckoutSuccess() {
   return (
     <main className="successPage">
       <section className="successCard">
-        <a className="brand" href="/">
-          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+        <Link className="brand" href="/">
+          <Image src="/digimark101-logo.svg" alt="DigiMark101 logo" width={48} height={48} priority />
           <span>DigiMark101</span>
-        </a>
+        </Link>
         <p className="eyebrow">Payment received</p>
         <h1>Set up your {label} login.</h1>
         <p>
-          Create your DigiMark101 login with the same email used at checkout. Ava Skye will open your private dashboard after your account is marked active in Supabase.
+          Create your DigiMark101 login with the same email used at checkout. Ava Skye will open your private dashboard once your account is active.
         </p>
         <div className="actions">
-          <a className="primary" href="/login">Create or sign in</a>
-          <a className="secondary" href="/">Back to site</a>
+          <Link className="primary" href="/login">Create or sign in</Link>
+          <Link className="secondary" href="/">Back to site</Link>
         </div>
       </section>
 
