@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [message, setMessage] = useState('Initializing Dynasty...');
   const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Test existing API endpoint (unchanged)
@@ -156,7 +155,7 @@ export default function Home() {
         <div className="dynasty-button" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button
             onClick={() => {
-              window.location.href = '/dashboard';
+              window.location.href = '/login';
             }}
             style={{
               padding: '1rem 2rem',
@@ -184,7 +183,7 @@ export default function Home() {
               e.target.style.boxShadow = '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)';
             }}
           >
-            Enter Dashboard
+            Login
           </button>
 
           <button
