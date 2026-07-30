@@ -119,50 +119,40 @@ export default function Home() {
 
       <section className="hero">
         <div className="heroCopy">
+          <div className="premiumBadge">Premium digital marketing agency</div>
           <div className="welcomeLockup">
-            <span>Welcome To</span>
+            <span>Welcome to</span>
             <h1>DigiMark101</h1>
-            <div className="dynastyLine">
-              <p>Your Digital Dynasty Starts Here!</p>
-              <div className="miniAva">
-                {avatarLoaded && (
-                  <img
-                    src={AVA_SKYE_IMAGE_URL}
-                    alt="Ava Skye AI executive avatar"
-                    onError={() => setAvatarLoaded(false)}
-                  />
-                )}
-                {!avatarLoaded && <strong>AS</strong>}
-              </div>
-            </div>
+            <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
           </div>
           <p className="lead">
-            Ava Skye asks the right questions, fills in the blanks, delegates the work to specialist AI agents, and guides every client from blank slate to brand, website, content, community, sales pages, ads, monetization, and automation workflows.
+            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one premium command center.
           </p>
           <div className="heroActions">
-            <a className="primary" href="/dashboard">Start guided onboarding</a>
+            <a className="primary" href="/dashboard">Start your dynasty build</a>
             <a className="secondary" href="#ava-video">Meet Ava Skye</a>
           </div>
           <div className="signalBar">
-            <span>{loading ? 'Initializing system...' : message}</span>
-            <strong>{supabaseReady ? 'Supabase live' : 'Supabase key pending'}</strong>
+            <span>{loading ? 'Preparing your agency command room...' : message}</span>
+            <strong>{supabaseReady ? 'Backend live' : 'Backend syncing'}</strong>
           </div>
         </div>
 
-        <div className="commandCard" aria-label="Ava Skye command console preview">
-          <div className="cardTop">
-            <span className="pulse" />
-            <span>Ava Skye</span>
-            <strong>Executive AI Producer</strong>
+        <div className="avaShowcase" aria-label="Meet Ava Skye, your AI chief of staff">
+          <div className="portraitHalo" />
+          <div className="portraitCard">
+            {avatarLoaded && (
+              <img
+                src={AVA_SKYE_IMAGE_URL}
+                alt="Ava Skye, AI chief of staff"
+                onError={() => setAvatarLoaded(false)}
+              />
+            )}
+            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
           </div>
-          <div className="promptBox">
-            <p>Tell me your business, audience, offer, voice, and seat tier. I will design the launch plan and assign the right AI agents.</p>
-          </div>
-          <div className="steps">
-            <div><span>01</span> Brand DNA intake</div>
-            <div><span>02</span> Social, Meta, YouTube, WhatsApp onboarding</div>
-            <div><span>03</span> Website, funnel, sales pages, banners</div>
-            <div><span>04</span> Bots, communities, videos, ads, monetization</div>
+          <div className="chiefCard">
+            <span>Meet your AI chief of staff.</span>
+            <p>Ava Skye turns your ideas into a premium marketing operating system.</p>
           </div>
         </div>
       </section>
@@ -287,11 +277,11 @@ export default function Home() {
       </footer>
 
       <style jsx>{`
-        .page { min-height: 100vh; overflow: hidden; color: #f8fbff; background: #030712; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; position: relative; }
-        .page:before { content: ''; position: fixed; inset: 0; background: linear-gradient(rgba(96,165,250,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(236,72,153,.045) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, black, transparent 75%); pointer-events: none; }
-        .mesh { position: absolute; border-radius: 999px; filter: blur(70px); opacity: .55; pointer-events: none; }
-        .meshOne { width: 480px; height: 480px; left: -180px; top: -120px; background: #2563eb; }
-        .meshTwo { width: 520px; height: 520px; right: -180px; top: 180px; background: #db2777; }
+        .page { min-height: 100vh; overflow: hidden; color: #f8fbff; background: radial-gradient(circle at 18% 12%, rgba(37,99,235,.28), transparent 30rem), radial-gradient(circle at 86% 16%, rgba(236,72,153,.22), transparent 28rem), linear-gradient(135deg, #020617 0%, #07111f 48%, #030712 100%); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; position: relative; }
+        .page:before { content: ''; position: fixed; inset: 0; background: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 72%); pointer-events: none; }
+        .mesh { position: absolute; border-radius: 999px; filter: blur(80px); opacity: .58; pointer-events: none; }
+        .meshOne { width: 560px; height: 560px; left: -220px; top: -150px; background: #2563eb; }
+        .meshTwo { width: 560px; height: 560px; right: -190px; top: 140px; background: #db2777; }
         .nav { position: relative; z-index: 2; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0; display: flex; align-items: center; justify-content: space-between; }
         .logoMark { display: flex; align-items: center; gap: .7rem; font-weight: 950; letter-spacing: -.04em; font-size: 1.1rem; }
         .logoMark img { width: 46px; height: 46px; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 12px 28px rgba(168,85,247,.38)); }
@@ -299,33 +289,31 @@ export default function Home() {
         .navLinks { display: flex; align-items: center; gap: 1rem; font-size: .92rem; }
         .navLinks a { color: rgba(248,251,255,.72); text-decoration: none; font-weight: 750; }
         .navCta { color: #fff !important; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: .7rem 1rem; background: rgba(255,255,255,.07); backdrop-filter: blur(14px); }
-        .hero { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; min-height: 760px; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 3rem; }
+        .hero { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; min-height: 810px; display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); padding: 2rem 0 5rem; }
         .eyebrow { margin: 0 0 1rem; color: #93c5fd; font-size: .78rem; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; }
         h1, h2, h3, p { margin-top: 0; }
+        .heroCopy { position: relative; }
+        .premiumBadge { width: fit-content; margin-bottom: 1.5rem; padding: .72rem 1rem; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: #dbeafe; background: rgba(255,255,255,.07); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 60px rgba(37,99,235,.2); backdrop-filter: blur(16px); font-size: .78rem; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
         .welcomeLockup { margin-bottom: 1.25rem; }
-        .welcomeLockup > span { display: block; margin-bottom: .35rem; color: #93c5fd; font-size: clamp(1rem, 2vw, 1.45rem); font-weight: 950; letter-spacing: .22em; text-transform: uppercase; }
-        h1 { max-width: 760px; margin: 0; font-size: clamp(4rem, 10vw, 9rem); line-height: .82; letter-spacing: -.09em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 8%, #93c5fd 38%, #f0abfc 78%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .dynastyLine { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
-        .dynastyLine p { margin: 0; color: #fff; font-size: clamp(1.45rem, 3vw, 2.7rem); line-height: 1; font-weight: 1000; letter-spacing: -.045em; }
-        .miniAva { width: 82px; height: 82px; border-radius: 1.2rem; flex: 0 0 auto; overflow: hidden; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.26); background: linear-gradient(135deg, rgba(37,99,235,.5), rgba(219,39,119,.45)); box-shadow: 0 18px 55px rgba(37,99,235,.28); }
-        .miniAva img { width: 100%; height: 100%; object-fit: cover; }
-        .miniAva strong { font-size: 1.35rem; }
-        .lead { max-width: 740px; color: rgba(226,232,240,.78); font-size: clamp(1.08rem, 2vw, 1.32rem); line-height: 1.75; }
+        .welcomeLockup > span { display: block; margin-bottom: .45rem; color: #bfdbfe; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 900; letter-spacing: .05em; }
+        h1 { max-width: 780px; margin: 0; font-size: clamp(4.2rem, 11vw, 9.6rem); line-height: .82; letter-spacing: -.095em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 5%, #bfdbfe 35%, #f9a8d4 72%, #fde68a 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 40px 110px rgba(59,130,246,.28); }
+        .dynastyStatement { margin: 1.35rem 0 0; color: #fff; font-size: clamp(1.8rem, 4vw, 3.5rem); line-height: .95; font-weight: 1000; letter-spacing: -.055em; max-width: 800px; }
+        .lead { max-width: 760px; color: rgba(226,232,240,.82); font-size: clamp(1.08rem, 2vw, 1.34rem); line-height: 1.75; }
         .heroActions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
         .primary, .secondary { border-radius: 999px; padding: 1rem 1.35rem; text-decoration: none; font-weight: 950; transition: .25s ease; }
-        .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777); box-shadow: 0 22px 70px rgba(37,99,235,.32); }
+        .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); box-shadow: 0 24px 80px rgba(37,99,235,.36); }
         .secondary { color: #dbeafe; border: 1px solid rgba(147,197,253,.35); background: rgba(15,23,42,.62); }
         .primary:hover, .secondary:hover { transform: translateY(-2px); }
         .signalBar { max-width: 720px; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border: 1px solid rgba(148,163,184,.2); border-radius: 1.2rem; background: rgba(15,23,42,.6); color: rgba(226,232,240,.78); }
         .signalBar strong { color: #86efac; white-space: nowrap; }
-        .commandCard { border: 1px solid rgba(148,163,184,.25); border-radius: 2rem; padding: 1.2rem; background: linear-gradient(145deg, rgba(15,23,42,.9), rgba(30,41,59,.52)); box-shadow: 0 30px 120px rgba(2,6,23,.7), inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(24px); }
-        .cardTop { display: grid; grid-template-columns: auto 1fr auto; gap: .75rem; align-items: center; padding: .75rem; color: rgba(226,232,240,.8); }
-        .pulse { width: .75rem; height: .75rem; border-radius: 999px; background: #22c55e; box-shadow: 0 0 0 8px rgba(34,197,94,.12); }
-        .cardTop strong { color: #f0abfc; font-size: .8rem; }
-        .promptBox { margin: 1rem 0; padding: 1.4rem; border-radius: 1.35rem; background: radial-gradient(circle at top left, rgba(37,99,235,.25), transparent 60%), rgba(2,6,23,.65); border: 1px solid rgba(96,165,250,.2); }
-        .promptBox p { margin: 0; color: #e0f2fe; font-size: 1.15rem; line-height: 1.65; }
-        .steps { display: grid; gap: .75rem; }
-        .steps div { display: flex; gap: .8rem; align-items: center; padding: 1rem; border-radius: 1rem; background: rgba(255,255,255,.045); color: rgba(248,250,252,.86); }
+        .avaShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
+        .portraitHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
+        .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .82; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
+        .portraitCard:after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 52%, rgba(2,6,23,.55)); pointer-events: none; }
+        .portraitCard img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.03); }
+        .chiefCard { position: absolute; left: 0; right: 0; bottom: 2rem; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
+        .chiefCard span { display: block; color: #fff; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1; font-weight: 1000; letter-spacing: -.04em; }
+        .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
         .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
         .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
         .cinema { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
@@ -374,8 +362,8 @@ export default function Home() {
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
         @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
         @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
-        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .dynastyLine { align-items: flex-start; } .miniAva { width: 66px; height: 66px; } .heroActions { flex-direction: column; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
       `}</style>
     </main>
   );
