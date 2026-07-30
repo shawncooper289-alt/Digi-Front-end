@@ -24,6 +24,12 @@ export default function Dashboard() {
   const [access, setAccess] = useState(null);
   const [checking, setChecking] = useState(true);
   const [avatarLoaded, setAvatarLoaded] = useState(true);
+  const [avaInput, setAvaInput] = useState('');
+  const [avaMessages, setAvaMessages] = useState([
+    { role: 'assistant', content: 'Welcome back. I am Ava Skye, your AI chief of staff. Tell me what you want to build, and I will delegate the work to the right specialist agents.' },
+  ]);
+  const [avaThinking, setAvaThinking] = useState(false);
+  const [voiceStatus, setVoiceStatus] = useState('Voice ready when your browser supports speech.');
   const ready = hasSupabaseConfig();
   const supabase = useMemo(() => createSupabaseClient(), []);
 
@@ -75,6 +81,89 @@ export default function Dashboard() {
       await supabase.auth.signOut();
     }
     window.location.href = '/login';
+  }
+
+
+  function chooseAvaVoice() {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+    const voices = window.speechSynthesis.getVoices();
+    return voices.find((voice) => voice.lang?.startsWith('en-US') && /female|samantha|victoria|jenny|aria|zira|google us english/i.test(voice.name))
+      || voices.find((voice) => voice.lang?.startsWith('en-US'))
+      || voices.find((voice) => voice.lang?.startsWith('en'))
+      || null;
+  }
+
+  function speakAsAva(text) {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
+      setVoiceStatus('Spoken replies are not supported in this browser.');
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voice = chooseAvaVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = voice?.lang || 'en-US';
+    utterance.rate = 0.94;
+    utterance.pitch = 1.05;
+    window.speechSynthesis.speak(utterance);
+    setVoiceStatus(voice ? `Speaking with ${voice.name}.` : 'Speaking with the best available English voice.');
+  }
+
+  function listenForAvaInput() {
+    if (typeof window === 'undefined') return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setVoiceStatus('Speech input is not supported in this browser. Try Chrome or Edge.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.continuous = false;
+    recognition.onstart = () => setVoiceStatus('Listening for your message to Ava...');
+    recognition.onerror = () => setVoiceStatus('Voice input stopped. You can type the message instead.');
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || '';
+      setAvaInput(transcript);
+      setVoiceStatus('Voice captured. Send it to Ava when ready.');
+    };
+    recognition.start();
+  }
+
+  async function askAva(event) {
+    event.preventDefault();
+    const message = avaInput.trim();
+    if (!message || avaThinking) return;
+
+    const nextMessages = [...avaMessages, { role: 'user', content: message }];
+    setAvaMessages(nextMessages);
+    setAvaInput('');
+    setAvaThinking(true);
+
+    try {
+      const response = await fetch('/api/ava', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history: avaMessages }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Ava Skye is not configured yet.');
+      }
+
+      setAvaMessages([...nextMessages, { role: 'assistant', content: result.reply }]);
+      speakAsAva(result.reply);
+    } catch (error) {
+      const fallback = error.message || 'Ava Skye could not respond right now.';
+      setAvaMessages([...nextMessages, { role: 'assistant', content: fallback }]);
+      setVoiceStatus(fallback);
+    } finally {
+      setAvaThinking(false);
+    }
   }
 
   if (checking) {
@@ -194,6 +283,35 @@ export default function Dashboard() {
           </div>
         </section>
 
+
+        <section className="avaChat">
+          <div className="chatHeader">
+            <div>
+              <p className="eyebrow">Talk to Ava Skye</p>
+              <h2>Speak or type. Ava delegates the work to her specialist AI workforce.</h2>
+            </div>
+            <button type="button" className="voiceButton" onClick={listenForAvaInput}>Speak to Ava</button>
+          </div>
+          <div className="conversation">
+            {avaMessages.map((message, index) => (
+              <div className={message.role === 'assistant' ? 'bubble avaBubble' : 'bubble userBubble'} key={`${message.role}-${index}`}>
+                <strong>{message.role === 'assistant' ? 'Ava Skye' : 'You'}</strong>
+                <p>{message.content}</p>
+              </div>
+            ))}
+          </div>
+          <form className="avaComposer" onSubmit={askAva}>
+            <textarea
+              value={avaInput}
+              onChange={(event) => setAvaInput(event.target.value)}
+              placeholder="Tell Ava what the client needs, or tap Speak to Ava."
+              rows={3}
+            />
+            <button type="submit" disabled={avaThinking || !avaInput.trim()}>{avaThinking ? 'Ava is delegating...' : 'Send to Ava'}</button>
+          </form>
+          <p className="voiceStatus">{voiceStatus}</p>
+        </section>
+
         <section className="workstreams">
           <div className="sectionTop">
             <p className="eyebrow">Delegated agent workstreams</p>
@@ -249,13 +367,27 @@ export default function Dashboard() {
         .missionGrid div { display: grid; gap: .35rem; padding: 1rem; border-radius: 1rem; background: rgba(2,6,23,.42); }
         .missionGrid span, article span { color: #93c5fd; font-size: .78rem; font-weight: 950; text-transform: uppercase; letter-spacing: .1em; }
         .missionGrid strong { font-size: 1.08rem; }
+        .avaChat { margin-bottom: 3rem; padding: 1.25rem; border-radius: 1.5rem; border: 1px solid rgba(148,163,184,.18); background: linear-gradient(145deg, rgba(15,23,42,.78), rgba(37,99,235,.12)); box-shadow: 0 25px 80px rgba(2,6,23,.3); }
+        .chatHeader { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 1rem; }
+        .chatHeader h2 { max-width: 820px; margin-bottom: 0; }
+        .voiceButton { white-space: nowrap; color: #fff; background: linear-gradient(135deg, #2563eb, #db2777); box-shadow: 0 18px 55px rgba(37,99,235,.25); }
+        .conversation { display: grid; gap: .85rem; max-height: 460px; overflow: auto; padding: .25rem; }
+        .bubble { width: min(760px, 100%); padding: 1rem; border-radius: 1.1rem; border: 1px solid rgba(148,163,184,.18); }
+        .bubble strong { display: block; margin-bottom: .35rem; color: #bfdbfe; }
+        .bubble p { margin: 0; color: rgba(226,232,240,.8); line-height: 1.65; }
+        .avaBubble { background: rgba(2,6,23,.55); }
+        .userBubble { justify-self: end; background: rgba(37,99,235,.18); }
+        .avaComposer { display: grid; grid-template-columns: 1fr auto; gap: .85rem; margin-top: 1rem; align-items: end; }
+        textarea { width: 100%; box-sizing: border-box; resize: vertical; border: 1px solid rgba(147,197,253,.22); border-radius: 1rem; padding: 1rem; color: #fff; background: rgba(2,6,23,.62); outline: none; font: inherit; }
+        textarea:focus { border-color: rgba(147,197,253,.72); box-shadow: 0 0 0 4px rgba(59,130,246,.14); }
+        .voiceStatus { margin: .85rem 0 0; color: rgba(226,232,240,.62); font-size: .9rem; }
         .sectionTop { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 1rem; }
         .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
         article { padding: 1.15rem; min-height: 180px; }
         article h3 { font-size: 1.35rem; margin: .7rem 0; }
         article p { color: rgba(226,232,240,.72); line-height: 1.6; }
         @media (max-width: 980px) { .console { grid-template-columns: 1fr; } .rail { position: static; border-right: 0; border-bottom: 1px solid rgba(148,163,184,.16); } .rail nav { display: flex; overflow: auto; } header, .builder { grid-template-columns: 1fr; } .cards { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .main { padding: 1rem; } .cards { grid-template-columns: 1fr; } .sectionTop { display: block; } }
+        @media (max-width: 640px) { .main { padding: 1rem; } .cards { grid-template-columns: 1fr; } .sectionTop, .chatHeader { display: block; } .avaComposer { grid-template-columns: 1fr; } }
       `}</style>
     </main>
   );
