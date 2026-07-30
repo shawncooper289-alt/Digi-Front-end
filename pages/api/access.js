@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   if (!supabaseUrl || !serviceRoleKey) {
     return res.status(500).json({
       allowed: false,
-      message: 'Server access check is missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.',
+      message: 'Private command center access is not fully configured yet.',
     });
   }
 
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
     role,
     plan,
     message: allowed
-      ? 'Founder or premium access confirmed.'
-      : 'This account needs profiles.role = founder or subscriptions.plan = premium.',
+      ? 'Command center access confirmed.'
+      : 'This account needs private command center approval.',
   });
 }

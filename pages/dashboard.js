@@ -4,23 +4,23 @@ import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
 
 const questions = [
-  'What business are we building and who is it for?',
-  'What offer, pricing, and seat tier should Ava Skye optimize around?',
-  'Which socials, Meta pages, communities, YouTube channels, and WhatsApp flows need onboarding?',
-  'What brand voice, visuals, proof, products, and monetization paths should the agents use?',
+  'What market are we entering, who needs to be convinced, and what outcome must this brand own?',
+  'What offer, pricing, proof, and seat tier should Ava Skye shape into the strongest growth path?',
+  'Which web, social, Meta, YouTube, WhatsApp, and community channels should become part of the launch system?',
+  'What visual direction, brand voice, content style, and conversion assets will make the business look elite?',
 ];
 
 const workstreams = [
-  { title: 'Brand Sync', owner: 'Identity Agent', status: 'Maps voice, colors, offers, and client-specific knowledge.' },
-  { title: 'Social Launch', owner: 'Social Agent', status: 'Connects pages, communities, YouTube, and content calendars.' },
-  { title: 'Meta Growth', owner: 'Ads Agent', status: 'Prepares business pages, audiences, campaigns, and paid community paths.' },
-  { title: 'Web + Sales', owner: 'Funnel Agent', status: 'Builds websites, landing pages, sales pages, banners, and lead capture.' },
-  { title: 'Virtual Studio', owner: 'Studio Agent', status: 'Produces long-form, shorts, cinematic, animated, and platform-native ad assets.' },
-  { title: 'Client Bots', owner: 'Automation Agent', status: 'Creates brand-aware bots for websites, pages, channels, and communities.' },
+  { title: 'Brand Authority', owner: 'Identity Agent', status: 'Defines the message, offer, proof, and visual direction that make the brand feel premium.' },
+  { title: 'Audience Growth', owner: 'Social Agent', status: 'Turns social channels, communities, and content calendars into a connected acquisition system.' },
+  { title: 'Paid Campaigns', owner: 'Ads Agent', status: 'Shapes audiences, creative angles, and campaign paths for Meta and high-intent traffic.' },
+  { title: 'Web + Funnels', owner: 'Funnel Agent', status: 'Builds conversion pages, lead capture, sales paths, and launch-ready web experiences.' },
+  { title: 'Content Studio', owner: 'Studio Agent', status: 'Plans long-form content, shorts, cinematic concepts, animated ads, and platform-native assets.' },
+  { title: 'Client Automation', owner: 'Automation Agent', status: 'Creates brand-aware assistants, follow-up flows, and support systems for client experiences.' },
 ];
 
 export default function Dashboard() {
-  const [status, setStatus] = useState('Checking founder access...');
+  const [status, setStatus] = useState('Opening the Ava Skye command center...');
   const [access, setAccess] = useState(null);
   const [checking, setChecking] = useState(true);
   const [avatarLoaded, setAvatarLoaded] = useState(true);
@@ -32,7 +32,7 @@ export default function Dashboard() {
 
     async function verifyAccess() {
       if (!supabase) {
-        setStatus('Supabase browser credentials are missing.');
+        setStatus('Private command center access is not configured yet.');
         setChecking(false);
         return;
       }
@@ -55,13 +55,13 @@ export default function Dashboard() {
       if (!active) return;
 
       setAccess(result);
-      setStatus(result.message || (response.ok ? 'Founder access confirmed.' : 'Access denied.'));
+      setStatus(result.message || (response.ok ? 'Command center access confirmed.' : 'Access denied.'));
       setChecking(false);
     }
 
     verifyAccess().catch((error) => {
       if (!active) return;
-      setStatus(error.message || 'Unable to verify founder access.');
+      setStatus(error.message || 'Unable to verify command center access.');
       setChecking(false);
     });
 
@@ -82,7 +82,7 @@ export default function Dashboard() {
       <main className="gate">
         <div>
           <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
-          <p>Opening Ava Skye command center...</p>
+          <p>Opening the Ava Skye command center...</p>
         </div>
         <style jsx>{`
           .gate { min-height: 100vh; display: grid; place-items: center; color: #fff; background: #020617; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
@@ -99,8 +99,8 @@ export default function Dashboard() {
       <main className="gate denied">
         <section>
           <a href="/" className="home">DigiMark101</a>
-          <p className="eyebrow">Private dashboard</p>
-          <h1>Founder or premium access required.</h1>
+          <p className="eyebrow">Private command center</p>
+          <h1>Premium access required.</h1>
           <p>{status}</p>
           <div className="actions">
             <a href="/login">Use another account</a>
@@ -141,11 +141,11 @@ export default function Dashboard() {
       <section className="main">
         <header>
           <div>
-            <p className="eyebrow">Ava Skye Guided Build Room</p>
-            <h1>Founder command center for premium client builds.</h1>
+            <p className="eyebrow">Ava Skye Command Center</p>
+            <h1>Premium growth systems directed by Ava Skye.</h1>
           </div>
           <div className={ready ? 'status online' : 'status pending'}>
-            <strong>{access.role === 'founder' ? 'Founder access' : 'Premium access'}</strong>
+            <strong>{access.role === 'founder' ? 'Founder command access' : 'Premium command access'}</strong>
             <span>{access.email} · {access.role || access.plan || 'approved'}</span>
             <small>{status}</small>
             <button type="button" onClick={signOut}>Sign out</button>
@@ -155,9 +155,9 @@ export default function Dashboard() {
         <section className="builder">
           <div className="chatPanel">
             <div className="avatar">AS</div>
-            <h2>Ava Skye Intake</h2>
+            <h2>Strategic Intelligence Intake</h2>
             <p>
-              I will interview the client, fill in missing pieces, assign specialized agents, and keep each deliverable moving until launch.
+              Ava Skye captures the brand, offer, audience, proof, channels, and desired outcome before assigning the right specialist agents.
             </p>
             <div className="questionStack">
               {questions.map((question, index) => (
@@ -180,24 +180,24 @@ export default function Dashboard() {
               )}
               {!avatarLoaded && <div className="studioFallback">Ava Skye</div>}
               <div>
-                <strong>Cinematic dashboard host</strong>
-                <span>Video-ready Ava intro, client briefing, and task delegation preview.</span>
+                <strong>Ava Skye directs execution</strong>
+                <span>Brand intelligence, client briefing, specialist delegation, and launch tracking in one premium workspace.</span>
               </div>
             </div>
-            <h2>Launch Mission</h2>
+            <h2>Growth Mission</h2>
             <div className="missionGrid">
-              <div><span>Client</span><strong>New brand buildout</strong></div>
+              <div><span>Brand</span><strong>Premium market presence</strong></div>
               <div><span>Seat Tier</span><strong>Growth / Studio ready</strong></div>
-              <div><span>Channels</span><strong>Meta, YouTube, WhatsApp, Web</strong></div>
-              <div><span>Output</span><strong>Agency-in-a-box workflow</strong></div>
+              <div><span>Channels</span><strong>Web, Meta, YouTube, WhatsApp</strong></div>
+              <div><span>Output</span><strong>Client-ready growth system</strong></div>
             </div>
           </div>
         </section>
 
         <section className="workstreams">
           <div className="sectionTop">
-            <p className="eyebrow">Delegated agent workstreams</p>
-            <h2>Ava manages the team and checks completion.</h2>
+            <p className="eyebrow">Specialist workstreams</p>
+            <h2>Ava Skye coordinates the team behind the brand, content, campaigns, and conversion system.</h2>
           </div>
           <div className="cards">
             {workstreams.map((stream) => (

@@ -6,8 +6,8 @@ export default function handler(req, res) {
 
   res.status(200).json({
     message: hasSupabase
-      ? 'Ava OS is online with Supabase ready'
-      : 'Ava OS is online — add Supabase env vars to connect data',
+      ? 'Ava Skye command center is online'
+      : 'Ava Skye command center is in private access mode',
     supabase: hasSupabase ? 'configured' : 'missing-env',
     method: req.method,
   });
