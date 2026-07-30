@@ -4,30 +4,71 @@ import { useState } from 'react';
 
 const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
 
-const agentSpecialists = [
-  'Brand Strategy',
-  'Social Onboarding',
-  'Meta Pages + Ads',
-  'Websites + Funnels',
-  'Community Bots',
-  'Video Studio',
-  'YouTube Growth',
-  'WhatsApp Sales',
+const agencyPillars = [
+  {
+    title: 'Brand presence that looks established from day one',
+    copy: 'Clear positioning, polished visuals, website direction, and social foundations built around the business you want people to trust.',
+  },
+  {
+    title: 'Content and campaigns built for attention',
+    copy: 'Short-form video ideas, YouTube direction, ad angles, launch messages, and sales assets shaped into a consistent growth system.',
+  },
+  {
+    title: 'Automation that keeps the business moving',
+    copy: 'Client intake, guided setup, sales flows, community support, and brand-aware AI assistants organized into one operating workflow.',
+  },
 ];
 
-const outcomes = [
-  'Business pages, paid communities, and social channels launched from one guided workflow.',
-  'Brand-aware bots trained for client sites, pages, channels, and communities.',
-  'Sales pages, banners, videos, ads, and monetization assets built by specialist AI agents.',
+const serviceStack = [
+  'Brand strategy and offer positioning',
+  'Website and landing page direction',
+  'Funnels, lead magnets, and sales pages',
+  'Meta pages, ads, and audience planning',
+  'YouTube, shorts, and video campaign briefs',
+  'Community, WhatsApp, and client support flows',
+  'Brand-aware AI bot planning',
+  'Launch roadmap and growth execution',
 ];
 
-const backendPowers = [
-  'Onboard socials, Meta business pages, paid communities, YouTube channels, WhatsApp, and client profiles.',
-  'Build websites, banners, sales pages, lead magnets, brand kits, funnels, and monetization paths.',
-  'Command a virtual studio for long-form videos, shorts, cinematic spots, animated ads, and TV-ready placements.',
-  'Deploy specialized brand-aware bots for communities, pages, sites, channels, and client support flows.',
+const trustSignals = [
+  'Clear setup path',
+  'Brand-first strategy',
+  'Multi-channel execution',
+  'AI-assisted delivery',
 ];
 
+const processSteps = [
+  {
+    title: 'Discover',
+    copy: 'Ava learns the business, audience, offer, goals, existing website, and current online presence.',
+  },
+  {
+    title: 'Design the plan',
+    copy: 'DigiMark101 turns those answers into a focused brand, website, content, automation, and growth roadmap.',
+  },
+  {
+    title: 'Build the system',
+    copy: 'Specialized workflows shape the pages, campaigns, sales assets, content direction, and AI support pieces.',
+  },
+  {
+    title: 'Launch with direction',
+    copy: 'Clients leave with clear next steps, organized assets, and a marketing system designed to keep improving.',
+  },
+];
+
+const clientOutcomes = [
+  'A brand message people understand quickly',
+  'A website plan built around action, not decoration',
+  'Content and campaign ideas matched to the offer',
+  'Sales and support flows that feel organized',
+  'A clear path from account setup to launch',
+];
+
+const planHighlights = [
+  { name: 'Launch', detail: 'A guided foundation for new founders who need the right message, structure, and first online presence.' },
+  { name: 'Growth', detail: 'A stronger marketing buildout for clients ready to add funnels, social channels, campaigns, and sales flows.' },
+  { name: 'Scale', detail: 'Advanced planning for serious operators who need deeper content, automation, video, and multi-channel execution.' },
+];
 
 const pricingPlans = [
   {
@@ -75,11 +116,6 @@ const pricingPlans = [
   },
 ];
 
-const tiers = [
-  { name: 'Launch Account', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
-  { name: 'Growth Account', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
-  { name: 'Premium Account', detail: 'Cinematic and animated video production, channel packaging, bots, sales systems, and ad distribution support.' },
-];
 
 export default function Home() {
   const [avatarLoaded, setAvatarLoaded] = useState(true);
@@ -111,15 +147,14 @@ export default function Home() {
             <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
           </div>
           <p className="lead">
-            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one polished command center.
+            DigiMark101 helps founders and agencies turn an idea, offer, or existing business into a polished online presence with clear strategy, strong visuals, client-ready pages, content direction, automation, and growth systems.
           </p>
           <div className="heroActions">
-            <Link className="primary" href="/dashboard">Start your dynasty build</Link>
-            <a className="secondary" href="#ava-guide">Meet Ava Skye</a>
+            <Link className="primary" href="/dashboard">Start your guided build</Link>
+            <a className="secondary" href="#services">See what you get</a>
           </div>
-          <div className="signalBar">
-            <span>Ava turns each answer into the next clear step for your brand, website, content, and growth plan.</span>
-            <strong>Guided onboarding</strong>
+          <div className="trustStrip">
+            {trustSignals.map((signal) => <span key={signal}>{signal}</span>)}
           </div>
         </div>
 
@@ -139,67 +174,94 @@ export default function Home() {
             {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
           </div>
           <div className="chiefCard">
-            <span>Meet your AI chief of staff.</span>
-            <p>Ava Skye turns your ideas into a complete marketing operating system.</p>
+            <span>A clear path from idea to launch.</span>
+            <p>Ava Skye guides the intake, organizes the plan, and keeps every step focused on what the business needs next.</p>
           </div>
         </div>
       </section>
 
-      <section id="ava-guide" className="section cinema">
-        <div className="videoCopy polishedSetup">
-          <p className="eyebrow">Guided setup experience</p>
-          <h2>Ava Skye guides every client through a focused launch plan.</h2>
-          <p>
-            Once your account is set up, Ava guides you through the entire onboarding process. If you already have a website, she asks for the URL, reviews the details, and uses that information to move your setup forward. If you do not have a website yet, she asks about your idea, your goals, and the outcome you want to create.
-          </p>
-          <p>
-            From there, Ava forms a clear plan to help you reach your goal through the fastest and most effective route.
-          </p>
-        </div>
-      </section>
-
-      <section id="backend" className="section backendPreview">
+      <section id="services" className="section serviceIntro">
         <div className="sectionHeader">
-          <p className="eyebrow">Inside the client dashboard</p>
-          <h2>Every capability is organized into a guided professional workflow.</h2>
+          <div>
+            <p className="eyebrow">What clients get</p>
+            <h2>A complete marketing foundation built around clarity, trust, and action.</h2>
+          </div>
+          <p className="sectionLead">The goal is not just to look online. The goal is to look prepared, explain the offer clearly, guide visitors toward action, and give the business a system it can keep building on.</p>
         </div>
-        <div className="backendGrid">
-          {backendPowers.map((power, index) => (
-            <article key={power}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{power}</p>
+        <div className="pillarGrid">
+          {agencyPillars.map((pillar) => (
+            <article key={pillar.title}>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.copy}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="workflow" className="section gridTwo">
-        <div>
-          <p className="eyebrow">Guided professional workflow</p>
-          <h2>From questions to completed business systems.</h2>
+      <section id="ava-guide" className="section avaGuide">
+        <div className="polishedSetup">
+          <p className="eyebrow">Ava Skye guided setup</p>
+          <h2>Your setup begins with the right questions, not a blank form.</h2>
+          <p>
+            Once your account is set up, Ava guides you through the entire onboarding process. If you already have a website, she asks for the URL, reviews the details, and uses that information to move your setup forward.
+          </p>
+          <p>
+            If you do not have a website yet, Ava asks about your idea, your audience, and the outcome you want. From there, she forms a clear plan to help you move through the fastest and most effective route.
+          </p>
         </div>
-        <div className="workflowList">
-          {outcomes.map((outcome, index) => (
-            <article key={outcome}>
+        <div className="outcomePanel">
+          <p className="eyebrow">The result</p>
+          <ul>
+            {clientOutcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section id="workflow" className="section processSection">
+        <div className="sectionHeader">
+          <div>
+            <p className="eyebrow">How the work moves</p>
+            <h2>A professional path from first answer to finished direction.</h2>
+          </div>
+        </div>
+        <div className="processGrid">
+          {processSteps.map((step, index) => (
+            <article key={step.title}>
               <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{outcome}</p>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="agents" className="section">
+      <section id="agents" className="section serviceStackSection">
         <div className="sectionHeader">
-          <p className="eyebrow">Specialized AI agent network</p>
-          <h2>Ava Skye delegates, reviews, and sees the work to completion.</h2>
+          <div>
+            <p className="eyebrow">Agency capabilities</p>
+            <h2>Everything is organized around the pieces a serious online business needs.</h2>
+          </div>
+          <p className="sectionLead">DigiMark101 connects strategy, creative direction, sales assets, content, automation, and channel planning so the experience feels complete instead of scattered.</p>
         </div>
-        <div className="agentGrid">
-          {agentSpecialists.map((agent) => (
-            <div className="agent" key={agent}>{agent}</div>
-          ))}
+        <div className="serviceStack">
+          {serviceStack.map((service) => <div key={service}>{service}</div>)}
         </div>
       </section>
 
+      <section id="tiers" className="section tierWrap">
+        <div className="sectionHeader">
+          <p className="eyebrow">Built for different stages</p>
+          <h2>Start with the foundation, then grow into deeper execution.</h2>
+        </div>
+        <div className="tiers">
+          {planHighlights.map((tier) => (
+            <article key={tier.name}>
+              <h3>{tier.name}</h3>
+              <p>{tier.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section id="pricing" className="section pricingSection">
         <div className="sectionHeader">
@@ -207,7 +269,7 @@ export default function Home() {
             <p className="eyebrow">Client account pricing</p>
             <h2>Client plans built for clear outcomes and smooth account setup.</h2>
           </div>
-          <p className="pricingIntro">After checkout, clients are sent to create their login and enter the DigiMark101 dashboard. No team account is required.</p>
+          <p className="pricingIntro">Choose the level that fits your stage. After checkout, your account opens the guided dashboard so Ava can begin shaping the right plan for your brand.</p>
         </div>
         <div className="pricingGrid">
           {pricingPlans.map((plan) => (
@@ -228,20 +290,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="tiers" className="section tierWrap">
-        <div className="sectionHeader">
-          <p className="eyebrow">Client-plan controlled capability</p>
-          <h2>Simple enough for new founders, deep enough for serious operators.</h2>
-        </div>
-        <div className="tiers">
-          {tiers.map((tier) => (
-            <article key={tier.name}>
-              <h3>{tier.name}</h3>
-              <p>{tier.detail}</p>
-            </article>
-          ))}
-        </div>
-      </section>
 
       <footer>
         <strong>DigiMark101</strong>
@@ -276,8 +324,8 @@ export default function Home() {
         .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); box-shadow: 0 24px 80px rgba(37,99,235,.36); }
         .secondary { color: #dbeafe; border: 1px solid rgba(147,197,253,.35); background: rgba(15,23,42,.62); }
         .primary:hover, .secondary:hover { transform: translateY(-2px); }
-        .signalBar { max-width: 720px; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border: 1px solid rgba(148,163,184,.2); border-radius: 1.2rem; background: rgba(15,23,42,.6); color: rgba(226,232,240,.78); }
-        .signalBar strong { color: #86efac; white-space: nowrap; }
+        .trustStrip { max-width: 760px; display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin-top: 2rem; }
+        .trustStrip span { min-height: 72px; display: flex; align-items: center; padding: .85rem; border: 1px solid rgba(148,163,184,.22); border-radius: 1rem; color: rgba(226,232,240,.86); background: rgba(15,23,42,.58); font-weight: 900; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
         .avaShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
         .portraitHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
         .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .82; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
@@ -286,24 +334,25 @@ export default function Home() {
         .chiefCard { position: absolute; left: 0; right: 0; bottom: 2rem; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
         .chiefCard span { display: block; color: #fff; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1; font-weight: 1000; letter-spacing: -.04em; }
         .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
-        .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
+        .processGrid span { color: #f0abfc; font-weight: 950; }
         .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
-        .cinema { display: block; }
         .avatarFallback { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 3.5rem; line-height: .9; font-weight: 1000; letter-spacing: -.08em; background: radial-gradient(circle at 50% 15%, rgba(240,171,252,.35), transparent 16rem), linear-gradient(145deg, #0f172a, #1e3a8a 52%, #831843); }
-        .videoCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; }
-        .polishedSetup { max-width: 880px; padding: 2rem; border-radius: 1.75rem; border: 1px solid rgba(148,163,184,.22); background: linear-gradient(145deg, rgba(15,23,42,.78), rgba(37,99,235,.12)); box-shadow: 0 30px 100px rgba(2,6,23,.36); }
-        .backendPreview { padding-top: 2rem; }
-        .backendGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .backendGrid article { padding: 1.2rem; min-height: 190px; border-radius: 1.25rem; background: linear-gradient(145deg, rgba(15,23,42,.72), rgba(37,99,235,.12)); border: 1px solid rgba(148,163,184,.2); }
-        .backendGrid p { margin: 1rem 0 0; color: rgba(226,232,240,.78); line-height: 1.6; }
-        .gridTwo { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; align-items: start; }
-        h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; letter-spacing: -.055em; max-width: 760px; }
-        .workflowList { display: grid; gap: 1rem; }
-        .workflowList article { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.25rem; border-radius: 1.2rem; border: 1px solid rgba(148,163,184,.2); background: rgba(15,23,42,.62); }
-        .workflowList p { margin: 0; color: rgba(226,232,240,.8); line-height: 1.6; }
+        h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; letter-spacing: -.055em; max-width: 780px; }
         .sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
-        .agentGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .agent { min-height: 130px; display: flex; align-items: end; padding: 1rem; border-radius: 1.3rem; border: 1px solid rgba(148,163,184,.2); background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.11)); font-weight: 950; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+        .sectionLead { max-width: 430px; color: rgba(226,232,240,.74); line-height: 1.65; margin: 0; }
+        .pillarGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .pillarGrid article, .processGrid article, .tiers article { padding: 1.45rem; border-radius: 1.45rem; background: linear-gradient(145deg, rgba(15,23,42,.72), rgba(37,99,235,.12)); border: 1px solid rgba(148,163,184,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+        .pillarGrid h3, .processGrid h3, .tiers h3 { font-size: 1.35rem; line-height: 1.1; margin-bottom: .8rem; }
+        .pillarGrid p, .processGrid p, .tiers p { color: rgba(226,232,240,.78); line-height: 1.65; margin: 0; }
+        .avaGuide { display: grid; grid-template-columns: 1.05fr .95fr; gap: 1rem; align-items: stretch; }
+        .polishedSetup, .outcomePanel { padding: 2rem; border-radius: 1.75rem; border: 1px solid rgba(148,163,184,.22); background: linear-gradient(145deg, rgba(15,23,42,.78), rgba(37,99,235,.12)); box-shadow: 0 30px 100px rgba(2,6,23,.36); }
+        .polishedSetup p { color: rgba(226,232,240,.8); font-size: 1.08rem; line-height: 1.75; }
+        .outcomePanel ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; }
+        .outcomePanel li { position: relative; padding: 1rem 1rem 1rem 2.5rem; border-radius: 1rem; background: rgba(255,255,255,.055); color: rgba(248,251,255,.88); font-weight: 850; }
+        .outcomePanel li:before { content: '✓'; position: absolute; left: 1rem; color: #86efac; font-weight: 1000; }
+        .processGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .serviceStack { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .serviceStack div { min-height: 120px; display: flex; align-items: end; padding: 1rem; border-radius: 1.25rem; border: 1px solid rgba(148,163,184,.2); background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.11)); font-weight: 950; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
 
         .pricingSection { padding-top: 2rem; }
         .pricingIntro { max-width: 430px; color: rgba(226,232,240,.72); line-height: 1.6; margin: 0; }
@@ -324,8 +373,8 @@ export default function Home() {
         .tiers h3 { font-size: 1.35rem; margin-bottom: .7rem; }
         .tiers p { color: rgba(226,232,240,.76); line-height: 1.65; }
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
-        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .polishedSetup { padding: 1.35rem; } }
+        @media (max-width: 900px) { .hero, .avaGuide { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .polishedSetup, .outcomePanel { padding: 1.35rem; } }
       `}</style>
     </main>
   );
