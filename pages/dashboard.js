@@ -144,9 +144,15 @@ export default function Dashboard() {
     setAvaThinking(true);
 
     try {
+      const { data: sessionData } = supabase ? await supabase.auth.getSession() : { data: null };
+      const accessToken = sessionData?.session?.access_token;
+
       const response = await fetch('/api/ava', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
         body: JSON.stringify({ message, history: avaMessages }),
       });
       const result = await response.json();
