@@ -44,6 +44,9 @@ Set these in your Vercel project settings:
 - `NEXT_PUBLIC_BASE44_API_URL` - Base44 API endpoint
 - `NEXT_PUBLIC_BASE44_API_KEY` - Base44 API key
 - `NEXT_PUBLIC_CLIENT_ID` - Client ID for Base44
+- `FOUNDER_EMAIL` - Founder login email
+- `FOUNDER_PASSWORD` - Founder login password
+- `FOUNDER_SESSION_SECRET` - Random secret used to sign founder sessions
 
 ## What Was Fixed
 
