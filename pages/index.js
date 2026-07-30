@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { hasSupabaseConfig } from '../lib/supabaseClient';
 
@@ -15,16 +16,16 @@ const agentTeams = [
 ];
 
 const outcomes = [
-  'Business pages, paid communities, and social channels launched from one guided workflow.',
-  'Brand-aware bots trained for client sites, pages, channels, and communities.',
-  'Sales pages, banners, videos, ads, and monetization assets built by specialist AI agents.',
+  'Premium digital storefronts, landing pages, and funnels designed to convert high-intent visitors.',
+  'Campaign systems that connect brand strategy, content production, paid media, and follow-up.',
+  'Agency-grade delivery workflows that turn client inputs into polished assets ready for market.',
 ];
 
 const backendPowers = [
-  'Onboard socials, Meta business pages, paid communities, YouTube channels, WhatsApp, and client profiles.',
-  'Build websites, banners, sales pages, lead magnets, brand kits, funnels, and monetization paths.',
-  'Command a virtual studio for long-form videos, shorts, cinematic spots, animated ads, and TV-ready placements.',
-  'Deploy specialized brand-aware bots for communities, pages, sites, channels, and client support flows.',
+  'Brand intelligence: offers, audience segments, voice, proof, visuals, and positioning organized before launch.',
+  'Web and funnel production: premium pages, lead magnets, conversion paths, and campaign-ready creative direction.',
+  'Content studio: long-form concepts, shorts, animated spots, ad scripts, and channel packaging built from one brand system.',
+  'Automation layer: follow-up flows, client workspaces, support bots, and clear delivery checkpoints for each account.',
 ];
 
 
@@ -33,55 +34,55 @@ const pricingPlans = [
     name: 'Startup Seat',
     slug: 'startup',
     price: '$97/mo',
-    note: 'For beginners launching the first digital dynasty.',
-    features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
+    note: 'For founders who need a credible launch foundation without looking early-stage.',
+    features: ['Ava Skye strategy intake', 'Brand foundation', 'Launch page direction', 'Social presence checklist', 'Campaign starter prompts'],
   },
   {
     name: 'Growth Seat',
     slug: 'growth',
     price: '$197/mo',
-    note: 'For creators and small businesses ready to grow faster.',
-    features: ['Everything in Startup', 'Meta + social onboarding', 'Sales page workflow', 'WhatsApp sales flow', 'Community launch plan'],
+    note: 'For businesses ready to turn attention into leads, booked calls, and recurring campaigns.',
+    features: ['Everything in Startup', 'Meta + social onboarding', 'Sales funnel workflow', 'WhatsApp follow-up path', 'Community launch plan'],
     highlight: true,
   },
   {
     name: 'Pro Seat',
     slug: 'pro',
     price: '$397/mo',
-    note: 'For operators who want more automation and content output.',
-    features: ['Everything in Growth', 'YouTube channel support', 'Brand-aware client bot plan', 'Campaign builder', 'Video studio briefs'],
+    note: 'For teams that need stronger automation, sharper content, and a more complete growth engine.',
+    features: ['Everything in Growth', 'YouTube growth system', 'Brand-aware client assistant', 'Campaign builder', 'Studio production briefs'],
   },
   {
     name: 'Elite Team Seat',
     slug: 'elite-team',
     price: '$797/mo',
-    note: 'For teams needing multi-channel execution and deeper support.',
-    features: ['Everything in Pro', 'Team workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
+    note: 'For teams that want multi-channel execution across web, social, paid media, and content.',
+    features: ['Everything in Pro', 'Team workflow lanes', 'Advanced funnel planning', 'Long + short-form production', 'Ad placement roadmap'],
   },
   {
     name: 'White Label Partner',
     slug: 'white-label-partner',
     price: '$1,497/mo',
-    note: 'For agencies reselling DigiMark101 workflows under their brand.',
-    features: ['Partner dashboard direction', 'Client workspace model', 'Reusable onboarding flows', 'Agency delivery templates', 'Priority roadmap access'],
+    note: 'For agencies that want a premium AI delivery layer for client acquisition and fulfillment.',
+    features: ['Partner command center', 'Client workspace model', 'Reusable onboarding flows', 'Agency delivery templates', 'Priority roadmap access'],
   },
   {
     name: 'White Label Enterprise',
     slug: 'white-label-enterprise',
     price: '$2,997/mo',
-    note: 'For serious agencies building a branded AI marketing platform.',
-    features: ['Everything in Partner', 'Multi-client operating model', 'Custom bot strategy', 'Studio production workflows', 'Premium implementation planning'],
+    note: 'For serious agencies building a branded AI marketing operating system.',
+    features: ['Everything in Partner', 'Multi-client operating model', 'Custom AI assistant strategy', 'Studio production workflows', 'Premium implementation planning'],
   },
 ];
 
 const tiers = [
-  { name: 'Launch Seat', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
-  { name: 'Growth Seat', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
-  { name: 'Studio Seat', detail: 'Cinematic and animated video production, channel packaging, bots, sales systems, and ad distribution support.' },
+  { name: 'Launch Seat', detail: 'Ava Skye turns scattered ideas into a launch-ready brand foundation, site direction, and campaign checklist.' },
+  { name: 'Growth Seat', detail: 'Funnels, paid community setup, Meta campaigns, YouTube support, and WhatsApp follow-up move into one connected growth path.' },
+  { name: 'Studio Seat', detail: 'Premium content systems, channel packaging, AI assistants, sales workflows, and ad distribution are coordinated for higher-value execution.' },
 ];
 
 export default function Home() {
-  const [message, setMessage] = useState('Ava Skye is preparing your launch room...');
+  const [message, setMessage] = useState('Ava Skye is preparing the command center...');
   const [loading, setLoading] = useState(true);
   const [avatarLoaded, setAvatarLoaded] = useState(true);
   const supabaseReady = hasSupabaseConfig();
@@ -94,13 +95,22 @@ export default function Home() {
         setLoading(false);
       })
       .catch(() => {
-        setMessage('Ava Skye is ready to build your digital agency stack.');
+        setMessage('Ava Skye is ready to orchestrate your growth system.');
         setLoading(false);
       });
   }, []);
 
   return (
-    <main className="page">
+    <>
+      <Head>
+        <title>DigiMark101 | Ava Skye AI Marketing Command Center</title>
+        <meta
+          name="description"
+          content="DigiMark101 is a premium AI marketing command center led by Ava Skye for websites, funnels, campaigns, content systems, and agency-grade growth workflows."
+        />
+      </Head>
+
+      <main className="page">
       <div className="mesh meshOne" />
       <div className="mesh meshTwo" />
       <nav className="nav">
@@ -109,7 +119,7 @@ export default function Home() {
           <span>DigiMark101</span>
         </div>
         <div className="navLinks">
-          <a href="#ava-video">Ava Skye</a>
+          <a href="#ava">Ava Skye</a>
           <a href="#workflow">Workflow</a>
           <a href="#agents">AI Agents</a>
           <a href="#tiers">Seat Tiers</a>
@@ -119,22 +129,22 @@ export default function Home() {
 
       <section className="hero">
         <div className="heroCopy">
-          <div className="premiumBadge">Premium digital marketing agency</div>
+          <div className="premiumBadge">AI marketing command center</div>
           <div className="welcomeLockup">
             <span>Welcome to</span>
             <h1>DigiMark101</h1>
             <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
           </div>
           <p className="lead">
-            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one premium command center.
+            Ava Skye leads an AI-powered growth team that builds premium websites, campaigns, content systems, automations, and client-ready marketing assets from one command center.
           </p>
           <div className="heroActions">
-            <a className="primary" href="/dashboard">Start your dynasty build</a>
-            <a className="secondary" href="#ava-video">Meet Ava Skye</a>
+            <a className="primary" href="/dashboard">Enter the Command Center</a>
+            <a className="secondary" href="#ava">Meet Ava Skye</a>
           </div>
           <div className="signalBar">
-            <span>{loading ? 'Preparing your agency command room...' : message}</span>
-            <strong>{supabaseReady ? 'Backend live' : 'Backend syncing'}</strong>
+            <span>{loading ? 'Ava Skye is assembling your growth system...' : message}</span>
+            <strong>{supabaseReady ? 'Command center online' : 'Private access enabled'}</strong>
           </div>
         </div>
 
@@ -151,45 +161,47 @@ export default function Home() {
             {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
           </div>
           <div className="chiefCard">
-            <span>Meet your AI chief of staff.</span>
-            <p>Ava Skye turns your ideas into a premium marketing operating system.</p>
+            <span>Ava Skye, your AI growth architect.</span>
+            <p>She directs strategy, creative, automation, and delivery so the brand feels premium from the first interaction.</p>
           </div>
         </div>
       </section>
 
-      <section id="ava-video" className="section cinema">
-        <div className="videoStage">
-          <div className="avatarFrame">
-            {avatarLoaded && (
-              <img
-                src={AVA_SKYE_IMAGE_URL}
-                alt="Ava Skye AI executive avatar"
-                onError={() => setAvatarLoaded(false)}
-              />
-            )}
-            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
-            <div className="scanLine" />
+      <section id="ava" className="section commandStory">
+        <div className="commandVisual" aria-label="Ava Skye command workflow">
+          <div className="commandPanel primaryPanel">
+            <span>01</span>
+            <strong>Strategic Intake</strong>
+            <p>Ava Skye captures the offer, market, audience, proof, visual direction, channels, and revenue goals before execution begins.</p>
           </div>
-          <div className="playOrb">▶</div>
-          <div className="captionStrip">Cinematic intro video placeholder • replace with Ava Skye narration asset</div>
+          <div className="commandPanel">
+            <span>02</span>
+            <strong>Elite Agent Team</strong>
+            <p>Specialists handle websites, funnels, paid media, video direction, social growth, brand systems, and automation with one coordinated brief.</p>
+          </div>
+          <div className="commandPanel">
+            <span>03</span>
+            <strong>Polished Delivery</strong>
+            <p>Every workstream is shaped around a client-ready outcome: impressive presentation, clear conversion paths, and assets ready to publish.</p>
+          </div>
         </div>
-        <div className="videoCopy">
-          <p className="eyebrow">Cinematic front-end story</p>
-          <h2>Ava Skye tells clients what happens after they enter the backend dashboard.</h2>
+        <div className="commandCopy">
+          <p className="eyebrow">Ava Skye command layer</p>
+          <h2>The face of a premium AI agency operating system.</h2>
           <p>
-            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the chosen seat tier into a full marketing operating system.
+            Ava Skye is presented as the executive AI host of DigiMark101: she welcomes clients, understands their business, assigns specialist agents, and turns strategy into websites, videos, funnels, campaigns, and automation systems.
           </p>
           <div className="scriptCard">
-            <strong>Intro script direction</strong>
-            <span>“Welcome to DigiMark101. I’m Ava Skye. Once you enter your dashboard, I’ll learn your business, connect your socials, build your brand systems, launch your pages, coordinate your content studio, and delegate every task to the right AI specialist until your digital agency engine is ready.”</span>
+            <strong>Built to stand apart</strong>
+            <span>A premium AI marketing engine for brands that need sharper positioning, stronger presentation, and faster execution than ordinary providers can deliver.</span>
           </div>
         </div>
       </section>
 
       <section id="backend" className="section backendPreview">
         <div className="sectionHeader">
-          <p className="eyebrow">Inside the backend dashboard</p>
-          <h2>Every capability is organized into a guided professional workflow.</h2>
+          <p className="eyebrow">Inside the command center</p>
+          <h2>Ava Skye coordinates strategy, creative, automation, and delivery.</h2>
         </div>
         <div className="backendGrid">
           {backendPowers.map((power, index) => (
@@ -203,8 +215,8 @@ export default function Home() {
 
       <section id="workflow" className="section gridTwo">
         <div>
-          <p className="eyebrow">Guided professional workflow</p>
-          <h2>From questions to completed business systems.</h2>
+          <p className="eyebrow">Execution workflow</p>
+          <h2>From raw business ideas to polished market-ready assets.</h2>
         </div>
         <div className="workflowList">
           {outcomes.map((outcome, index) => (
@@ -219,7 +231,7 @@ export default function Home() {
       <section id="agents" className="section">
         <div className="sectionHeader">
           <p className="eyebrow">Specialized AI agent team</p>
-          <h2>Ava Skye delegates, reviews, and sees the work to completion.</h2>
+          <h2>Ava Skye directs the team behind the brand, content, campaigns, and conversions.</h2>
         </div>
         <div className="agentGrid">
           {agentTeams.map((agent) => (
@@ -232,10 +244,10 @@ export default function Home() {
       <section id="pricing" className="section pricingSection">
         <div className="sectionHeader">
           <div>
-            <p className="eyebrow">Stripe checkout pricing</p>
-            <h2>More capability for less, built for high-margin recurring revenue.</h2>
+            <p className="eyebrow">Investment tiers</p>
+            <h2>Built for founders, operators, and agencies that want premium output at scale.</h2>
           </div>
-          <p className="pricingIntro">Seat prices are structured for recurring revenue, higher-value upgrades, and simple Stripe Checkout wiring once price IDs are added.</p>
+          <p className="pricingIntro">Choose the level of strategy, production, automation, and support needed to turn a business into a stronger digital brand.</p>
         </div>
         <div className="pricingGrid">
           {pricingPlans.map((plan) => (
@@ -248,8 +260,8 @@ export default function Home() {
               <ul>
                 {plan.features.map((feature) => <li key={feature}>{feature}</li>)}
               </ul>
-              <a className="checkoutBtn" href={`/api/checkout?plan=${plan.slug}`}>
-                Start checkout
+              <a className="checkoutBtn" href="/login">
+                Request Private Access
               </a>
             </article>
           ))}
@@ -258,8 +270,8 @@ export default function Home() {
 
       <section id="tiers" className="section tierWrap">
         <div className="sectionHeader">
-          <p className="eyebrow">Seat-tier controlled capability</p>
-          <h2>Simple enough for beginners, deep enough for serious operators.</h2>
+          <p className="eyebrow">Seat-tier intelligence</p>
+          <h2>The system scales from launch foundation to agency-grade execution.</h2>
         </div>
         <div className="tiers">
           {tiers.map((tier) => (
@@ -273,7 +285,7 @@ export default function Home() {
 
       <footer>
         <strong>DigiMark101</strong>
-        <span>Vercel front end • Supabase-ready data layer • Ava Skye AI agency workflow</span>
+        <span>Ava Skye AI command center • Premium web, content, funnel, and automation systems</span>
       </footer>
 
       <style jsx>{`
@@ -316,16 +328,13 @@ export default function Home() {
         .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
         .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
         .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
-        .cinema { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
-        .videoStage { min-height: 560px; position: relative; display: grid; place-items: center; border-radius: 2.2rem; overflow: hidden; border: 1px solid rgba(148,163,184,.22); background: radial-gradient(circle at 50% 20%, rgba(59,130,246,.28), transparent 34rem), linear-gradient(145deg, rgba(15,23,42,.96), rgba(2,6,23,.82)); box-shadow: 0 40px 130px rgba(2,6,23,.72); }
-        .videoStage:before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0 40%, rgba(255,255,255,.1) 50%, transparent 60%); transform: translateX(-120%); animation: sweep 5s infinite; }
-        .avatarFrame { width: min(360px, 72vw); aspect-ratio: 1; border-radius: 2rem; overflow: hidden; display: grid; place-items: center; position: relative; border: 1px solid rgba(255,255,255,.22); background: linear-gradient(145deg, rgba(15,23,42,.7), rgba(37,99,235,.22)); box-shadow: 0 24px 80px rgba(0,0,0,.48); }
-        .avatarFrame img { width: 100%; height: 100%; object-fit: cover; }
-        .avatarFallback { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 3.5rem; line-height: .9; font-weight: 1000; letter-spacing: -.08em; background: radial-gradient(circle at 50% 15%, rgba(240,171,252,.35), transparent 16rem), linear-gradient(145deg, #0f172a, #1e3a8a 52%, #831843); }
-        .scanLine { position: absolute; left: 0; right: 0; height: 2px; top: 50%; background: linear-gradient(90deg, transparent, #93c5fd, transparent); box-shadow: 0 0 24px #60a5fa; opacity: .8; animation: scan 3s infinite; }
-        .playOrb { position: absolute; width: 76px; height: 76px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(16px); box-shadow: 0 20px 60px rgba(37,99,235,.32); }
-        .captionStrip { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.8); background: rgba(2,6,23,.72); border: 1px solid rgba(148,163,184,.18); }
-        .videoCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; }
+        .commandStory { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
+        .commandVisual { display: grid; gap: 1rem; padding: 1rem; border-radius: 2.2rem; border: 1px solid rgba(148,163,184,.22); background: radial-gradient(circle at 50% 20%, rgba(59,130,246,.24), transparent 34rem), linear-gradient(145deg, rgba(15,23,42,.96), rgba(2,6,23,.82)); box-shadow: 0 40px 130px rgba(2,6,23,.72); }
+        .commandPanel { padding: 1.35rem; border-radius: 1.35rem; border: 1px solid rgba(148,163,184,.18); background: rgba(255,255,255,.06); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+        .commandPanel.primaryPanel { background: linear-gradient(145deg, rgba(37,99,235,.28), rgba(219,39,119,.18)); border-color: rgba(147,197,253,.35); }
+        .commandPanel span { display: block; margin-bottom: .7rem; color: #f0abfc; font-weight: 1000; letter-spacing: .12em; }
+        .commandPanel strong { display: block; color: #fff; font-size: clamp(1.45rem, 3vw, 2.35rem); line-height: 1; letter-spacing: -.045em; }
+        .commandPanel p, .commandCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; margin: .75rem 0 0; }
         .scriptCard { display: grid; gap: .6rem; padding: 1.2rem; border-radius: 1.2rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); color: rgba(226,232,240,.8); }
         .scriptCard strong { color: #f0abfc; }
         .backendPreview { padding-top: 2rem; }
@@ -360,11 +369,10 @@ export default function Home() {
         .tiers h3 { font-size: 1.35rem; margin-bottom: .7rem; }
         .tiers p { color: rgba(226,232,240,.76); line-height: 1.65; }
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
-        @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
-        @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
-        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .commandStory { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } }
       `}</style>
-    </main>
+      </main>
+    </>
   );
 }

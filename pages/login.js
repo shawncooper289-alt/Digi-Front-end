@@ -6,7 +6,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mode, setMode] = useState('signin');
-  const [status, setStatus] = useState('Sign in with your founder or premium account.');
+  const [status, setStatus] = useState('Sign in to the private Ava Skye command center.');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Login() {
     event.preventDefault();
 
     if (!supabase) {
-      setStatus('Supabase browser credentials are missing. Add NEXT_PUBLIC_SUPABASE_URL and a public anon or publishable key.');
+      setStatus('Private command center access is not configured yet.');
       return;
     }
 
@@ -42,7 +42,7 @@ export default function Login() {
     }
 
     if (mode === 'signup') {
-      setStatus('Account created. Add this user to profiles.role = founder or subscriptions.plan = premium, then sign in.');
+      setStatus('Account created. Private access must be approved before the command center opens.');
       return;
     }
 
@@ -56,9 +56,9 @@ export default function Login() {
           <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
           <span>DigiMark101</span>
         </a>
-        <p className="eyebrow">Founder access</p>
-        <h1>Enter the DigiMark101 backend.</h1>
-        <p className="intro">Ava Skye opens the private command center for founder and premium accounts only.</p>
+        <p className="eyebrow">Private access</p>
+        <h1>Enter the Ava Skye command center.</h1>
+        <p className="intro">A premium workspace for brand strategy, content systems, funnels, campaigns, and client-ready execution.</p>
 
         <form onSubmit={handleSubmit}>
           <label>
@@ -75,7 +75,7 @@ export default function Login() {
         </form>
 
         <button className="switchMode" type="button" onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}>
-          {mode === 'signin' ? 'Need to create the founder account?' : 'Already have the founder account?'}
+          {mode === 'signin' ? 'Request private access?' : 'Already approved? Sign in'}
         </button>
         <p className="status">{status}</p>
       </section>
