@@ -1,24 +1,4 @@
-import { useEffect, useState } from 'react';
-
 export default function Home() {
-  const [message, setMessage] = useState('Initializing Dynasty...');
-  const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Test existing API endpoint (unchanged)
-    fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setMessage('Welcome to Your Digital Dynasty');
-        setLoading(false);
-      });
-  }, []);
-
   return (
     <main
       style={{
@@ -36,7 +16,6 @@ export default function Home() {
         overflow: 'hidden'
       }}
     >
-      {/* Animated background elements */}
       <div
         style={{
           position: 'absolute',
@@ -87,7 +66,7 @@ export default function Home() {
         .dynasty-subtitle {
           animation: slideUp 0.8s ease-out 0.3s both;
         }
-        .dynasty-box {
+        .dynasty-card {
           animation: slideUp 0.8s ease-out 0.5s both;
         }
         .dynasty-button {
@@ -95,8 +74,7 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Main Content - Z-index to appear over background */}
-      <div style={{ position: 'relative', zIndex: 10 }}>
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: '760px' }}>
         <h1
           className="dynasty-title"
           style={{
@@ -117,18 +95,17 @@ export default function Home() {
           className="dynasty-subtitle"
           style={{
             fontSize: '1.3rem',
-            maxWidth: '600px',
-            marginBottom: '2rem',
+            maxWidth: '640px',
+            margin: '0 auto 2rem',
             opacity: 0.85,
             lineHeight: '1.6'
           }}
         >
-          Advanced AI-powered marketing automation. The simplest structure. Unlimited potential.
+          Advanced AI-powered marketing automation built to help you launch, manage, and scale with confidence.
         </p>
 
-        {/* Status Box */}
         <div
-          className="dynasty-box"
+          className="dynasty-card"
           style={{
             padding: '2rem',
             borderRadius: '1rem',
@@ -141,19 +118,14 @@ export default function Home() {
           }}
         >
           <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#60a5fa' }}>
-            {loading ? 'Initializing...' : 'System Status'}
+            Built for modern growth teams
           </h2>
-          <p style={{ fontSize: '1.1rem', margin: 0, minHeight: '2rem' }}>
-            {loading ? (
-              <span style={{ opacity: 0.7 }}>Connecting to Ava OS...</span>
-            ) : (
-              <span style={{ color: '#34d399' }}>✓ {message}</span>
-            )}
+          <p style={{ fontSize: '1.05rem', margin: 0, lineHeight: '1.7', opacity: 0.82 }}>
+            Organize campaigns, streamline client workflows, and keep your marketing operations moving from one polished workspace.
           </p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="dynasty-button" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="dynasty-button" style={{ display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={() => {
               window.location.href = '/dashboard';
@@ -169,11 +141,7 @@ export default function Home() {
               fontSize: '1rem',
               boxShadow: '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)',
               transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 15px 35px rgba(59,130,246,0.5), 0 0 60px rgba(236,72,153,0.3)'
-              }
+              transform: 'translateY(0)'
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = 'translateY(-2px)';
@@ -186,43 +154,8 @@ export default function Home() {
           >
             Enter Dashboard
           </button>
-
-          <button
-            onClick={() => {
-              fetch('/api/hello', { method: 'POST' })
-                .then((res) => res.json())
-                .then((data) => setMessage(data.message))
-                .catch(() => setMessage('Error connecting to backend'));
-            }}
-            style={{
-              padding: '1rem 2rem',
-              borderRadius: '999px',
-              border: '2px solid rgba(148,163,184,0.5)',
-              cursor: 'pointer',
-              background: 'transparent',
-              color: '#f9fafb',
-              fontWeight: 700,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                borderColor: 'rgba(96,165,250,0.8)',
-                background: 'rgba(59,130,246,0.1)'
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.borderColor = 'rgba(96,165,250,0.8)';
-              e.target.style.background = 'rgba(59,130,246,0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.borderColor = 'rgba(148,163,184,0.5)';
-              e.target.style.background = 'transparent';
-            }}
-          >
-            Test Ava OS
-          </button>
         </div>
 
-        {/* Footer */}
         <p
           style={{
             marginTop: '3rem',
@@ -231,9 +164,7 @@ export default function Home() {
             animation: 'fadeIn 1.5s ease-out 1s both'
           }}
         >
-          Powered by Ava OS • Base44 Backend • Ava Knowledge Base
-          <br />
-          <small>Deployed on Vercel • Fully responsive • Zero downtime updates</small>
+          Powered by DigiMark101 • Deployed on Vercel
         </p>
       </div>
     </main>
