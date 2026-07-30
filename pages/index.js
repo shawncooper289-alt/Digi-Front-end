@@ -5,27 +5,27 @@ import { hasSupabaseConfig } from '../lib/supabaseClient';
 const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
 
 const proofPoints = [
-  { value: '01', label: 'Ava-led strategy intake' },
-  { value: '08', label: 'Specialist AI workstreams' },
+  { value: 'WOW', label: 'First-impression standard' },
+  { value: '08', label: 'AI specialist divisions' },
   { value: '24/7', label: 'Command center momentum' },
 ];
 
 const capabilities = [
   {
-    title: 'Luxury web presence',
-    text: 'High-conversion websites, landing pages, and funnels shaped around trust, speed, and authority.',
+    title: 'Websites that stop the scroll',
+    text: 'Cinematic landing pages and conversion systems built to make a brand feel expensive before the first call.',
   },
   {
-    title: 'Content studio',
-    text: 'Campaign concepts, shorts, long-form direction, ad scripts, brand stories, and channel packaging.',
+    title: 'Campaigns that feel engineered',
+    text: 'Offers, audiences, ads, funnels, content, and follow-up mapped as one connected revenue path.',
   },
   {
-    title: 'Paid growth systems',
-    text: 'Meta-ready offers, audience paths, creative angles, landing flows, and follow-up automation.',
+    title: 'Content that looks agency-built',
+    text: 'Video concepts, shorts, scripts, brand stories, channel packaging, and creative direction with premium polish.',
   },
   {
-    title: 'Client automation',
-    text: 'Brand-aware assistants, intake systems, WhatsApp follow-up, support flows, and delivery checkpoints.',
+    title: 'Automation that keeps selling',
+    text: 'AI assistants, intake systems, WhatsApp flows, client workspaces, and delivery checkpoints that keep momentum alive.',
   },
 ];
 
@@ -69,9 +69,9 @@ const pricingPlans = [
 ];
 
 const commandSteps = [
-  ['01', 'Decode the brand', 'Ava Skye captures the offer, audience, proof, voice, visuals, channels, and revenue target.'],
-  ['02', 'Deploy the agents', 'Specialist AI teams build the website, funnel, campaigns, content, automations, and follow-up paths.'],
-  ['03', 'Ship the presence', 'Every output is organized into a client-ready growth system designed to look premium and move fast.'],
+  ['01', 'Create the wow', 'Ava Skye sharpens the offer, brand promise, visual direction, and first impression until the business feels premium.'],
+  ['02', 'Build the machine', 'Specialist AI divisions turn the strategy into pages, funnels, videos, campaigns, content, automations, and follow-up.'],
+  ['03', 'Make marketers want in', 'The platform presents a repeatable growth engine that agencies can use to win clients and deliver faster.'],
 ];
 
 export default function Home() {
@@ -124,14 +124,14 @@ export default function Home() {
 
         <section className="hero">
           <div className="heroCopy">
-            <p className="badge">AI digital marketing agency of the future</p>
-            <h1>The agency your competitors hope your clients never find.</h1>
+            <p className="badge">AI-powered agency platform built to make clients say wow</p>
+            <h1>The digital marketing agency everyone else will be measured against.</h1>
             <p className="lead">
-              DigiMark101 is a premium growth command center led by Ava Skye, an AI executive strategist that turns brands into cinematic websites, high-converting funnels, content engines, paid campaigns, and automated client experiences.
+              DigiMark101 is the Ava Skye-led command center for brands and marketers who want work that looks elite on sight: cinematic websites, high-converting funnels, content engines, campaigns, video direction, and automation built as one platform.
             </p>
             <div className="heroActions">
               <a className="primary" href="/dashboard">Enter the Command Center</a>
-              <a className="secondary" href="#systems">See What Ava Builds</a>
+              <a className="secondary" href="#systems">See the Platform</a>
             </div>
             <div className="statusStrip">
               <span>{loading ? 'Ava Skye is assembling your growth system...' : message}</span>
@@ -173,17 +173,17 @@ export default function Home() {
         </section>
 
         <section className="section manifesto">
-          <p className="eyebrow">Built to make the market stop scrolling</p>
-          <h2>Not a template. Not a basic agency site. A premium AI marketing machine with Ava Skye at the center.</h2>
+          <p className="eyebrow">Built for instant belief</p>
+          <h2>When clients and marketers land here, the reaction should be simple: this is the agency I want.</h2>
           <p>
-            The first impression should feel expensive, intelligent, and inevitable. DigiMark101 presents the brand, explains the system, and moves serious clients toward a private command center where strategy becomes execution.
+            Every section is designed to signal taste, power, and execution. Ava Skye is not a mascot; she is the face of an AI marketing platform built to help brands look better, move faster, and outclass ordinary agencies.
           </p>
         </section>
 
         <section className="section commandGrid" id="systems">
           <div className="sectionIntro">
-            <p className="eyebrow">Command center architecture</p>
-            <h2>Ava Skye turns business ideas into digital assets that look ready for the big leagues.</h2>
+            <p className="eyebrow">The DigiMark101 engine</p>
+            <h2>Ava Skye turns a business into the kind of digital brand people remember.</h2>
           </div>
           <div className="stepStack">
             {commandSteps.map(([number, title, text]) => (
@@ -198,8 +198,8 @@ export default function Home() {
 
         <section className="section capabilities">
           <div className="sectionIntro wide">
-            <p className="eyebrow">What Ava Skye builds</p>
-            <h2>Every service is designed to raise the perceived value of the brand.</h2>
+            <p className="eyebrow">What the platform produces</p>
+            <h2>Everything has one job: make the brand look like the obvious choice.</h2>
           </div>
           <div className="capabilityGrid">
             {capabilities.map((capability) => (
@@ -212,10 +212,30 @@ export default function Home() {
           </div>
         </section>
 
+
+        <section className="section transformations">
+          <div className="sectionIntro wide">
+            <p className="eyebrow">Before DigiMark101 vs after Ava Skye</p>
+            <h2>The transformation should be obvious before a sales call ever happens.</h2>
+          </div>
+          <div className="transformationGrid">
+            <article>
+              <span>Before</span>
+              <h3>Scattered marketing</h3>
+              <p>Disconnected pages, uneven content, slow follow-up, weak positioning, and no clear reason to choose the brand.</p>
+            </article>
+            <article className="afterCard">
+              <span>After</span>
+              <h3>Ava Skye command system</h3>
+              <p>A polished digital presence where website, funnel, content, ads, automation, and delivery all feel like one premium machine.</p>
+            </article>
+          </div>
+        </section>
+
         <section className="section agents" id="agents">
           <div className="agentHeader">
-            <p className="eyebrow">Specialist AI agent team</p>
-            <h2>One face. One command center. An entire agency behind the scenes.</h2>
+            <p className="eyebrow">Why marketers should want it</p>
+            <h2>One premium face for clients. An AI-powered agency team behind the scenes.</h2>
           </div>
           <div className="agentGrid">
             {agentTeams.map((agent) => (
@@ -226,10 +246,10 @@ export default function Home() {
 
         <section className="section showcase">
           <div className="showcasePanel">
-            <p className="eyebrow">The promise</p>
-            <h2>Websites, videos, funnels, campaigns, and automations should feel like they came from the future.</h2>
+            <p className="eyebrow">The standard</p>
+            <h2>If another agency sees this, they should wonder how they compete with it.</h2>
             <p>
-              DigiMark101 should make clients and competing agencies instantly understand that this is a different level of digital marketing execution: premium presentation, AI-directed workflows, and a system built to keep creating.
+              The landing page must sell more than services. It must sell dominance: a platform where strategy, web design, content, video, ads, automations, and delivery all feel connected, premium, and impossible to ignore.
             </p>
           </div>
         </section>
@@ -237,7 +257,7 @@ export default function Home() {
         <section className="section pricing" id="tiers">
           <div className="sectionIntro wide">
             <p className="eyebrow">Private access tiers</p>
-            <h2>Choose the level of firepower Ava Skye should bring to the brand.</h2>
+            <h2>For brands and marketers who want the unfair advantage.</h2>
           </div>
           <div className="pricingGrid">
             {pricingPlans.map((plan) => (
@@ -327,6 +347,13 @@ export default function Home() {
         .capabilityGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; }
         .capabilityCard { min-height: 300px; padding: 1.35rem; border-radius: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end; }
         .cardGlow { position: absolute; inset: -40% -20% auto auto; width: 210px; height: 210px; border-radius: 999px; background: rgba(56,189,248,.2); filter: blur(28px); }
+        .transformations { padding-top: 3rem; }
+        .transformationGrid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 1rem; margin-top: 2rem; }
+        .transformationGrid article { min-height: 320px; padding: 1.5rem; border-radius: 1.6rem; border: 1px solid rgba(148,163,184,.18); background: rgba(15,23,42,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 28px 100px rgba(2,6,23,.26); }
+        .transformationGrid .afterCard { background: radial-gradient(circle at 80% 0%, rgba(240,171,252,.22), transparent 22rem), linear-gradient(145deg, rgba(37,99,235,.26), rgba(219,39,119,.18)); border-color: rgba(147,197,253,.34); }
+        .transformationGrid span { color: #93c5fd; font-size: .76rem; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
+        .transformationGrid h3 { margin: 1rem 0; color: #fff; font-size: clamp(2rem, 4vw, 3.8rem); line-height: .9; letter-spacing: -.07em; }
+        .transformationGrid p { max-width: 620px; color: rgba(226,232,240,.76); font-size: 1.08rem; line-height: 1.75; }
         .agentHeader { display: flex; justify-content: space-between; gap: 2rem; align-items: end; margin-bottom: 2rem; }
         .agentGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
         .agentPill { min-height: 126px; display: flex; align-items: end; padding: 1rem; border-radius: 1.25rem; color: #fff; font-weight: 1000; background: linear-gradient(145deg, rgba(37,99,235,.2), rgba(219,39,119,.14)); border: 1px solid rgba(148,163,184,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
@@ -343,7 +370,7 @@ export default function Home() {
         footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem 0 3rem; border-top: 1px solid rgba(148,163,184,.16); color: rgba(226,232,240,.64); }
         footer strong { color: #fff; }
         @keyframes orbit { from { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.04); } to { transform: rotate(360deg) scale(1); } }
-        @media (max-width: 980px) { .hero, .commandGrid { grid-template-columns: 1fr; min-height: auto; } .avaStage { min-height: 620px; } .capabilityGrid, .pricingGrid, .agentGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .proofBar { margin-top: 0; } .agentHeader, footer, .statusStrip { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 980px) { .hero, .commandGrid, .transformationGrid { grid-template-columns: 1fr; min-height: auto; } .avaStage { min-height: 620px; } .capabilityGrid, .pricingGrid, .agentGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .proofBar { margin-top: 0; } .agentHeader, footer, .statusStrip { flex-direction: column; align-items: flex-start; } }
         @media (max-width: 620px) { .nav { align-items: flex-start; flex-direction: column; } h1 { font-size: clamp(3.7rem, 18vw, 5.5rem); } .hero { padding-top: 2rem; } .avaStage { min-height: 520px; } .portraitCard { width: min(360px, 88vw); } .topCard { top: 1rem; right: auto; } .bottomCard { bottom: 1rem; left: auto; } .proofBar, .capabilityGrid, .pricingGrid, .agentGrid { grid-template-columns: 1fr; } .stepCard { grid-template-columns: 1fr; } .heroActions a { width: 100%; } }
       `}</style>
     </>
