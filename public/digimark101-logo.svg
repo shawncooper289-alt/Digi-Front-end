@@ -1,0 +1,10 @@
+<svg width="720" height="240" viewBox="0 0 720 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M78 76h82c52 0 86 28 86 70 0 46-37 78-91 78H42L78 76Z" fill="#101323"/>
+  <path d="M128 104h32c22 0 37 13 37 33 0 24-18 40-45 40H96l32-73Z" fill="#030712"/>
+  <path d="M235 180C342 75 448 48 590 37l-20 76-28-33c-71 46-134 92-222 125l66-76c-44 13-84 29-151 51Z" fill="url(#g)"/>
+  <path d="M550 34h20v20h-20V34Zm-48 20h24v24h-24V54Zm-30 38h16v16h-16V92Zm72-10h12v12h-12V82Z" fill="#A855F7"/>
+  <text x="38" y="190" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="58" font-style="italic" fill="#111827">DigiMark</text>
+  <text x="354" y="190" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="58" font-style="italic" fill="#8B5CF6">101</text>
+  <text x="150" y="226" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" letter-spacing="9" fill="#9CA3AF">DIGITAL MARKETING AGENCY</text>
+  <defs><linearGradient id="g" x1="235" y1="121" x2="590" y2="121" gradientUnits="userSpaceOnUse"><stop stop-color="#211432"/><stop offset=".45" stop-color="#6D28D9"/><stop offset="1" stop-color="#D946EF"/></linearGradient></defs>
+</svg>
