@@ -20,23 +20,107 @@ const workstreams = [
 ];
 
 export default function Dashboard() {
-  const [status, setStatus] = useState('Opening Ava Skye command center...');
+  const [status, setStatus] = useState('Checking founder access...');
+  const [access, setAccess] = useState(null);
+  const [checking, setChecking] = useState(true);
   const [avatarLoaded, setAvatarLoaded] = useState(true);
   const ready = hasSupabaseConfig();
   const supabase = useMemo(() => createSupabaseClient(), []);
 
   useEffect(() => {
-    if (!supabase) {
-      setStatus('Supabase URL is set. Add the anon public key to activate live onboarding data.');
-      return;
+    let active = true;
+
+    async function verifyAccess() {
+      if (!supabase) {
+        setStatus('Supabase browser credentials are missing.');
+        setChecking(false);
+        return;
+      }
+
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      const session = sessionData?.session;
+
+      if (!active) return;
+
+      if (sessionError || !session) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const response = await fetch('/api/access', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      const result = await response.json().catch(() => ({ allowed: false, message: 'Access check failed.' }));
+
+      if (!active) return;
+
+      setAccess(result);
+      setStatus(result.message || (response.ok ? 'Founder access confirmed.' : 'Access denied.'));
+      setChecking(false);
     }
 
-    supabase.auth.getSession()
-      .then(({ error }) => {
-        setStatus(error ? `Supabase responded with: ${error.message}` : 'Supabase client is ready for auth, client records, and workflow data.');
-      })
-      .catch(() => setStatus('Supabase client loaded, but the browser could not complete the session check.'));
+    verifyAccess().catch((error) => {
+      if (!active) return;
+      setStatus(error.message || 'Unable to verify founder access.');
+      setChecking(false);
+    });
+
+    return () => {
+      active = false;
+    };
   }, [supabase]);
+
+  async function signOut() {
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    window.location.href = '/login';
+  }
+
+  if (checking) {
+    return (
+      <main className="gate">
+        <div>
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <p>Opening Ava Skye command center...</p>
+        </div>
+        <style jsx>{`
+          .gate { min-height: 100vh; display: grid; place-items: center; color: #fff; background: #020617; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+          .gate div { display: grid; justify-items: center; gap: 1rem; }
+          img { width: 76px; height: 76px; object-fit: contain; mix-blend-mode: screen; }
+          p { color: rgba(226,232,240,.76); font-weight: 900; }
+        `}</style>
+      </main>
+    );
+  }
+
+  if (!access?.allowed) {
+    return (
+      <main className="gate denied">
+        <section>
+          <a href="/" className="home">DigiMark101</a>
+          <p className="eyebrow">Private dashboard</p>
+          <h1>Founder or premium access required.</h1>
+          <p>{status}</p>
+          <div className="actions">
+            <a href="/login">Use another account</a>
+            <button type="button" onClick={signOut}>Sign out</button>
+          </div>
+        </section>
+        <style jsx>{`
+          .gate { min-height: 100vh; display: grid; place-items: center; padding: 2rem; color: #fff; background: radial-gradient(circle at 20% 12%, rgba(37,99,235,.25), transparent 28rem), #020617; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+          section { width: min(640px, 100%); padding: 2rem; border: 1px solid rgba(255,255,255,.16); border-radius: 2rem; background: rgba(15,23,42,.78); }
+          .home, a, button { color: #dbeafe; font-weight: 1000; }
+          .home { text-decoration: none; }
+          .eyebrow { margin: 2rem 0 .75rem; color: #93c5fd; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+          h1 { margin: 0; font-size: clamp(2.2rem, 7vw, 4rem); line-height: .92; letter-spacing: -.07em; }
+          p { color: rgba(226,232,240,.76); line-height: 1.65; }
+          .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.4rem; }
+          a, button { border: 1px solid rgba(147,197,253,.28); border-radius: 999px; padding: .85rem 1rem; background: rgba(255,255,255,.06); text-decoration: none; cursor: pointer; }
+        `}</style>
+      </main>
+    );
+  }
 
   return (
     <main className="console">
@@ -58,11 +142,13 @@ export default function Dashboard() {
         <header>
           <div>
             <p className="eyebrow">Ava Skye Guided Build Room</p>
-            <h1>Answer the questions. Ava builds the business system.</h1>
+            <h1>Founder command center for premium client builds.</h1>
           </div>
           <div className={ready ? 'status online' : 'status pending'}>
-            <strong>{ready ? 'Data layer ready' : 'Anon key pending'}</strong>
-            <span>{status}</span>
+            <strong>{access.role === 'founder' ? 'Founder access' : 'Premium access'}</strong>
+            <span>{access.email} · {access.role || access.plan || 'approved'}</span>
+            <small>{status}</small>
+            <button type="button" onClick={signOut}>Sign out</button>
           </div>
         </header>
 
@@ -141,7 +227,8 @@ export default function Dashboard() {
         .status { padding: 1rem; border-radius: 1.1rem; border: 1px solid rgba(148,163,184,.2); background: rgba(15,23,42,.72); display: grid; gap: .4rem; }
         .status strong { color: #fdba74; }
         .status.online strong { color: #86efac; }
-        .status span { color: rgba(226,232,240,.7); line-height: 1.5; }
+        .status span, .status small { color: rgba(226,232,240,.7); line-height: 1.5; }
+        .status button { width: fit-content; margin-top: .3rem; border: 1px solid rgba(147,197,253,.22); color: #dbeafe; background: rgba(255,255,255,.055); }
         .builder { display: grid; grid-template-columns: 1.05fr .95fr; gap: 1rem; margin-bottom: 3rem; }
         .chatPanel, .missionPanel, article { border: 1px solid rgba(148,163,184,.18); border-radius: 1.5rem; background: rgba(15,23,42,.72); box-shadow: 0 25px 80px rgba(2,6,23,.32); }
         .chatPanel { padding: 1.4rem; }
