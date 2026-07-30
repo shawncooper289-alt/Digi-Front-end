@@ -5,7 +5,7 @@ const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88
 
 const questions = [
   'What business are we building and who is it for?',
-  'What offer, pricing, and seat tier should Ava Skye optimize around?',
+  'What offer, pricing, and client plan should Ava Skye optimize around?',
   'Which socials, Meta pages, communities, YouTube channels, and WhatsApp flows need onboarding?',
   'What brand voice, visuals, proof, products, and monetization paths should the agents use?',
 ];
@@ -187,7 +187,7 @@ export default function Dashboard() {
             <h2>Launch Mission</h2>
             <div className="missionGrid">
               <div><span>Client</span><strong>New brand buildout</strong></div>
-              <div><span>Seat Tier</span><strong>Growth / Studio ready</strong></div>
+              <div><span>Client Plan</span><strong>Growth / Premium ready</strong></div>
               <div><span>Channels</span><strong>Meta, YouTube, WhatsApp, Web</strong></div>
               <div><span>Output</span><strong>Agency-in-a-box workflow</strong></div>
             </div>
@@ -197,7 +197,7 @@ export default function Dashboard() {
         <section className="workstreams">
           <div className="sectionTop">
             <p className="eyebrow">Delegated agent workstreams</p>
-            <h2>Ava manages the team and checks completion.</h2>
+            <h2>Ava manages the specialist network and checks completion.</h2>
           </div>
           <div className="cards">
             {workstreams.map((stream) => (

@@ -3,7 +3,7 @@ import { hasSupabaseConfig } from '../lib/supabaseClient';
 
 const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
 
-const agentTeams = [
+const agentSpecialists = [
   'Brand Strategy',
   'Social Onboarding',
   'Meta Pages + Ads',
@@ -30,33 +30,33 @@ const backendPowers = [
 
 const pricingPlans = [
   {
-    name: 'Startup Seat',
-    slug: 'startup',
+    name: 'Launch Account',
+    slug: 'launch',
     price: '$97/mo',
-    note: 'For beginners launching the first digital dynasty.',
+    note: 'For a founder starting their digital presence with a guided premium launch path.',
     features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
   },
   {
-    name: 'Growth Seat',
+    name: 'Growth Account',
     slug: 'growth',
     price: '$197/mo',
-    note: 'For creators and small businesses ready to grow faster.',
-    features: ['Everything in Startup', 'Meta + social onboarding', 'Sales page workflow', 'WhatsApp sales flow', 'Community launch plan'],
+    note: 'For clients ready to turn their offer into pages, funnels, and social growth systems.',
+    features: ['Everything in Launch', 'Meta + social onboarding', 'Sales page workflow', 'WhatsApp sales flow', 'Community launch plan'],
     highlight: true,
   },
   {
-    name: 'Pro Seat',
-    slug: 'pro',
+    name: 'Premium Account',
+    slug: 'premium',
     price: '$397/mo',
-    note: 'For operators who want more automation and content output.',
+    note: 'For serious operators who want more automation, content output, and campaign direction.',
     features: ['Everything in Growth', 'YouTube channel support', 'Brand-aware client bot plan', 'Campaign builder', 'Video studio briefs'],
   },
   {
-    name: 'Elite Team Seat',
-    slug: 'elite-team',
+    name: 'Elite Account',
+    slug: 'elite',
     price: '$797/mo',
-    note: 'For teams needing multi-channel execution and deeper support.',
-    features: ['Everything in Pro', 'Team workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
+    note: 'For high-touch clients needing deeper multi-channel execution and premium support.',
+    features: ['Everything in Premium', 'Advanced workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
   },
   {
     name: 'White Label Partner',
@@ -75,9 +75,9 @@ const pricingPlans = [
 ];
 
 const tiers = [
-  { name: 'Launch Seat', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
-  { name: 'Growth Seat', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
-  { name: 'Studio Seat', detail: 'Cinematic and animated video production, channel packaging, bots, sales systems, and ad distribution support.' },
+  { name: 'Launch Account', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
+  { name: 'Growth Account', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
+  { name: 'Premium Account', detail: 'Cinematic and animated video production, channel packaging, bots, sales systems, and ad distribution support.' },
 ];
 
 export default function Home() {
@@ -112,7 +112,7 @@ export default function Home() {
           <a href="#ava-video">Ava Skye</a>
           <a href="#workflow">Workflow</a>
           <a href="#agents">AI Agents</a>
-          <a href="#tiers">Seat Tiers</a>
+          <a href="#tiers">Client Plans</a>
           <a className="navCta" href="/dashboard">Launch Console</a>
         </div>
       </nav>
@@ -177,7 +177,7 @@ export default function Home() {
           <p className="eyebrow">Cinematic front-end story</p>
           <h2>Ava Skye tells clients what happens after they enter the backend dashboard.</h2>
           <p>
-            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the chosen seat tier into a full marketing operating system.
+            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the selected client plan into a full marketing operating system.
           </p>
           <div className="scriptCard">
             <strong>Intro script direction</strong>
@@ -218,11 +218,11 @@ export default function Home() {
 
       <section id="agents" className="section">
         <div className="sectionHeader">
-          <p className="eyebrow">Specialized AI agent team</p>
+          <p className="eyebrow">Specialized AI agent network</p>
           <h2>Ava Skye delegates, reviews, and sees the work to completion.</h2>
         </div>
         <div className="agentGrid">
-          {agentTeams.map((agent) => (
+          {agentSpecialists.map((agent) => (
             <div className="agent" key={agent}>{agent}</div>
           ))}
         </div>
@@ -232,10 +232,10 @@ export default function Home() {
       <section id="pricing" className="section pricingSection">
         <div className="sectionHeader">
           <div>
-            <p className="eyebrow">Stripe checkout pricing</p>
-            <h2>More capability for less, built for high-margin recurring revenue.</h2>
+            <p className="eyebrow">Client account pricing</p>
+            <h2>Premium client plans built for clear outcomes and smooth account setup.</h2>
           </div>
-          <p className="pricingIntro">Seat prices are structured for recurring revenue, higher-value upgrades, and simple Stripe Checkout wiring once price IDs are added.</p>
+          <p className="pricingIntro">After checkout, clients are sent to create their login and enter the DigiMark101 dashboard. No team account is required.</p>
         </div>
         <div className="pricingGrid">
           {pricingPlans.map((plan) => (
@@ -249,7 +249,7 @@ export default function Home() {
                 {plan.features.map((feature) => <li key={feature}>{feature}</li>)}
               </ul>
               <a className="checkoutBtn" href={`/api/checkout?plan=${plan.slug}`}>
-                Start checkout
+                Pay and create account
               </a>
             </article>
           ))}
@@ -258,8 +258,8 @@ export default function Home() {
 
       <section id="tiers" className="section tierWrap">
         <div className="sectionHeader">
-          <p className="eyebrow">Seat-tier controlled capability</p>
-          <h2>Simple enough for beginners, deep enough for serious operators.</h2>
+          <p className="eyebrow">Client-plan controlled capability</p>
+          <h2>Simple enough for new founders, deep enough for serious operators.</h2>
         </div>
         <div className="tiers">
           {tiers.map((tier) => (
