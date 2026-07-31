@@ -326,12 +326,12 @@ export default function Home() {
         .primary:hover, .secondary:hover { transform: translateY(-2px); }
         .trustStrip { max-width: 760px; display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin-top: 2rem; }
         .trustStrip span { min-height: 72px; display: flex; align-items: center; padding: .85rem; border: 1px solid rgba(148,163,184,.22); border-radius: 1rem; color: rgba(226,232,240,.86); background: rgba(15,23,42,.58); font-weight: 900; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
-        .avaShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
-        .portraitHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
-        .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .82; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
-        .portraitCard:after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 52%, rgba(2,6,23,.55)); pointer-events: none; }
-        .portraitCard img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.03); }
-        .chiefCard { position: absolute; left: 0; right: 0; bottom: 2rem; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
+        .avaShowcase { position: relative; min-height: 690px; display: grid; justify-items: center; align-content: center; gap: 1rem; }
+        .portraitHalo { position: absolute; top: 2rem; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
+        .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .72; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
+        .portraitCard:after { content: ''; position: absolute; inset: auto 0 0; height: 26%; background: linear-gradient(to bottom, transparent, rgba(2,6,23,.45)); pointer-events: none; }
+        .portraitCard img { width: 100%; height: 100%; object-fit: contain; object-position: center top; transform: none; }
+        .chiefCard { position: relative; z-index: 2; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
         .chiefCard span { display: block; color: #fff; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1; font-weight: 1000; letter-spacing: -.04em; }
         .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
         .processGrid span { color: #f0abfc; font-weight: 950; }
@@ -373,8 +373,8 @@ export default function Home() {
         .tiers h3 { font-size: 1.35rem; margin-bottom: .7rem; }
         .tiers p { color: rgba(226,232,240,.76); line-height: 1.65; }
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
-        @media (max-width: 900px) { .hero, .avaGuide { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .polishedSetup, .outcomePanel { padding: 1.35rem; } }
+        @media (max-width: 900px) { .hero, .avaGuide { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: auto; } .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .trustStrip, .pillarGrid, .processGrid, .serviceStack, .tiers, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .portraitCard { width: min(360px, 88vw); } .primary, .secondary { text-align: center; } .polishedSetup, .outcomePanel { padding: 1.35rem; } }
       `}</style>
     </main>
   );
