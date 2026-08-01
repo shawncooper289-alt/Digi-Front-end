@@ -36,10 +36,11 @@ export default function Home() {
         }
 
         .hero {
-          width: min(1160px, 100%);
+          width: min(1240px, 100%);
+          min-height: calc(100vh - clamp(2.5rem, 8vw, 8rem));
           display: grid;
-          grid-template-columns: minmax(0, 0.95fr) minmax(360px, 520px);
-          gap: clamp(2rem, 6vw, 5rem);
+          grid-template-columns: minmax(0, 0.95fr) minmax(420px, 560px);
+          gap: clamp(2.5rem, 7vw, 6rem);
           align-items: center;
         }
 
@@ -81,11 +82,12 @@ export default function Home() {
         }
 
         .subtitle {
-          font-size: clamp(1.08rem, 2vw, 1.35rem);
+          font-size: clamp(1.25rem, 2.4vw, 1.75rem);
           max-width: 42rem;
           margin: 0 0 2rem;
-          color: rgba(249, 250, 251, 0.82);
-          line-height: 1.65;
+          color: rgba(249, 250, 251, 0.88);
+          line-height: 1.45;
+          font-weight: 700;
         }
 
         .status-box {
@@ -150,7 +152,7 @@ export default function Home() {
         }
 
         .visual-wrap {
-          min-height: clamp(560px, 78vh, 760px);
+          min-height: clamp(620px, 82vh, 780px);
           display: flex;
           align-items: flex-end;
           justify-content: center;
@@ -191,9 +193,9 @@ export default function Home() {
         }
 
         .ava-figure {
-          width: min(100%, 410px);
-          height: min(720px, 74vh);
-          min-height: 560px;
+          width: min(100%, 430px);
+          height: min(740px, 78vh);
+          min-height: 600px;
           position: relative;
           overflow: visible;
         }
@@ -427,11 +429,11 @@ export default function Home() {
         <div className="copy">
           <div className="eyebrow">DigiMark101 • Ava Skye</div>
           <h1>
-            DigiMark101
-            <span className="gradient-text">Starts Here</span>
+            Welcome to
+            <span className="gradient-text">DigiMark101</span>
           </h1>
           <p className="subtitle">
-            Advanced AI-powered marketing automation with Ava Skye shown separately, unobstructed, and fully visible.
+            Your digital empire starts here!
           </p>
 
           <div className="status-box">
