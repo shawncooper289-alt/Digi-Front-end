@@ -119,14 +119,14 @@ export default function Home() {
 
       <section className="hero">
         <div className="heroCopy">
-          <div className="premiumBadge">Premium digital marketing agency</div>
+          <div className="premiumBadge">Premium AI-powered digital marketing agency</div>
           <div className="welcomeLockup">
-            <span>Welcome to</span>
-            <h1>DigiMark101</h1>
-            <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
+            <span>Welcome to DigiMark101.com</span>
+            <h1>Your digital empire starts here.</h1>
+            <p className="dynastyStatement">A futuristic agency platform built to turn attention into leads, sales, content, campaigns, and long-term growth.</p>
           </div>
           <p className="lead">
-            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one premium command center.
+            DigiMark101 blends elite strategy, beautiful web experiences, conversion-focused funnels, AI-guided execution, and Ava Skye’s command-center workflow into one polished growth system.
           </p>
           <div className="heroActions">
             <a className="primary" href="/dashboard">Start your dynasty build</a>
@@ -295,10 +295,10 @@ export default function Home() {
         .heroCopy { position: relative; }
         .premiumBadge { width: fit-content; margin-bottom: 1.5rem; padding: .72rem 1rem; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: #dbeafe; background: rgba(255,255,255,.07); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 60px rgba(37,99,235,.2); backdrop-filter: blur(16px); font-size: .78rem; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
         .welcomeLockup { margin-bottom: 1.25rem; }
-        .welcomeLockup > span { display: block; margin-bottom: .45rem; color: #bfdbfe; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 900; letter-spacing: .05em; }
-        h1 { max-width: 780px; margin: 0; font-size: clamp(4.2rem, 11vw, 9.6rem); line-height: .82; letter-spacing: -.095em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 5%, #bfdbfe 35%, #f9a8d4 72%, #fde68a 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 40px 110px rgba(59,130,246,.28); }
-        .dynastyStatement { margin: 1.35rem 0 0; color: #fff; font-size: clamp(1.8rem, 4vw, 3.5rem); line-height: .95; font-weight: 1000; letter-spacing: -.055em; max-width: 800px; }
-        .lead { max-width: 760px; color: rgba(226,232,240,.82); font-size: clamp(1.08rem, 2vw, 1.34rem); line-height: 1.75; }
+        .welcomeLockup > span { display: block; margin-bottom: .75rem; color: #bfdbfe; font-size: clamp(1.35rem, 2.6vw, 2.25rem); font-weight: 950; letter-spacing: .04em; }
+        h1 { max-width: 840px; margin: 0; font-size: clamp(3.75rem, 8.6vw, 8rem); line-height: .9; letter-spacing: -.085em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 5%, #bfdbfe 35%, #f9a8d4 72%, #fde68a 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 40px 110px rgba(59,130,246,.28); }
+        .dynastyStatement { margin: 1.35rem 0 0; color: #fff; font-size: clamp(1.35rem, 2.4vw, 2.35rem); line-height: 1.12; font-weight: 900; letter-spacing: -.035em; max-width: 820px; }
+        .lead { max-width: 780px; color: rgba(226,232,240,.86); font-size: clamp(1.08rem, 1.8vw, 1.28rem); line-height: 1.75; }
         .heroActions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
         .primary, .secondary { border-radius: 999px; padding: 1rem 1.35rem; text-decoration: none; font-weight: 950; transition: .25s ease; }
         .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); box-shadow: 0 24px 80px rgba(37,99,235,.36); }
