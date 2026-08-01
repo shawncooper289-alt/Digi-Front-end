@@ -1,1096 +1,370 @@
-import Head from 'next/head';
-import { useState } from 'react';
-import { Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
-import DigiMarkLogo from '../components/DigiMarkLogo';
-import { supabase, hasSupabaseConfig } from '../lib/supabaseClient';
+import { useEffect, useState } from 'react';
+import { hasSupabaseConfig } from '../lib/supabaseClient';
 
-const seatTiers = [
+const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
+
+const agentSpecialists = [
+  'Brand Strategy',
+  'Social Onboarding',
+  'Meta Pages + Ads',
+  'Websites + Funnels',
+  'Community Bots',
+  'Video Studio',
+  'YouTube Growth',
+  'WhatsApp Sales',
+];
+
+const outcomes = [
+  'Business pages, paid communities, and social channels launched from one guided workflow.',
+  'Brand-aware bots trained for client sites, pages, channels, and communities.',
+  'Sales pages, banners, videos, ads, and monetization assets built by specialist AI agents.',
+];
+
+const backendPowers = [
+  'Onboard socials, Meta business pages, paid communities, YouTube channels, WhatsApp, and client profiles.',
+  'Build websites, banners, sales pages, lead magnets, brand kits, funnels, and monetization paths.',
+  'Command a virtual studio for long-form videos, shorts, cinematic spots, animated ads, and TV-ready placements.',
+  'Deploy specialized brand-aware bots for communities, pages, sites, channels, and client support flows.',
+];
+
+
+const pricingPlans = [
   {
-    id: 'founder-starter',
-    name: 'Founder Starter',
-    seats: '1 seat · first-adopter rate',
-    price: '$149/mo',
-    regularPrice: '$299/mo regular',
-    icon: Users,
-    description: 'For solo founders who want Ava to plan campaigns and keep lead follow-up organized.',
-    highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates', 'Email support'],
+    name: 'Launch Account',
+    slug: 'launch',
+    price: '$97/mo',
+    note: 'For a founder starting their digital presence with a guided premium launch path.',
+    features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
   },
   {
-    id: 'growth-partner',
-    name: 'Growth Partner',
-    seats: '3 seats · first-adopter rate',
-    price: '$399/mo',
-    regularPrice: '$799/mo regular',
-    icon: Rocket,
-    description: 'Best value for businesses that want more done-for-you structure without agency-level pricing.',
-    highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Checkout/onboarding handoff', 'Priority setup support'],
-    featured: true,
+    name: 'Growth Account',
+    slug: 'growth',
+    price: '$197/mo',
+    note: 'For clients ready to turn their offer into pages, funnels, and social growth systems.',
+    features: ['Everything in Launch', 'Meta + social onboarding', 'Sales page workflow', 'WhatsApp sales flow', 'Community launch plan'],
+    highlight: true,
   },
   {
-    id: 'agency-command',
-    name: 'Agency Command',
-    seats: '10 seats · first-adopter rate',
+    name: 'Premium Account',
+    slug: 'premium',
+    price: '$397/mo',
+    note: 'For serious operators who want more automation, content output, and campaign direction.',
+    features: ['Everything in Growth', 'YouTube channel support', 'Brand-aware client bot plan', 'Campaign builder', 'Video studio briefs'],
+  },
+  {
+    name: 'Elite Account',
+    slug: 'elite',
+    price: '$797/mo',
+    note: 'For high-touch clients needing deeper multi-channel execution and premium support.',
+    features: ['Everything in Premium', 'Advanced workflow lanes', 'Advanced funnel planning', 'Long + short video pipelines', 'Ad placement roadmap'],
+  },
+  {
+    name: 'White Label Partner',
+    slug: 'white-label-partner',
     price: '$1,497/mo',
-    regularPrice: '$2,997/mo regular',
-    icon: Crown,
-    description: 'For teams and agencies that need a premium growth command center with room to scale.',
-    highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff', 'Monthly strategy review'],
+    note: 'For agencies reselling DigiMark101 workflows under their brand.',
+    features: ['Partner dashboard direction', 'Client workspace model', 'Reusable onboarding flows', 'Agency delivery templates', 'Priority roadmap access'],
+  },
+  {
+    name: 'White Label Enterprise',
+    slug: 'white-label-enterprise',
+    price: '$2,997/mo',
+    note: 'For serious agencies building a branded AI marketing platform.',
+    features: ['Everything in Partner', 'Multi-client operating model', 'Custom bot strategy', 'Studio production workflows', 'Premium implementation planning'],
   },
 ];
 
-export default function LandingPage() {
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [selectedTier, setSelectedTier] = useState(seatTiers[1].id);
-  const [purchaseEmail, setPurchaseEmail] = useState('');
-  const [purchaseLoading, setPurchaseLoading] = useState(false);
-  const [purchaseMessage, setPurchaseMessage] = useState('');
-  const selectedSeatTier = seatTiers.find((tier) => tier.id === selectedTier) || seatTiers[1];
+const tiers = [
+  { name: 'Launch Account', detail: 'Guided setup, brand foundation, website starter, social profiles, and campaign checklist.' },
+  { name: 'Growth Account', detail: 'Funnels, paid community setup, Meta ads workflow, YouTube support, and WhatsApp sales flows.' },
+  { name: 'Premium Account', detail: 'Cinematic and animated video production, channel packaging, bots, sales systems, and ad distribution support.' },
+];
 
-  const handlePurchaseSubmit = async (event) => {
-    event.preventDefault();
-    setPurchaseLoading(true);
-    setPurchaseMessage('Opening checkout...');
+export default function Home() {
+  const [message, setMessage] = useState('Ava Skye is preparing your launch room...');
+  const [loading, setLoading] = useState(true);
+  const [avatarLoaded, setAvatarLoaded] = useState(true);
+  const supabaseReady = hasSupabaseConfig();
 
-    const params = new URLSearchParams({
-      tier: selectedSeatTier.id,
-      package: selectedSeatTier.name,
-      price: selectedSeatTier.price.replace(/[^0-9.]/g, ''),
-    });
-
-    if (purchaseEmail.trim()) {
-      params.set('email', purchaseEmail.trim().toLowerCase());
-    }
-
-    window.location.href = `/checkout?${params.toString()}`;
-  };
-
-  const handleLeadSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    setMessage('');
-
-    if (!hasSupabaseConfig || !supabase) {
-      setLoading(false);
-      setMessage('Supabase is not configured yet. Add the Vercel environment variables first.');
-      return;
-    }
-
-    const { error } = await supabase
-      .from('leads')
-      .insert([{ email: email.trim().toLowerCase() }]);
-
-    setLoading(false);
-
-    if (error) {
-      if (error.code === '23505') {
-        setMessage('You are already registered!');
-      } else {
-        setMessage('Something went wrong. Please try again.');
-      }
-      return;
-    }
-
-    setMessage('Success! You are on the early access list.');
-    setEmail('');
-  };
+  useEffect(() => {
+    fetch('/api/hello')
+      .then((res) => res.json())
+      .then((data) => {
+        setMessage(data.message);
+        setLoading(false);
+      })
+      .catch(() => {
+        setMessage('Ava Skye is ready to build your digital agency stack.');
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <>
-      <Head>
-        <title>DigiMark101 | AI Marketing Platform</title>
-        <meta
-          name="description"
-          content="DigiMark101 is an AI-powered marketing agency platform with Supabase-powered early access capture."
-        />
-      </Head>
+    <main className="page">
+      <div className="mesh meshOne" />
+      <div className="mesh meshTwo" />
+      <nav className="nav">
+        <div className="logoMark">
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <span>DigiMark101</span>
+        </div>
+        <div className="navLinks">
+          <a href="#ava-video">Ava Skye</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#agents">AI Agents</a>
+          <a href="#tiers">Client Plans</a>
+          <a className="navCta" href="/dashboard">Launch Console</a>
+        </div>
+      </nav>
 
-      <main className="shell">
-        <nav className="nav">
-          <a className="brand" href="/" aria-label="DigiMark101 home">
-            <DigiMarkLogo compact />
-          </a>
-          <a className="nav-button" href="#seat-tiers">
-            Choose Seats <ArrowRight size={16} />
-          </a>
-        </nav>
-
-        <section className="hero">
-          <div className="hero-content">
-            <div>
-              <div className="eyebrow">
-                <Sparkles size={14} />
-                Meet Ava Skye, Your AI Chief of Staff
-              </div>
-
-              <div className="hero-logo"><DigiMarkLogo /></div>
-
-              <h1>
-                The Future of Digital Marketing <br />
-                <span>Runs Through Ava.</span>
-              </h1>
-
-              <p className="hero-copy">
-                DigiMark101 is a futuristic AI marketing command center — combining premium strategy, campaign automation,
-                conversion funnels, content systems, and <strong>Ava Skye</strong>, your human-facing AI Chief of Staff.
-              </p>
-
-              <form id="early-access" className="lead-form" onSubmit={handleLeadSubmit}>
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  aria-label="Email address"
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Joining...' : 'Get Early Access'}
-                </button>
-              </form>
-
-              {message && <p className="message">{message}</p>}
-
-              <div className="badges" aria-label="Platform highlights">
-                <span><CheckCircle2 size={16} /> AI Strategy</span>
-                <span><CheckCircle2 size={16} /> Campaign Automation</span>
-                <span><CheckCircle2 size={16} /> Revenue Workflows</span>
-              </div>
-
-              <div className="hero-stats" aria-label="DigiMark101 agency system highlights">
-                <span><strong>24/7</strong><small>Ava guidance</small></span>
-                <span><strong>3</strong><small>seat tiers</small></span>
-                <span><strong>1</strong><small>growth command center</small></span>
-              </div>
-            </div>
-
-        <div className="visual-wrap" aria-hidden="true">
-          <div className="halo" />
-          <div className="ava-figure">
-            <div className="hair-back" />
-            <div className="face" />
-            <div className="bangs" />
-            <div className="eyes"><span /><span /></div>
-            <div className="mouth" />
-            <div className="neck" />
-            <div className="arm left" />
-            <div className="arm right" />
-            <div className="torso" />
-            <div className="hand left" />
-            <div className="hand right" />
-            <div className="legs"><span /><span /></div>
+      <section className="hero">
+        <div className="heroCopy">
+          <div className="premiumBadge">Premium digital marketing agency</div>
+          <div className="welcomeLockup">
+            <span>Welcome to</span>
+            <h1>DigiMark101</h1>
+            <p className="dynastyStatement">Your Digital Dynasty Starts Here</p>
+          </div>
+          <p className="lead">
+            Strategy, websites, content systems, paid campaigns, social growth, and AI-powered execution built from one premium command center.
+          </p>
+          <div className="heroActions">
+            <a className="primary" href="/dashboard">Start your dynasty build</a>
+            <a className="secondary" href="#ava-video">Meet Ava Skye</a>
+          </div>
+          <div className="signalBar">
+            <span>{loading ? 'Preparing your agency command room...' : message}</span>
+            <strong>{supabaseReady ? 'Backend live' : 'Backend syncing'}</strong>
           </div>
         </div>
-          </div>
-        </section>
-        <section className="pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
-          <div className="pricing-heading">
-            <span className="card-kicker"><Users size={15} /> Choose Your Seat Tier</span>
-            <h2>Select a plan, then continue into the DigiMark101 checkout flow.</h2>
-            <p>
-              Choose the package that fits your growth stage. Checkout records are saved in Supabase with payment pending until the payment processor is connected.
-            </p>
-          </div>
 
-          <div className="tier-grid">
-            {seatTiers.map((tier) => {
-              const Icon = tier.icon;
-              const active = selectedTier === tier.id;
+        <div className="avaShowcase" aria-label="Meet Ava Skye, your AI chief of staff">
+          <div className="portraitHalo" />
+          <div className="portraitCard">
+            {avatarLoaded && (
+              <img
+                src={AVA_SKYE_IMAGE_URL}
+                alt="Ava Skye, AI chief of staff"
+                onError={() => setAvatarLoaded(false)}
+              />
+            )}
+            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
+          </div>
+          <div className="chiefCard">
+            <span>Meet your AI chief of staff.</span>
+            <p>Ava Skye turns your ideas into a premium marketing operating system.</p>
+          </div>
+        </div>
+      </section>
 
-              return (
-                <button
-                  type="button"
-                  className={`tier-card ${active ? 'active' : ''} ${tier.featured ? 'featured' : ''}`}
-                  key={tier.id}
-                  onClick={() => setSelectedTier(tier.id)}
-                  aria-pressed={active}
-                >
-                  <span className="tier-icon"><Icon size={22} /></span>
-                  <span className="tier-name">{tier.name}</span>
-                  <strong>{tier.price}</strong>
-                  <span className="regular-price">{tier.regularPrice}</span>
-                  <span className="tier-seats">{tier.seats}</span>
-                  <span className="tier-description">{tier.description}</span>
-                  <span className="tier-list">
-                    {tier.highlights.map((highlight) => (
-                      <span key={highlight}><CheckCircle2 size={14} /> {highlight}</span>
-                    ))}
-                  </span>
-                </button>
-              );
-            })}
+      <section id="ava-video" className="section cinema">
+        <div className="videoStage">
+          <div className="avatarFrame">
+            {avatarLoaded && (
+              <img
+                src={AVA_SKYE_IMAGE_URL}
+                alt="Ava Skye AI executive avatar"
+                onError={() => setAvatarLoaded(false)}
+              />
+            )}
+            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
+            <div className="scanLine" />
           </div>
+          <div className="playOrb">▶</div>
+          <div className="captionStrip">Cinematic intro video placeholder • replace with Ava Skye narration asset</div>
+        </div>
+        <div className="videoCopy">
+          <p className="eyebrow">Cinematic front-end story</p>
+          <h2>Ava Skye tells clients what happens after they enter the backend dashboard.</h2>
+          <p>
+            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the selected client plan into a full marketing operating system.
+          </p>
+          <div className="scriptCard">
+            <strong>Intro script direction</strong>
+            <span>“Welcome to DigiMark101. I’m Ava Skye. Once you enter your dashboard, I’ll learn your business, connect your socials, build your brand systems, launch your pages, coordinate your content studio, and delegate every task to the right AI specialist until your digital agency engine is ready.”</span>
+          </div>
+        </div>
+      </section>
 
-          <form className="purchase-form" onSubmit={handlePurchaseSubmit}>
-            <div>
-              <span>Selected: {selectedSeatTier.name}</span>
-              <strong>{selectedSeatTier.price} first-adopter · {selectedSeatTier.regularPrice}</strong>
-            </div>
-            <input
-              type="email"
-              required
-              placeholder="Buyer email address"
-              value={purchaseEmail}
-              onChange={(event) => setPurchaseEmail(event.target.value)}
-              aria-label="Buyer email address"
-            />
-            <button type="submit" disabled={purchaseLoading}>
-              Continue to Checkout
-              <ArrowRight size={16} />
-            </button>
-          </form>
-          {purchaseMessage && <p className="purchase-message">{purchaseMessage}</p>}
-        </section>
+      <section id="backend" className="section backendPreview">
+        <div className="sectionHeader">
+          <p className="eyebrow">Inside the backend dashboard</p>
+          <h2>Every capability is organized into a guided professional workflow.</h2>
+        </div>
+        <div className="backendGrid">
+          {backendPowers.map((power, index) => (
+            <article key={power}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{power}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        <section className="ai-showcase" aria-label="DigiMark101 futuristic agency operating system">
-          <div className="showcase-card command-card">
-            <span className="card-kicker"><Zap size={15} /> AI Agency Operating System</span>
-            <h2>Ava Skye turns attention into campaigns, funnels, and customers.</h2>
-            <p>
-              Your buyers see a premium digital agency. Behind the scenes, Ava helps coordinate offers, content,
-              email sequences, lead capture, client onboarding, and growth strategy from one command layer.
-            </p>
+      <section id="workflow" className="section gridTwo">
+        <div>
+          <p className="eyebrow">Guided professional workflow</p>
+          <h2>From questions to completed business systems.</h2>
+        </div>
+        <div className="workflowList">
+          {outcomes.map((outcome, index) => (
+            <article key={outcome}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{outcome}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="agents" className="section">
+        <div className="sectionHeader">
+          <p className="eyebrow">Specialized AI agent network</p>
+          <h2>Ava Skye delegates, reviews, and sees the work to completion.</h2>
+        </div>
+        <div className="agentGrid">
+          {agentSpecialists.map((agent) => (
+            <div className="agent" key={agent}>{agent}</div>
+          ))}
+        </div>
+      </section>
+
+
+      <section id="pricing" className="section pricingSection">
+        <div className="sectionHeader">
+          <div>
+            <p className="eyebrow">Client account pricing</p>
+            <h2>Premium client plans built for clear outcomes and smooth account setup.</h2>
           </div>
-          <div className="showcase-card glass-card">
-            <Wand2 size={24} />
-            <strong>Futuristic presentation</strong>
-            <span>Dark luxury interface, glass panels, AI glow systems, and a high-converting brand presence.</span>
-          </div>
-          <div className="showcase-card glass-card">
-            <ShieldCheck size={24} />
-            <strong>Checkout-ready stack</strong>
-            <span>Supabase checkout requests, Vercel deployment, and Ava-guided customer acquisition.</span>
-          </div>
-        </section>
-      </main>
+          <p className="pricingIntro">After checkout, clients are sent to create their login and enter the DigiMark101 dashboard. No team account is required.</p>
+        </div>
+        <div className="pricingGrid">
+          {pricingPlans.map((plan) => (
+            <article className={plan.highlight ? 'priceCard featured' : 'priceCard'} key={plan.name}>
+              <div>
+                <span className="planName">{plan.name}</span>
+                <strong className="planPrice">{plan.price}</strong>
+                <p>{plan.note}</p>
+              </div>
+              <ul>
+                {plan.features.map((feature) => <li key={feature}>{feature}</li>)}
+              </ul>
+              <a className="checkoutBtn" href={`/api/checkout?plan=${plan.slug}`}>
+                Pay and create account
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="tiers" className="section tierWrap">
+        <div className="sectionHeader">
+          <p className="eyebrow">Client-plan controlled capability</p>
+          <h2>Simple enough for new founders, deep enough for serious operators.</h2>
+        </div>
+        <div className="tiers">
+          {tiers.map((tier) => (
+            <article key={tier.name}>
+              <h3>{tier.name}</h3>
+              <p>{tier.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <footer>
+        <strong>DigiMark101</strong>
+        <span>Vercel front end • Supabase-ready data layer • Ava Skye AI agency workflow</span>
+      </footer>
 
       <style jsx>{`
-        :global(body) {
-          margin: 0;
-          background: #020617;
-          color: #ffffff;
-          font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
-        :global(*) {
-          box-sizing: border-box;
-        }
-
-        .shell {
-          min-height: 100vh;
-          color: #ffffff;
-          background:
-            radial-gradient(circle at 20% 0%, rgba(34, 197, 94, 0.12), transparent 30rem),
-            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.24), transparent 36rem),
-            radial-gradient(circle at 85% 18%, rgba(217, 70, 239, 0.22), transparent 30rem),
-            linear-gradient(135deg, #020617 0%, #070b1d 48%, #111827 100%);
-        }
-
-        .nav {
-          width: min(1280px, calc(100% - 64px));
-          margin: 0 auto;
-          padding: 20px 0;
-          border-bottom: 1px solid #1e293b;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .brand,
-        .nav-button {
-          color: inherit;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .brand {
-          gap: 10px;
-          font-size: 1.25rem;
-          font-weight: 800;
-          letter-spacing: -0.04em;
-        }
-
-        .nav-button {
-          gap: 8px;
-          border: 0;
-          border-radius: 999px;
-          padding: 10px 20px;
-          background: #4f46e5;
-          color: #ffffff;
-          font-size: 0.9rem;
-          font-weight: 700;
-          transition: background 180ms ease, transform 180ms ease;
-        }
-
-        .nav-button:hover {
-          background: #6366f1;
-          transform: translateY(-1px);
-        }
-
-        .hero {
-          width: min(1180px, calc(100% - 48px));
-          margin: 0 auto;
-          padding: 86px 0 64px;
-        }
-
-        .hero-content {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
-          gap: 64px;
-          align-items: center;
-        }
-
-        .eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          border: 1px solid rgba(99, 102, 241, 0.32);
-          background: rgba(99, 102, 241, 0.1);
-          color: #818cf8;
-          border-radius: 999px;
-          padding: 7px 16px;
-          margin-bottom: 32px;
-          font-size: 0.75rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-        }
-
-        .hero-logo {
-          display: flex;
-          justify-content: flex-start;
-          margin: -10px 0 26px;
-        }
-
-        h1 {
-          margin: 0 0 24px;
-          font-size: clamp(3.2rem, 8vw, 7rem);
-          line-height: 1.02;
-          font-weight: 900;
-          letter-spacing: -0.065em;
-        }
-
-        h1 span {
-          background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-
-        .hero-copy {
-          max-width: 760px;
-          margin: 0 0 40px;
-          color: #94a3b8;
-          font-size: clamp(1.05rem, 2vw, 1.25rem);
-          line-height: 1.75;
-        }
-
-        .hero-copy strong {
-          color: #ffffff;
-        }
-
-        .lead-form {
-          width: min(448px, 100%);
-          margin: 0 0 26px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-        }
-
-        .lead-form input,
-        .lead-form button {
-          border-radius: 999px;
-          min-height: 52px;
-          font: inherit;
-        }
-
-        .lead-form input {
-          width: 100%;
-          border: 1px solid #1e293b;
-          background: #0f172a;
-          color: #ffffff;
-          padding: 0 20px;
-          outline: none;
-          transition: border-color 180ms ease, box-shadow 180ms ease;
-        }
-
-        .lead-form input::placeholder {
-          color: #64748b;
-        }
-
-        .lead-form input:focus {
-          border-color: #6366f1;
-          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
-        }
-
-        .lead-form button {
-          flex: 0 0 auto;
-          border: 0;
-          cursor: pointer;
-          background: #4f46e5;
-          color: #ffffff;
-          padding: 0 28px;
-          font-weight: 800;
-          white-space: nowrap;
-          transition: background 180ms ease, opacity 180ms ease;
-        }
-
-        .lead-form button:hover:not(:disabled) {
-          background: #6366f1;
-        }
-
-        .lead-form button:disabled {
-          cursor: not-allowed;
-          opacity: 0.55;
-        }
-
-        .message {
-          min-height: 18px;
-          margin: -12px 0 24px;
-          color: #818cf8;
-          font-size: 0.8rem;
-          font-weight: 700;
-        }
-
-        .badges {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 24px;
-          flex-wrap: wrap;
-          color: #94a3b8;
-          font-size: 0.8rem;
-          font-weight: 700;
-        }
-
-        .badges span {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-        }
-
-        .badges :global(svg) {
-          color: #86efac;
-        }
-
-        .hero-stats {
-          width: min(560px, 100%);
-          margin-top: 28px;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
-        }
-
-        .hero-stats span {
-          border: 1px solid rgba(148, 163, 184, 0.18);
-          border-radius: 18px;
-          padding: 16px;
-          background: rgba(15, 23, 42, 0.58);
-          backdrop-filter: blur(18px);
-        }
-
-        .hero-stats strong,
-        .hero-stats small {
-          display: block;
-        }
-
-        .hero-stats strong {
-          font-size: 1.6rem;
-          letter-spacing: -0.05em;
-        }
-
-        .hero-stats small {
-          margin-top: 4px;
-          color: #94a3b8;
-          font-size: 0.72rem;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-        }
-
-        .visual-wrap {
-          min-height: clamp(620px, 82vh, 780px);
-          display: flex;
-          align-items: flex-end;
-          justify-content: center;
-          position: relative;
-          isolation: isolate;
-          animation: slideUp 0.7s ease-out 0.1s both;
-        }
-
-        .visual-wrap::before {
-          content: '';
-          position: absolute;
-          width: min(95%, 500px);
-          height: 88%;
-          bottom: 0;
-          border-radius: 2rem;
-          background:
-            radial-gradient(circle at 50% 18%, rgba(96, 165, 250, 0.32), transparent 15rem),
-            radial-gradient(circle at 50% 55%, rgba(236, 72, 153, 0.24), transparent 18rem),
-            linear-gradient(180deg, rgba(15, 23, 42, 0.34), rgba(15, 23, 42, 0.78));
-          border: 1px solid rgba(148, 163, 184, 0.22);
-          box-shadow: 0 32px 90px rgba(2, 6, 23, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-          z-index: -2;
-        }
-
-        .halo {
-          position: absolute;
-          width: clamp(18rem, 32vw, 28rem);
-          height: clamp(18rem, 32vw, 28rem);
-          left: 50%;
-          top: 2rem;
-          transform: translateX(-50%);
-          border-radius: 999px;
-          background: conic-gradient(from 150deg, rgba(96, 165, 250, 0.08), rgba(236, 72, 153, 0.46), rgba(52, 211, 153, 0.16), rgba(96, 165, 250, 0.08));
-          filter: blur(1px);
-          opacity: 0.95;
-          z-index: -1;
-          animation: pulse 4.5s ease-in-out infinite;
-        }
-
-        .ava-figure {
-          width: min(100%, 430px);
-          height: min(740px, 78vh);
-          min-height: 600px;
-          position: relative;
-          overflow: visible;
-        }
-
-        .hair-back {
-          position: absolute;
-          width: 210px;
-          height: 300px;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 50% 50% 42% 42%;
-          background: linear-gradient(145deg, #050505, #020617 58%, #111827);
-          box-shadow: 0 0 52px rgba(96, 165, 250, 0.28);
-        }
-
-        .hair-back::before,
-        .hair-back::after {
-          content: '';
-          position: absolute;
-          top: 76px;
-          width: 74px;
-          height: 255px;
-          border-radius: 999px 999px 32px 32px;
-          background: linear-gradient(180deg, #050505, #020617);
-        }
-
-        .hair-back::before {
-          left: -22px;
-          transform: rotate(8deg);
-        }
-
-        .hair-back::after {
-          right: -22px;
-          transform: rotate(-8deg);
-        }
-
-        .face {
-          position: absolute;
-          width: 138px;
-          height: 164px;
-          top: 64px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 48% 48% 45% 45%;
-          background: linear-gradient(160deg, #f0b58f, #c77d5b 68%, #9f5a44);
-          box-shadow: inset -14px -18px 24px rgba(86, 45, 56, 0.24), 0 0 0 1px rgba(255,255,255,0.08);
-          z-index: 2;
-        }
-
-        .bangs {
-          position: absolute;
-          width: 154px;
-          height: 72px;
-          top: 39px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 62% 62% 36% 36%;
-          background: linear-gradient(150deg, #000000, #111827 58%, #020617);
-          clip-path: polygon(0 0, 100% 0, 96% 50%, 78% 38%, 61% 62%, 44% 37%, 27% 58%, 7% 66%);
-          z-index: 3;
-        }
-
-        .eyes {
-          position: absolute;
-          width: 86px;
-          top: 124px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          justify-content: space-between;
-          z-index: 4;
-        }
-
-        .eyes span {
-          width: 16px;
-          height: 9px;
-          border-radius: 999px;
-          background: #111827;
-          box-shadow: 0 0 12px rgba(96, 165, 250, 0.7);
-        }
-
-        .mouth {
-          position: absolute;
-          width: 34px;
-          height: 14px;
-          top: 181px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-bottom: 3px solid rgba(127, 29, 29, 0.5);
-          border-radius: 0 0 999px 999px;
-          z-index: 4;
-        }
-
-        .neck {
-          position: absolute;
-          width: 52px;
-          height: 82px;
-          top: 204px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 0 0 18px 18px;
-          background: linear-gradient(160deg, #c77d5b, #93523f);
-          z-index: 1;
-        }
-
-        .torso {
-          position: absolute;
-          width: 248px;
-          height: 305px;
-          top: 266px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 104px 104px 44px 44px;
-          background:
-            linear-gradient(115deg, rgba(96, 165, 250, 0.18), transparent 30%),
-            linear-gradient(180deg, #101827, #080b14 48%, #020617);
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 18px 48px rgba(2, 6, 23, 0.42);
-          z-index: 1;
-        }
-
-        .torso::before {
-          content: '';
-          position: absolute;
-          width: 94px;
-          height: 146px;
-          left: 50%;
-          top: 0;
-          transform: translateX(-50%);
-          border-radius: 0 0 42px 42px;
-          background: linear-gradient(180deg, #fff7ed, #f3e8d7);
-          clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
-        }
-
-        .torso::after {
-          content: '';
-          position: absolute;
-          width: 150px;
-          height: 210px;
-          left: 50%;
-          top: 52px;
-          transform: translateX(-50%);
-          border-radius: 46px 46px 34px 34px;
-          background: linear-gradient(180deg, rgba(236, 72, 153, 0.18), rgba(96, 165, 250, 0.12));
-          clip-path: polygon(12% 0, 88% 0, 70% 100%, 30% 100%);
-        }
-
-        .arm {
-          position: absolute;
-          width: 56px;
-          height: 260px;
-          top: 290px;
-          border-radius: 999px;
-          background: linear-gradient(180deg, #111827, #050816);
-          transform-origin: top center;
-          z-index: 0;
-        }
-
-        .arm.left {
-          left: 62px;
-          transform: rotate(11deg);
-        }
-
-        .arm.right {
-          right: 62px;
-          transform: rotate(-11deg);
-        }
-
-        .hand {
-          position: absolute;
-          width: 42px;
-          height: 46px;
-          top: 526px;
-          border-radius: 999px;
-          background: linear-gradient(160deg, #c77d5b, #93523f);
-          z-index: 2;
-        }
-
-        .hand.left {
-          left: 54px;
-        }
-
-        .hand.right {
-          right: 54px;
-        }
-
-        .legs {
-          position: absolute;
-          width: 136px;
-          height: 152px;
-          left: 50%;
-          bottom: 0;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 20px;
-          z-index: 0;
-        }
-
-        .legs span {
-          flex: 1;
-          border-radius: 24px 24px 0 0;
-          background: linear-gradient(180deg, #111827, #020617);
-        }
-
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 0.75; transform: translateX(-50%) scale(1); }
-          50% { opacity: 1; transform: translateX(-50%) scale(1.04); }
-        }
-
-        .pricing-section {
-          width: min(1120px, calc(100% - 48px));
-          margin: 0 auto;
-          padding: 0 0 80px;
-        }
-
-        .pricing-heading {
-          max-width: 820px;
-          margin: 0 auto 28px;
-          text-align: center;
-        }
-
-        .pricing-heading h2 {
-          margin: 14px 0;
-          font-size: clamp(2rem, 4vw, 4.2rem);
-          line-height: 1;
-          letter-spacing: -0.06em;
-        }
-
-        .pricing-heading p {
-          margin: 0;
-          color: #94a3b8;
-          line-height: 1.7;
-        }
-
-        .tier-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 18px;
-        }
-
-        .tier-card {
-          position: relative;
-          overflow: hidden;
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          border-radius: 28px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-          color: #ffffff;
-          background: rgba(15, 23, 42, 0.72);
-          text-align: left;
-          cursor: pointer;
-          transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-        }
-
-        .tier-card:hover,
-        .tier-card.active {
-          transform: translateY(-4px);
-          border-color: rgba(192, 132, 252, 0.72);
-          box-shadow: 0 24px 80px rgba(79, 70, 229, 0.24);
-        }
-
-        .tier-card.featured::after {
-          content: 'Most Popular';
-          position: absolute;
-          top: 18px;
-          right: 18px;
-          border-radius: 999px;
-          padding: 6px 10px;
-          background: rgba(168, 85, 247, 0.2);
-          color: #e9d5ff;
-          font-size: 0.68rem;
-          font-weight: 900;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .tier-icon {
-          width: 46px;
-          height: 46px;
-          border-radius: 16px;
-          display: grid;
-          place-items: center;
-          background: linear-gradient(135deg, #6366f1, #a855f7);
-          color: #fff;
-        }
-
-        .tier-name {
-          color: #c4b5fd;
-          font-weight: 900;
-        }
-
-        .tier-card strong {
-          font-size: 2.2rem;
-          letter-spacing: -0.06em;
-        }
-
-        .regular-price {
-          color: #f0abfc;
-          font-size: 0.82rem;
-          font-weight: 900;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .tier-seats,
-        .tier-description {
-          color: #94a3b8;
-          line-height: 1.55;
-        }
-
-        .tier-list {
-          display: grid;
-          gap: 8px;
-          margin-top: 8px;
-          color: #cbd5e1;
-          font-size: 0.86rem;
-          font-weight: 700;
-        }
-
-        .tier-list span {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-        }
-
-        .tier-list :global(svg) {
-          color: #818cf8;
-        }
-
-        .purchase-form {
-          margin: 22px auto 0;
-          padding: 16px;
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          border-radius: 999px;
-          display: grid;
-          grid-template-columns: 1fr 1.1fr auto;
-          gap: 12px;
-          align-items: center;
-          background: rgba(15, 23, 42, 0.82);
-          backdrop-filter: blur(18px);
-        }
-
-        .purchase-form div {
-          display: grid;
-          gap: 3px;
-          padding-left: 12px;
-        }
-
-        .purchase-form div span,
-        .purchase-message {
-          color: #94a3b8;
-          font-size: 0.85rem;
-        }
-
-        .purchase-form input {
-          min-height: 50px;
-          border: 1px solid #1e293b;
-          border-radius: 999px;
-          background: #0f172a;
-          color: #fff;
-          padding: 0 18px;
-          outline: none;
-        }
-
-        .purchase-form button {
-          min-height: 50px;
-          border: 0;
-          border-radius: 999px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: linear-gradient(135deg, #4f46e5, #a855f7);
-          color: #fff;
-          padding: 0 22px;
-          font-weight: 900;
-          cursor: pointer;
-        }
-
-        .purchase-form button:disabled {
-          cursor: not-allowed;
-          opacity: 0.58;
-        }
-
-        .purchase-message {
-          margin: 12px 0 0;
-          text-align: center;
-          font-weight: 800;
-        }
-
-        .ai-showcase {
-          width: min(1120px, calc(100% - 48px));
-          margin: 10px auto 0;
-          padding: 0 0 86px;
-          display: grid;
-          grid-template-columns: 1.2fr 0.9fr 0.9fr;
-          gap: 18px;
-        }
-
-        .showcase-card {
-          position: relative;
-          overflow: hidden;
-          border: 1px solid rgba(192, 132, 252, 0.26);
-          border-radius: 28px;
-          background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 27, 75, 0.48));
-          box-shadow: 0 30px 100px rgba(2, 6, 23, 0.46), 0 0 70px rgba(168, 85, 247, 0.1);
-          backdrop-filter: blur(18px);
-        }
-
-        .showcase-card::before {
-          content: '';
-          position: absolute;
-          inset: -40% auto auto -25%;
-          width: 220px;
-          height: 220px;
-          border-radius: 999px;
-          background: rgba(168, 85, 247, 0.24);
-          filter: blur(8px);
-        }
-
-        .command-card {
-          padding: 30px;
-        }
-
-        .card-kicker {
-          position: relative;
-          z-index: 1;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          color: #c4b5fd;
-          font-size: 0.78rem;
-          font-weight: 900;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        .command-card h2 {
-          position: relative;
-          z-index: 1;
-          margin: 14px 0;
-          font-size: clamp(1.8rem, 3vw, 3rem);
-          line-height: 1;
-          letter-spacing: -0.055em;
-        }
-
-        .command-card p,
-        .glass-card span {
-          position: relative;
-          z-index: 1;
-          color: #94a3b8;
-          line-height: 1.65;
-        }
-
-        .glass-card {
-          min-height: 220px;
-          padding: 26px;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          gap: 10px;
-        }
-
-        .glass-card :global(svg) {
-          position: relative;
-          z-index: 1;
-          color: #c084fc;
-        }
-
-        .glass-card strong {
-          position: relative;
-          z-index: 1;
-          font-size: 1.2rem;
-        }
-
-        @media (max-width: 860px) {
-          .hero-content,
-          .ai-showcase,
-          .tier-grid,
-          .purchase-form {
-            grid-template-columns: 1fr;
-          }
-
-          .hero-content {
-            text-align: center;
-          }
-
-          .hero-logo,
-          .badges {
-            justify-content: center;
-          }
-
-          .hero-copy,
-          .lead-form,
-          .hero-stats {
-            margin-left: auto;
-            margin-right: auto;
-          }
-
-          .purchase-form {
-            border-radius: 28px;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .nav {
-            width: min(100% - 32px, 1280px);
-          }
-
-          .nav-button {
-            display: none;
-          }
-
-          .hero {
-            width: min(100% - 32px, 1024px);
-            padding-top: 72px;
-          }
-
-          .lead-form {
-            flex-direction: column;
-          }
-
-          .lead-form button {
-            width: 100%;
-          }
-        }
+        .page { min-height: 100vh; overflow: hidden; color: #f8fbff; background: radial-gradient(circle at 18% 12%, rgba(37,99,235,.28), transparent 30rem), radial-gradient(circle at 86% 16%, rgba(236,72,153,.22), transparent 28rem), linear-gradient(135deg, #020617 0%, #07111f 48%, #030712 100%); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; position: relative; }
+        .page:before { content: ''; position: fixed; inset: 0; background: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 72%); pointer-events: none; }
+        .mesh { position: absolute; border-radius: 999px; filter: blur(80px); opacity: .58; pointer-events: none; }
+        .meshOne { width: 560px; height: 560px; left: -220px; top: -150px; background: #2563eb; }
+        .meshTwo { width: 560px; height: 560px; right: -190px; top: 140px; background: #db2777; }
+        .nav { position: relative; z-index: 2; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 1.25rem 0; display: flex; align-items: center; justify-content: space-between; }
+        .logoMark { display: flex; align-items: center; gap: .7rem; font-weight: 950; letter-spacing: -.04em; font-size: 1.1rem; }
+        .logoMark img { width: 46px; height: 46px; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 12px 28px rgba(168,85,247,.38)); }
+        .logoMark span { color: #fff; }
+        .navLinks { display: flex; align-items: center; gap: 1rem; font-size: .92rem; }
+        .navLinks a { color: rgba(248,251,255,.72); text-decoration: none; font-weight: 750; }
+        .navCta { color: #fff !important; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: .7rem 1rem; background: rgba(255,255,255,.07); backdrop-filter: blur(14px); }
+        .hero { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; min-height: 810px; display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); padding: 2rem 0 5rem; }
+        .eyebrow { margin: 0 0 1rem; color: #93c5fd; font-size: .78rem; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; }
+        h1, h2, h3, p { margin-top: 0; }
+        .heroCopy { position: relative; }
+        .premiumBadge { width: fit-content; margin-bottom: 1.5rem; padding: .72rem 1rem; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: #dbeafe; background: rgba(255,255,255,.07); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 60px rgba(37,99,235,.2); backdrop-filter: blur(16px); font-size: .78rem; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
+        .welcomeLockup { margin-bottom: 1.25rem; }
+        .welcomeLockup > span { display: block; margin-bottom: .45rem; color: #bfdbfe; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 900; letter-spacing: .05em; }
+        h1 { max-width: 780px; margin: 0; font-size: clamp(4.2rem, 11vw, 9.6rem); line-height: .82; letter-spacing: -.095em; font-weight: 1000; background: linear-gradient(135deg, #ffffff 5%, #bfdbfe 35%, #f9a8d4 72%, #fde68a 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 40px 110px rgba(59,130,246,.28); }
+        .dynastyStatement { margin: 1.35rem 0 0; color: #fff; font-size: clamp(1.8rem, 4vw, 3.5rem); line-height: .95; font-weight: 1000; letter-spacing: -.055em; max-width: 800px; }
+        .lead { max-width: 760px; color: rgba(226,232,240,.82); font-size: clamp(1.08rem, 2vw, 1.34rem); line-height: 1.75; }
+        .heroActions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
+        .primary, .secondary { border-radius: 999px; padding: 1rem 1.35rem; text-decoration: none; font-weight: 950; transition: .25s ease; }
+        .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); box-shadow: 0 24px 80px rgba(37,99,235,.36); }
+        .secondary { color: #dbeafe; border: 1px solid rgba(147,197,253,.35); background: rgba(15,23,42,.62); }
+        .primary:hover, .secondary:hover { transform: translateY(-2px); }
+        .signalBar { max-width: 720px; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border: 1px solid rgba(148,163,184,.2); border-radius: 1.2rem; background: rgba(15,23,42,.6); color: rgba(226,232,240,.78); }
+        .signalBar strong { color: #86efac; white-space: nowrap; }
+        .avaShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
+        .portraitHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
+        .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .82; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
+        .portraitCard:after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 52%, rgba(2,6,23,.55)); pointer-events: none; }
+        .portraitCard img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.03); }
+        .chiefCard { position: absolute; left: 0; right: 0; bottom: 2rem; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
+        .chiefCard span { display: block; color: #fff; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1; font-weight: 1000; letter-spacing: -.04em; }
+        .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
+        .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
+        .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
+        .cinema { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
+        .videoStage { min-height: 560px; position: relative; display: grid; place-items: center; border-radius: 2.2rem; overflow: hidden; border: 1px solid rgba(148,163,184,.22); background: radial-gradient(circle at 50% 20%, rgba(59,130,246,.28), transparent 34rem), linear-gradient(145deg, rgba(15,23,42,.96), rgba(2,6,23,.82)); box-shadow: 0 40px 130px rgba(2,6,23,.72); }
+        .videoStage:before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0 40%, rgba(255,255,255,.1) 50%, transparent 60%); transform: translateX(-120%); animation: sweep 5s infinite; }
+        .avatarFrame { width: min(360px, 72vw); aspect-ratio: 1; border-radius: 2rem; overflow: hidden; display: grid; place-items: center; position: relative; border: 1px solid rgba(255,255,255,.22); background: linear-gradient(145deg, rgba(15,23,42,.7), rgba(37,99,235,.22)); box-shadow: 0 24px 80px rgba(0,0,0,.48); }
+        .avatarFrame img { width: 100%; height: 100%; object-fit: cover; }
+        .avatarFallback { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 3.5rem; line-height: .9; font-weight: 1000; letter-spacing: -.08em; background: radial-gradient(circle at 50% 15%, rgba(240,171,252,.35), transparent 16rem), linear-gradient(145deg, #0f172a, #1e3a8a 52%, #831843); }
+        .scanLine { position: absolute; left: 0; right: 0; height: 2px; top: 50%; background: linear-gradient(90deg, transparent, #93c5fd, transparent); box-shadow: 0 0 24px #60a5fa; opacity: .8; animation: scan 3s infinite; }
+        .playOrb { position: absolute; width: 76px; height: 76px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(16px); box-shadow: 0 20px 60px rgba(37,99,235,.32); }
+        .captionStrip { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.8); background: rgba(2,6,23,.72); border: 1px solid rgba(148,163,184,.18); }
+        .videoCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; }
+        .scriptCard { display: grid; gap: .6rem; padding: 1.2rem; border-radius: 1.2rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); color: rgba(226,232,240,.8); }
+        .scriptCard strong { color: #f0abfc; }
+        .backendPreview { padding-top: 2rem; }
+        .backendGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .backendGrid article { padding: 1.2rem; min-height: 190px; border-radius: 1.25rem; background: linear-gradient(145deg, rgba(15,23,42,.72), rgba(37,99,235,.12)); border: 1px solid rgba(148,163,184,.2); }
+        .backendGrid p { margin: 1rem 0 0; color: rgba(226,232,240,.78); line-height: 1.6; }
+        .gridTwo { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; align-items: start; }
+        h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; letter-spacing: -.055em; max-width: 760px; }
+        .workflowList { display: grid; gap: 1rem; }
+        .workflowList article { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.25rem; border-radius: 1.2rem; border: 1px solid rgba(148,163,184,.2); background: rgba(15,23,42,.62); }
+        .workflowList p { margin: 0; color: rgba(226,232,240,.8); line-height: 1.6; }
+        .sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
+        .agentGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .agent { min-height: 130px; display: flex; align-items: end; padding: 1rem; border-radius: 1.3rem; border: 1px solid rgba(148,163,184,.2); background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.11)); font-weight: 950; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+
+        .pricingSection { padding-top: 2rem; }
+        .pricingIntro { max-width: 430px; color: rgba(226,232,240,.72); line-height: 1.6; margin: 0; }
+        .pricingGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .priceCard { display: flex; flex-direction: column; justify-content: space-between; gap: 1.2rem; min-height: 430px; padding: 1.25rem; border-radius: 1.35rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+        .priceCard.featured { background: linear-gradient(145deg, rgba(37,99,235,.28), rgba(219,39,119,.18)); border-color: rgba(147,197,253,.38); box-shadow: 0 28px 90px rgba(37,99,235,.22); }
+        .planName { display: block; color: #93c5fd; font-size: .78rem; font-weight: 1000; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .75rem; }
+        .planPrice { display: block; color: #fff; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1; letter-spacing: -.06em; }
+        .priceCard p { color: rgba(226,232,240,.74); line-height: 1.55; margin: .9rem 0 0; }
+        .priceCard ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; color: rgba(226,232,240,.8); }
+        .priceCard li { position: relative; padding-left: 1.25rem; line-height: 1.4; }
+        .priceCard li:before { content: '✓'; position: absolute; left: 0; color: #86efac; font-weight: 1000; }
+        .checkoutBtn { display: block; text-align: center; text-decoration: none; color: #fff; border-radius: 999px; padding: .95rem 1rem; font-weight: 1000; background: linear-gradient(135deg, #2563eb, #db2777); box-shadow: 0 18px 50px rgba(37,99,235,.22); }
+
+        .tierWrap { padding-bottom: 3rem; }
+        .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .tiers article { padding: 1.4rem; border-radius: 1.3rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); }
+        .tiers h3 { font-size: 1.35rem; margin-bottom: .7rem; }
+        .tiers p { color: rgba(226,232,240,.76); line-height: 1.65; }
+        footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
+        @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
+        @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
       `}</style>
-    </>
+    </main>
   );
 }

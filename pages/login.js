@@ -1,241 +1,102 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { hasSupabaseConfig, supabase } from '../lib/supabaseClient';
+import { useEffect, useMemo, useState } from 'react';
+import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
 export default function Login() {
-  const router = useRouter();
-  const [email, setEmail] = useState('digimark101s@gmail.com');
+  const supabase = useMemo(() => createSupabaseClient(), []);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mode, setMode] = useState('signin');
+  const [status, setStatus] = useState('Sign in with your founder or premium account.');
   const [loading, setLoading] = useState(false);
-  const [resetLoading, setResetLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('error');
 
-  const requireSupabase = () => {
-    if (!hasSupabaseConfig || !supabase) {
-      setMessageType('error');
-      setMessage('Supabase is not configured yet. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel.');
-      return false;
+  useEffect(() => {
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        window.location.href = '/dashboard';
+      }
+    });
+  }, [supabase]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!supabase) {
+      setStatus('Supabase browser credentials are missing. Add NEXT_PUBLIC_SUPABASE_URL and a public anon or publishable key.');
+      return;
     }
 
-    return true;
-  };
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    setMessage('');
-
-    if (!requireSupabase()) return;
-
     setLoading(true);
+    setStatus(mode === 'signin' ? 'Signing you in...' : 'Creating your account...');
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const result = mode === 'signin'
+      ? await supabase.auth.signInWithPassword({ email, password })
+      : await supabase.auth.signUp({ email, password });
 
     setLoading(false);
 
-    if (error) {
-      setMessageType('error');
-      setMessage(error.message || 'Login failed. Check the owner/founder credentials in Supabase.');
+    if (result.error) {
+      setStatus(result.error.message);
       return;
     }
 
-    router.push('/dashboard');
-  };
-
-  const handlePasswordSetup = async () => {
-    setMessage('');
-
-    if (!email) {
-      setMessageType('error');
-      setMessage('Enter your owner email first.');
+    if (mode === 'signup') {
+      setStatus('Account created. Add this user to profiles.role = founder or subscriptions.plan = premium, then sign in.');
       return;
     }
 
-    if (!requireSupabase()) return;
-
-    setResetLoading(true);
-
-    const redirectTo = `${window.location.origin}/login`;
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo,
-    });
-
-    setResetLoading(false);
-
-    if (error) {
-      setMessageType('error');
-      setMessage(error.message || 'Could not send the password setup email.');
-      return;
-    }
-
-    setMessageType('success');
-    setMessage(`Password setup email sent to ${email}. Open that email and follow the Supabase link to choose your private password.`);
-  };
+    window.location.href = '/dashboard';
+  }
 
   return (
-    <main className="login-shell">
-      <style jsx>{`
-        .login-shell {
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background:
-            radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.22), transparent 28rem),
-            radial-gradient(circle at 82% 78%, rgba(236, 72, 153, 0.2), transparent 26rem),
-            linear-gradient(135deg, #050816 0%, #0f1419 48%, #1a1f2e 100%);
-          color: #f9fafb;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-          padding: 1.25rem;
-        }
+    <main className="loginPage">
+      <section className="loginCard">
+        <a className="brand" href="/">
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <span>DigiMark101</span>
+        </a>
+        <p className="eyebrow">Founder access</p>
+        <h1>Enter the DigiMark101 backend.</h1>
+        <p className="intro">Ava Skye opens the private command center for founder and premium accounts only.</p>
 
-        .login-card {
-          width: min(100%, 440px);
-          padding: clamp(1.5rem, 5vw, 2.5rem);
-          border-radius: 1.5rem;
-          background: rgba(15, 23, 42, 0.78);
-          border: 1px solid rgba(148, 163, 184, 0.28);
-          box-shadow: 0 32px 90px rgba(2, 6, 23, 0.5);
-          backdrop-filter: blur(18px);
-        }
-
-        .eyebrow {
-          color: #93c5fd;
-          font-size: 0.8rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          margin: 0 0 0.75rem;
-        }
-
-        h1 {
-          font-size: clamp(2.25rem, 9vw, 3.75rem);
-          line-height: 0.96;
-          letter-spacing: -0.06em;
-          margin: 0 0 0.75rem;
-        }
-
-        .subtitle {
-          color: rgba(249, 250, 251, 0.72);
-          line-height: 1.6;
-          margin: 0 0 1.75rem;
-        }
-
-        label {
-          display: block;
-          color: rgba(249, 250, 251, 0.82);
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-        }
-
-        input {
-          width: 100%;
-          box-sizing: border-box;
-          padding: 0.95rem 1rem;
-          margin-bottom: 1rem;
-          border-radius: 0.9rem;
-          border: 1px solid rgba(148, 163, 184, 0.38);
-          background: rgba(2, 6, 23, 0.42);
-          color: #f9fafb;
-          font-size: 1rem;
-          outline: none;
-        }
-
-        input:focus {
-          border-color: rgba(96, 165, 250, 0.85);
-          box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
-        }
-
-        button {
-          width: 100%;
-          padding: 1rem 1.25rem;
-          border-radius: 999px;
-          cursor: pointer;
-          color: #f9fafb;
-          font-size: 1rem;
-          font-weight: 900;
-          transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        button:hover:not(:disabled) {
-          transform: translateY(-1px);
-        }
-
-        button:disabled {
-          cursor: not-allowed;
-          opacity: 0.7;
-        }
-
-        .primary-button {
-          border: none;
-          background: linear-gradient(135deg, #3b82f6, #ec4899);
-          box-shadow: 0 18px 40px rgba(59, 130, 246, 0.35), 0 0 60px rgba(236, 72, 153, 0.18);
-        }
-
-        .secondary-button {
-          margin-top: 0.75rem;
-          border: 1px solid rgba(148, 163, 184, 0.45);
-          background: rgba(15, 23, 42, 0.35);
-        }
-
-        .message {
-          min-height: 1.5rem;
-          margin-top: 1rem;
-          color: ${messageType === 'success' ? '#86efac' : '#fca5a5'};
-          line-height: 1.5;
-        }
-
-        .back-link {
-          display: inline-block;
-          margin-top: 1.25rem;
-          color: #93c5fd;
-          font-weight: 800;
-          text-decoration: none;
-        }
-      `}</style>
-
-      <section className="login-card" aria-label="Owner founder login">
-        <p className="eyebrow">DigiMark101 secure access</p>
-        <h1>Owner / Founder Login</h1>
-        <p className="subtitle">
-          Use your owner email to sign in, or send yourself a secure Supabase password setup email. Your private password is never handled here.
-        </p>
-
-        <form onSubmit={handleLogin}>
-          <label htmlFor="email">Owner email</label>
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-
-          <button className="primary-button" type="submit" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign in as Owner / Founder'}
+        <form onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />
+          </label>
+          <label>
+            Password
+            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} minLength={6} />
+          </label>
+          <button type="submit" disabled={loading || !hasSupabaseConfig()}>
+            {loading ? 'Working...' : mode === 'signin' ? 'Sign in' : 'Create account'}
           </button>
         </form>
 
-        <button className="secondary-button" type="button" onClick={handlePasswordSetup} disabled={resetLoading}>
-          {resetLoading ? 'Sending setup email...' : 'Send password setup email'}
+        <button className="switchMode" type="button" onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}>
+          {mode === 'signin' ? 'Need to create the founder account?' : 'Already have the founder account?'}
         </button>
-
-        <div className="message" role="status">{message}</div>
-        <a className="back-link" href="/">Back to DigiMark101</a>
+        <p className="status">{status}</p>
       </section>
+
+      <style jsx>{`
+        .loginPage { min-height: 100vh; display: grid; place-items: center; padding: 2rem; color: #f8fafc; background: radial-gradient(circle at 20% 12%, rgba(37,99,235,.28), transparent 28rem), radial-gradient(circle at 88% 18%, rgba(219,39,119,.24), transparent 28rem), #020617; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .loginCard { width: min(520px, 100%); padding: 2rem; border: 1px solid rgba(255,255,255,.16); border-radius: 2rem; background: rgba(15,23,42,.78); box-shadow: 0 40px 140px rgba(2,6,23,.72), inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(22px); }
+        .brand { display: flex; align-items: center; gap: .75rem; color: #fff; text-decoration: none; font-weight: 1000; letter-spacing: -.04em; margin-bottom: 2rem; }
+        .brand img { width: 48px; height: 48px; object-fit: contain; mix-blend-mode: screen; }
+        .eyebrow { margin: 0 0 .75rem; color: #93c5fd; font-size: .75rem; font-weight: 1000; letter-spacing: .18em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: .9; letter-spacing: -.07em; }
+        .intro, .status { color: rgba(226,232,240,.76); line-height: 1.65; }
+        form { display: grid; gap: 1rem; margin-top: 1.6rem; }
+        label { display: grid; gap: .45rem; color: rgba(226,232,240,.78); font-weight: 850; }
+        input { width: 100%; box-sizing: border-box; border: 1px solid rgba(147,197,253,.25); border-radius: 1rem; padding: 1rem; color: #fff; background: rgba(2,6,23,.62); outline: none; }
+        input:focus { border-color: rgba(147,197,253,.75); box-shadow: 0 0 0 4px rgba(59,130,246,.16); }
+        button { border: 0; border-radius: 999px; padding: 1rem 1.25rem; color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); font-weight: 1000; cursor: pointer; box-shadow: 0 22px 70px rgba(37,99,235,.3); }
+        button:disabled { cursor: not-allowed; opacity: .55; }
+        .switchMode { margin-top: 1rem; width: 100%; color: #dbeafe; border: 1px solid rgba(147,197,253,.28); background: rgba(255,255,255,.05); box-shadow: none; }
+        .status { margin-bottom: 0; }
+      `}</style>
     </main>
   );
 }

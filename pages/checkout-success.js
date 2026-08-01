@@ -1,94 +1,53 @@
 import { useRouter } from 'next/router';
 
+const planLabels = {
+  launch: 'Launch Account',
+  startup: 'Launch Account',
+  growth: 'Growth Account',
+  premium: 'Premium Account',
+  pro: 'Premium Account',
+  elite: 'Elite Account',
+  'elite-team': 'Elite Account',
+  'white-label-partner': 'White Label Partner',
+  'white-label-enterprise': 'White Label Enterprise',
+};
+
 export default function CheckoutSuccess() {
   const router = useRouter();
-  const orderId = router.query.order;
+  const plan = String(router.query.plan || '').toLowerCase();
+  const label = planLabels[plan] || 'DigiMark101 Account';
 
   return (
-    <main className="success-shell">
-      <style jsx>{`
-        .success-shell {
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background:
-            radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.22), transparent 28rem),
-            radial-gradient(circle at 82% 78%, rgba(236, 72, 153, 0.2), transparent 26rem),
-            linear-gradient(135deg, #050816 0%, #0f1419 48%, #1a1f2e 100%);
-          color: #f9fafb;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-          padding: 1.25rem;
-        }
-
-        .success-card {
-          width: min(100%, 620px);
-          padding: clamp(1.5rem, 5vw, 2.5rem);
-          border-radius: 1.5rem;
-          background: rgba(15, 23, 42, 0.78);
-          border: 1px solid rgba(148, 163, 184, 0.28);
-          box-shadow: 0 32px 90px rgba(2, 6, 23, 0.5);
-          backdrop-filter: blur(18px);
-          text-align: center;
-        }
-
-        .eyebrow {
-          color: #93c5fd;
-          font-size: 0.8rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          margin: 0 0 0.75rem;
-        }
-
-        h1 {
-          font-size: clamp(2.5rem, 9vw, 4.5rem);
-          line-height: 0.96;
-          letter-spacing: -0.06em;
-          margin: 0 0 1rem;
-        }
-
-        p {
-          color: rgba(249, 250, 251, 0.74);
-          line-height: 1.6;
-        }
-
-        .order-box {
-          margin: 1.5rem 0;
-          padding: 1rem;
-          border-radius: 1rem;
-          border: 1px solid rgba(148, 163, 184, 0.24);
-          background: rgba(2, 6, 23, 0.32);
-        }
-
-        a {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 1rem 1.25rem;
-          border-radius: 999px;
-          color: #f9fafb;
-          font-weight: 900;
-          text-decoration: none;
-          background: linear-gradient(135deg, #3b82f6, #ec4899);
-          box-shadow: 0 18px 40px rgba(59, 130, 246, 0.35), 0 0 60px rgba(236, 72, 153, 0.18);
-        }
-      `}</style>
-
-      <section className="success-card" aria-label="Checkout request saved">
-        <p className="eyebrow">Checkout request saved</p>
-        <h1>Request received</h1>
+    <main className="successPage">
+      <section className="successCard">
+        <a className="brand" href="/">
+          <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
+          <span>DigiMark101</span>
+        </a>
+        <p className="eyebrow">Payment received</p>
+        <h1>Set up your {label} login.</h1>
         <p>
-          Your DigiMark101 checkout request was saved with payment pending. Once payment processing is connected, this flow can send clients to live payment and automated receipts.
+          Create your DigiMark101 login with the same email used at checkout. Ava Skye will open your private dashboard after your account is marked active in Supabase.
         </p>
-        {orderId ? (
-          <div className="order-box">
-            <strong>Order reference</strong>
-            <p>{orderId}</p>
-          </div>
-        ) : null}
-        <a href="/">Back to DigiMark101</a>
+        <div className="actions">
+          <a className="primary" href="/login">Create or sign in</a>
+          <a className="secondary" href="/">Back to site</a>
+        </div>
       </section>
+
+      <style jsx>{`
+        .successPage { min-height: 100vh; display: grid; place-items: center; padding: 2rem; color: #fff; background: radial-gradient(circle at 20% 12%, rgba(37,99,235,.28), transparent 28rem), radial-gradient(circle at 88% 18%, rgba(219,39,119,.24), transparent 28rem), #020617; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+        .successCard { width: min(680px, 100%); padding: 2rem; border: 1px solid rgba(255,255,255,.16); border-radius: 2rem; background: rgba(15,23,42,.78); box-shadow: 0 40px 140px rgba(2,6,23,.72), inset 0 1px 0 rgba(255,255,255,.08); }
+        .brand { display: flex; align-items: center; gap: .75rem; color: #fff; text-decoration: none; font-weight: 1000; letter-spacing: -.04em; margin-bottom: 2rem; }
+        .brand img { width: 48px; height: 48px; object-fit: contain; mix-blend-mode: screen; }
+        .eyebrow { margin: 0 0 .75rem; color: #93c5fd; font-size: .75rem; font-weight: 1000; letter-spacing: .18em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 5rem); line-height: .9; letter-spacing: -.07em; }
+        p { color: rgba(226,232,240,.76); line-height: 1.7; font-size: 1.08rem; }
+        .actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 1.5rem; }
+        a.primary, a.secondary { border-radius: 999px; padding: 1rem 1.25rem; text-decoration: none; font-weight: 1000; }
+        .primary { color: #fff; background: linear-gradient(135deg, #2563eb, #db2777 72%, #f59e0b); box-shadow: 0 22px 70px rgba(37,99,235,.3); }
+        .secondary { color: #dbeafe; border: 1px solid rgba(147,197,253,.28); background: rgba(255,255,255,.05); }
+      `}</style>
     </main>
   );
 }
