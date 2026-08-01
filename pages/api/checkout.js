@@ -51,18 +51,67 @@ const requiredEnv = [
   'PAYMENT_LINK_ENTERPRISE_URL',
 ];
 
-export default function handler(req, res) {
+function getBaseUrl(req) {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
+  if (configured) {
+    return configured.startsWith('http') ? configured : `https://${configured}`;
+  }
+
+  const protocol = req.headers['x-forwarded-proto'] || 'https';
+  return `${protocol}://${req.headers.host}`;
+}
+
+function withOrderParams(checkoutUrl, orderId, plan, email) {
+  const url = new URL(checkoutUrl);
+  url.searchParams.set('order_id', orderId);
+  url.searchParams.set('plan', plan);
+
+  if (email) {
+    url.searchParams.set('email', email);
+  }
+
+  return url.toString();
+}
+
+export default async function handler(req, res) {
   const plan = String(req.query.plan || 'elite').toLowerCase();
+  const email = String(req.query.email || '').trim().toLowerCase();
   const checkoutUrl = checkoutLinks[plan] || process.env.PAYMENT_LINK_TOP_TIER_URL;
 
   if (!checkoutUrl) {
     return res.status(501).json({
       error: 'Payment link is not configured yet.',
       plan,
-      nextStep: 'Create a PayPal/Cash App/current payment link and set PAYMENT_LINK_TOP_TIER_URL in Vercel production env.',
+      nextStep: 'Create a Supabase/PayPal/Cash App/current payment link and set PAYMENT_LINK_TOP_TIER_URL in Vercel production env.',
       requiredEnv,
     });
   }
 
-  return res.redirect(303, checkoutUrl);
+  if (!email) {
+    return res.redirect(303, checkoutUrl);
+  }
+
+  const baseUrl = getBaseUrl(req);
+  const response = await fetch(`${baseUrl}/api/orders/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      plan,
+      email,
+      paymentProvider: 'supabase_checkout',
+    }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || !data.orderId) {
+    console.error('Checkout order create failed:', data);
+    return res.status(response.status || 500).json({
+      error: data.error || 'Could not create the order before checkout.',
+      plan,
+    });
+  }
+
+  return res.redirect(303, withOrderParams(checkoutUrl, data.orderId, plan, email));
 }

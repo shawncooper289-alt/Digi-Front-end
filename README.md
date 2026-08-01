@@ -70,6 +70,16 @@ The website includes `/checkout` and saves payment-pending client requests to a 
 
 When a payment provider is connected later, the same checkout flow can update `payment_status` from `pending` to `paid` and trigger receipts/invoices.
 
+## Orders Backend
+
+The payment-link checkout API can also create Supabase `orders` and `order_items` records before redirecting to payment. Run `supabase/orders_and_order_items.sql` in the Supabase SQL Editor for `https://raxsxcmferydxllddeub.supabase.co` before using this in production.
+
+Required server-only Vercel environment variable:
+
+- `SUPABASE_SERVICE_ROLE_KEY` - never expose this in browser code or chat responses.
+
+Set `PAYMENT_LINK_TOP_TIER_URL` to the Supabase/PayPal/Cash App/current payment URL for the immediate top-tier purchase.
+
 ## Backend Lead Upsells
 
 The founder dashboard links to `/dashboard-sales`, a protected backend sales page for premium buyer and opt-in lead packages. Run `supabase/lead_sale_requests.sql` in the Supabase SQL Editor before using it in production.
