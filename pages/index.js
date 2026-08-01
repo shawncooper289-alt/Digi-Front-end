@@ -7,32 +7,35 @@ import { supabase, hasSupabaseConfig } from '../lib/supabaseClient';
 
 const seatTiers = [
   {
-    id: 'starter-seat',
-    name: 'Starter Seat',
-    seats: '1 seat',
-    price: '$97/mo',
+    id: 'founder-starter',
+    name: 'Founder Starter',
+    seats: '1 seat · first-adopter rate',
+    price: '$149/mo',
+    regularPrice: '$299/mo regular',
     icon: Users,
-    description: 'For solo founders launching their first AI-powered marketing system.',
-    highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates'],
+    description: 'For solo founders who want Ava to plan campaigns and keep lead follow-up organized.',
+    highlights: ['Ava campaign planning', 'Lead capture workspace', 'Core funnel templates', 'Email support'],
   },
   {
-    id: 'growth-team',
-    name: 'Growth Team',
-    seats: '3 seats',
-    price: '$297/mo',
+    id: 'growth-partner',
+    name: 'Growth Partner',
+    seats: '3 seats · first-adopter rate',
+    price: '$399/mo',
+    regularPrice: '$799/mo regular',
     icon: Rocket,
-    description: 'For teams that need campaign execution, content, and follow-up systems.',
-    highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Supabase-backed onboarding'],
+    description: 'Best value for businesses that want more done-for-you structure without agency-level pricing.',
+    highlights: ['Multi-seat Ava workflows', 'Campaign + email planning', 'Checkout/onboarding handoff', 'Priority setup support'],
     featured: true,
   },
   {
     id: 'agency-command',
     name: 'Agency Command',
-    seats: '10 seats',
-    price: '$997/mo',
+    seats: '10 seats · first-adopter rate',
+    price: '$1,497/mo',
+    regularPrice: '$2,997/mo regular',
     icon: Crown,
-    description: 'For agencies building a full client acquisition and delivery command center.',
-    highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff'],
+    description: 'For teams and agencies that need a premium growth command center with room to scale.',
+    highlights: ['Client portal readiness', 'Advanced growth systems', 'Priority AI strategy handoff', 'Monthly strategy review'],
   },
 ];
 
@@ -191,6 +194,7 @@ export default function LandingPage() {
                   <span className="tier-icon"><Icon size={22} /></span>
                   <span className="tier-name">{tier.name}</span>
                   <strong>{tier.price}</strong>
+                  <span className="regular-price">{tier.regularPrice}</span>
                   <span className="tier-seats">{tier.seats}</span>
                   <span className="tier-description">{tier.description}</span>
                   <span className="tier-list">
@@ -206,7 +210,7 @@ export default function LandingPage() {
           <form className="purchase-form" onSubmit={handlePurchaseSubmit}>
             <div>
               <span>Selected: {selectedSeatTier.name}</span>
-              <strong>{selectedSeatTier.seats} · {selectedSeatTier.price}</strong>
+              <strong>{selectedSeatTier.price} first-adopter · {selectedSeatTier.regularPrice}</strong>
             </div>
             <input
               type="email"
@@ -580,6 +584,14 @@ export default function LandingPage() {
         .tier-card strong {
           font-size: 2.2rem;
           letter-spacing: -0.06em;
+        }
+
+        .regular-price {
+          color: #f0abfc;
+          font-size: 0.82rem;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
 
         .tier-seats,

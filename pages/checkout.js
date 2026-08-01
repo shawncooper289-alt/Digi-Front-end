@@ -3,14 +3,14 @@ import { useRouter } from 'next/router';
 import { hasSupabaseConfig, supabase } from '../lib/supabaseClient';
 
 const packages = [
-  { id: 'starter-seat', name: 'Starter Seat', price: 97, priceLabel: '$97/mo', description: 'For solo founders launching their first AI-powered marketing system.' },
-  { id: 'growth-team', name: 'Growth Team', price: 297, priceLabel: '$297/mo', description: 'For teams that need campaign execution, content, and follow-up systems.' },
-  { id: 'agency-command', name: 'Agency Command', price: 997, priceLabel: '$997/mo', description: 'For agencies building a full client acquisition and delivery command center.' },
+  { id: 'founder-starter', name: 'Founder Starter', price: 149, priceLabel: '$149/mo first-adopter', regularPrice: '$299/mo regular', description: 'For solo founders who want Ava to plan campaigns and keep lead follow-up organized.' },
+  { id: 'growth-partner', name: 'Growth Partner', price: 399, priceLabel: '$399/mo first-adopter', regularPrice: '$799/mo regular', description: 'Best value for businesses that want more done-for-you structure without agency-level pricing.' },
+  { id: 'agency-command', name: 'Agency Command', price: 1497, priceLabel: '$1,497/mo first-adopter', regularPrice: '$2,997/mo regular', description: 'For teams and agencies that need a premium growth command center with room to scale.' },
 ];
 
 export default function Checkout() {
   const router = useRouter();
-  const [selectedPackage, setSelectedPackage] = useState(packages[1].id);
+  const [selectedPackage, setSelectedPackage] = useState('growth-partner');
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -178,6 +178,15 @@ export default function Checkout() {
           margin: 0.25rem 0;
         }
 
+        .regular-price {
+          color: #f0abfc;
+          font-size: 0.78rem;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          margin-bottom: 0.35rem;
+        }
+
         label {
           display: block;
           color: rgba(249, 250, 251, 0.82);
@@ -288,6 +297,7 @@ export default function Checkout() {
           <div className="package-card">
             <strong>{selected.name}</strong>
             <div className="price">{selected.priceLabel}</div>
+            <div className="regular-price">{selected.regularPrice}</div>
             <p>{selected.description}</p>
           </div>
 
