@@ -44,6 +44,12 @@ Set these in your Vercel project settings:
 - `NEXT_PUBLIC_BASE44_API_URL` - Base44 API endpoint
 - `NEXT_PUBLIC_BASE44_API_KEY` - Base44 API key
 - `NEXT_PUBLIC_CLIENT_ID` - Client ID for Base44
+- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anon public key
+
+## Owner / Founder Login
+
+The website includes `/login` for the owner/founder account. Create the owner user in Supabase Auth, then set the two Supabase environment variables above in Vercel. Do not commit Supabase service-role keys or passwords to this repository.
 
 ## What Was Fixed
 

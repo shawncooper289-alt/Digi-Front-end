@@ -445,6 +445,12 @@ export default function Home() {
             </button>
             <button
               className="secondary-button"
+              onClick={() => { window.location.href = '/login'; }}
+            >
+              Owner Login
+            </button>
+            <button
+              className="secondary-button"
               onClick={() => {
                 fetch('/api/hello', { method: 'POST' })
                   .then((res) => res.json())
