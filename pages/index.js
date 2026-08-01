@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { Sparkles, CheckCircle2, ArrowRight, Zap, ShieldCheck, Wand2, Users, Crown, Rocket } from 'lucide-react';
-import AvaSkyeVisual from '../components/AvaSkyeVisual';
 import DigiMarkLogo from '../components/DigiMarkLogo';
 import { supabase, hasSupabaseConfig } from '../lib/supabaseClient';
 
@@ -166,7 +165,23 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <AvaSkyeVisual />
+        <div className="visual-wrap" aria-hidden="true">
+          <div className="halo" />
+          <div className="ava-figure">
+            <div className="hair-back" />
+            <div className="face" />
+            <div className="bangs" />
+            <div className="eyes"><span /><span /></div>
+            <div className="mouth" />
+            <div className="neck" />
+            <div className="arm left" />
+            <div className="arm right" />
+            <div className="torso" />
+            <div className="hand left" />
+            <div className="hand right" />
+            <div className="legs"><span /><span /></div>
+          </div>
+        </div>
           </div>
         </section>
         <section className="pricing-section" id="seat-tiers" aria-label="Choose a DigiMark101 seat tier">
@@ -494,6 +509,231 @@ export default function LandingPage() {
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.08em;
+        }
+
+        .visual-wrap {
+          min-height: clamp(620px, 82vh, 780px);
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          position: relative;
+          isolation: isolate;
+          animation: slideUp 0.7s ease-out 0.1s both;
+        }
+
+        .visual-wrap::before {
+          content: '';
+          position: absolute;
+          width: min(95%, 500px);
+          height: 88%;
+          bottom: 0;
+          border-radius: 2rem;
+          background:
+            radial-gradient(circle at 50% 18%, rgba(96, 165, 250, 0.32), transparent 15rem),
+            radial-gradient(circle at 50% 55%, rgba(236, 72, 153, 0.24), transparent 18rem),
+            linear-gradient(180deg, rgba(15, 23, 42, 0.34), rgba(15, 23, 42, 0.78));
+          border: 1px solid rgba(148, 163, 184, 0.22);
+          box-shadow: 0 32px 90px rgba(2, 6, 23, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          z-index: -2;
+        }
+
+        .halo {
+          position: absolute;
+          width: clamp(18rem, 32vw, 28rem);
+          height: clamp(18rem, 32vw, 28rem);
+          left: 50%;
+          top: 2rem;
+          transform: translateX(-50%);
+          border-radius: 999px;
+          background: conic-gradient(from 150deg, rgba(96, 165, 250, 0.08), rgba(236, 72, 153, 0.46), rgba(52, 211, 153, 0.16), rgba(96, 165, 250, 0.08));
+          filter: blur(1px);
+          opacity: 0.95;
+          z-index: -1;
+          animation: pulse 4.5s ease-in-out infinite;
+        }
+
+        .ava-figure {
+          width: min(100%, 430px);
+          height: min(740px, 78vh);
+          min-height: 600px;
+          position: relative;
+          overflow: visible;
+        }
+
+        .hair-back {
+          position: absolute;
+          width: 190px;
+          height: 255px;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 48% 48% 44% 44%;
+          background: linear-gradient(145deg, #1f2937, #030712 58%, #111827);
+          box-shadow: 0 0 52px rgba(96, 165, 250, 0.28);
+        }
+
+        .face {
+          position: absolute;
+          width: 126px;
+          height: 150px;
+          top: 54px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 48% 48% 45% 45%;
+          background: linear-gradient(160deg, #f5c7b8, #d69488 68%, #a86964);
+          box-shadow: inset -14px -18px 24px rgba(86, 45, 56, 0.26);
+          z-index: 2;
+        }
+
+        .bangs {
+          position: absolute;
+          width: 138px;
+          height: 78px;
+          top: 31px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 60% 60% 38% 38%;
+          background: linear-gradient(150deg, #020617, #1f2937 58%, #111827);
+          clip-path: polygon(0 0, 100% 0, 96% 58%, 74% 42%, 55% 76%, 34% 42%, 7% 68%);
+          z-index: 3;
+        }
+
+        .eyes {
+          position: absolute;
+          width: 80px;
+          top: 108px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          justify-content: space-between;
+          z-index: 4;
+        }
+
+        .eyes span {
+          width: 14px;
+          height: 8px;
+          border-radius: 999px;
+          background: #0f172a;
+          box-shadow: 0 0 12px rgba(96, 165, 250, 0.7);
+        }
+
+        .mouth {
+          position: absolute;
+          width: 30px;
+          height: 13px;
+          top: 158px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-bottom: 3px solid rgba(127, 29, 29, 0.46);
+          border-radius: 0 0 999px 999px;
+          z-index: 4;
+        }
+
+        .neck {
+          position: absolute;
+          width: 48px;
+          height: 76px;
+          top: 184px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 0 0 18px 18px;
+          background: linear-gradient(160deg, #d69488, #9f625f);
+          z-index: 1;
+        }
+
+        .torso {
+          position: absolute;
+          width: 228px;
+          height: 285px;
+          top: 242px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 98px 98px 44px 44px;
+          background:
+            linear-gradient(120deg, rgba(96, 165, 250, 0.32), transparent 32%),
+            linear-gradient(180deg, #101827, #1f1141 48%, #111827);
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 18px 48px rgba(2, 6, 23, 0.42);
+          z-index: 1;
+        }
+
+        .torso::before {
+          content: '';
+          position: absolute;
+          width: 88px;
+          height: 132px;
+          left: 50%;
+          top: 0;
+          transform: translateX(-50%);
+          border-radius: 0 0 42px 42px;
+          background: linear-gradient(180deg, rgba(236, 72, 153, 0.34), rgba(96, 165, 250, 0.18));
+          clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+        }
+
+        .arm {
+          position: absolute;
+          width: 54px;
+          height: 250px;
+          top: 267px;
+          border-radius: 999px;
+          background: linear-gradient(180deg, #161b2c, #0f172a);
+          transform-origin: top center;
+          z-index: 0;
+        }
+
+        .arm.left {
+          left: 73px;
+          transform: rotate(10deg);
+        }
+
+        .arm.right {
+          right: 73px;
+          transform: rotate(-10deg);
+        }
+
+        .hand {
+          position: absolute;
+          width: 42px;
+          height: 46px;
+          top: 497px;
+          border-radius: 999px;
+          background: linear-gradient(160deg, #d69488, #9f625f);
+          z-index: 2;
+        }
+
+        .hand.left {
+          left: 66px;
+        }
+
+        .hand.right {
+          right: 66px;
+        }
+
+        .legs {
+          position: absolute;
+          width: 136px;
+          height: 152px;
+          left: 50%;
+          bottom: 0;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 20px;
+          z-index: 0;
+        }
+
+        .legs span {
+          flex: 1;
+          border-radius: 24px 24px 0 0;
+          background: linear-gradient(180deg, #111827, #020617);
+        }
+
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 0.75; transform: translateX(-50%) scale(1); }
+          50% { opacity: 1; transform: translateX(-50%) scale(1.04); }
         }
 
         .pricing-section {
