@@ -70,6 +70,12 @@ The website includes `/checkout` and saves payment-pending client requests to a 
 
 When a payment provider is connected later, the same checkout flow can update `payment_status` from `pending` to `paid` and trigger receipts/invoices.
 
+## Backend Lead Upsells
+
+The founder dashboard links to `/dashboard-sales`, a protected backend sales page for premium buyer and opt-in lead packages. Run `supabase/lead_sale_requests.sql` in the Supabase SQL Editor before using it in production.
+
+Only sell consented, opt-in, niche-matched leads. Do not use this flow for scraped, cold, or non-consented contact lists.
+
 ## What Was Fixed
 
 **Why you were getting a 404 error:**

@@ -193,6 +193,7 @@ export default function Dashboard() {
         </div>
 
         <button type="button" onClick={handleSignOut}>Sign out</button>
+        <a href="/dashboard-sales">Lead upsell page</a>
         <a href="/">Back to site</a>
       </section>
     </main>
