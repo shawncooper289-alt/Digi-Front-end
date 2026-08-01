@@ -562,46 +562,67 @@ export default function LandingPage() {
 
         .hair-back {
           position: absolute;
-          width: 190px;
-          height: 255px;
+          width: 210px;
+          height: 300px;
           top: 0;
           left: 50%;
           transform: translateX(-50%);
-          border-radius: 48% 48% 44% 44%;
-          background: linear-gradient(145deg, #1f2937, #030712 58%, #111827);
+          border-radius: 50% 50% 42% 42%;
+          background: linear-gradient(145deg, #050505, #020617 58%, #111827);
           box-shadow: 0 0 52px rgba(96, 165, 250, 0.28);
+        }
+
+        .hair-back::before,
+        .hair-back::after {
+          content: '';
+          position: absolute;
+          top: 76px;
+          width: 74px;
+          height: 255px;
+          border-radius: 999px 999px 32px 32px;
+          background: linear-gradient(180deg, #050505, #020617);
+        }
+
+        .hair-back::before {
+          left: -22px;
+          transform: rotate(8deg);
+        }
+
+        .hair-back::after {
+          right: -22px;
+          transform: rotate(-8deg);
         }
 
         .face {
           position: absolute;
-          width: 126px;
-          height: 150px;
-          top: 54px;
+          width: 138px;
+          height: 164px;
+          top: 64px;
           left: 50%;
           transform: translateX(-50%);
           border-radius: 48% 48% 45% 45%;
-          background: linear-gradient(160deg, #f5c7b8, #d69488 68%, #a86964);
-          box-shadow: inset -14px -18px 24px rgba(86, 45, 56, 0.26);
+          background: linear-gradient(160deg, #f0b58f, #c77d5b 68%, #9f5a44);
+          box-shadow: inset -14px -18px 24px rgba(86, 45, 56, 0.24), 0 0 0 1px rgba(255,255,255,0.08);
           z-index: 2;
         }
 
         .bangs {
           position: absolute;
-          width: 138px;
-          height: 78px;
-          top: 31px;
+          width: 154px;
+          height: 72px;
+          top: 39px;
           left: 50%;
           transform: translateX(-50%);
-          border-radius: 60% 60% 38% 38%;
-          background: linear-gradient(150deg, #020617, #1f2937 58%, #111827);
-          clip-path: polygon(0 0, 100% 0, 96% 58%, 74% 42%, 55% 76%, 34% 42%, 7% 68%);
+          border-radius: 62% 62% 36% 36%;
+          background: linear-gradient(150deg, #000000, #111827 58%, #020617);
+          clip-path: polygon(0 0, 100% 0, 96% 50%, 78% 38%, 61% 62%, 44% 37%, 27% 58%, 7% 66%);
           z-index: 3;
         }
 
         .eyes {
           position: absolute;
-          width: 80px;
-          top: 108px;
+          width: 86px;
+          top: 124px;
           left: 50%;
           transform: translateX(-50%);
           display: flex;
@@ -610,48 +631,48 @@ export default function LandingPage() {
         }
 
         .eyes span {
-          width: 14px;
-          height: 8px;
+          width: 16px;
+          height: 9px;
           border-radius: 999px;
-          background: #0f172a;
+          background: #111827;
           box-shadow: 0 0 12px rgba(96, 165, 250, 0.7);
         }
 
         .mouth {
           position: absolute;
-          width: 30px;
-          height: 13px;
-          top: 158px;
+          width: 34px;
+          height: 14px;
+          top: 181px;
           left: 50%;
           transform: translateX(-50%);
-          border-bottom: 3px solid rgba(127, 29, 29, 0.46);
+          border-bottom: 3px solid rgba(127, 29, 29, 0.5);
           border-radius: 0 0 999px 999px;
           z-index: 4;
         }
 
         .neck {
           position: absolute;
-          width: 48px;
-          height: 76px;
-          top: 184px;
+          width: 52px;
+          height: 82px;
+          top: 204px;
           left: 50%;
           transform: translateX(-50%);
           border-radius: 0 0 18px 18px;
-          background: linear-gradient(160deg, #d69488, #9f625f);
+          background: linear-gradient(160deg, #c77d5b, #93523f);
           z-index: 1;
         }
 
         .torso {
           position: absolute;
-          width: 228px;
-          height: 285px;
-          top: 242px;
+          width: 248px;
+          height: 305px;
+          top: 266px;
           left: 50%;
           transform: translateX(-50%);
-          border-radius: 98px 98px 44px 44px;
+          border-radius: 104px 104px 44px 44px;
           background:
-            linear-gradient(120deg, rgba(96, 165, 250, 0.32), transparent 32%),
-            linear-gradient(180deg, #101827, #1f1141 48%, #111827);
+            linear-gradient(115deg, rgba(96, 165, 250, 0.18), transparent 30%),
+            linear-gradient(180deg, #101827, #080b14 48%, #020617);
           box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 18px 48px rgba(2, 6, 23, 0.42);
           z-index: 1;
         }
@@ -659,53 +680,66 @@ export default function LandingPage() {
         .torso::before {
           content: '';
           position: absolute;
-          width: 88px;
-          height: 132px;
+          width: 94px;
+          height: 146px;
           left: 50%;
           top: 0;
           transform: translateX(-50%);
           border-radius: 0 0 42px 42px;
-          background: linear-gradient(180deg, rgba(236, 72, 153, 0.34), rgba(96, 165, 250, 0.18));
+          background: linear-gradient(180deg, #fff7ed, #f3e8d7);
           clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+        }
+
+        .torso::after {
+          content: '';
+          position: absolute;
+          width: 150px;
+          height: 210px;
+          left: 50%;
+          top: 52px;
+          transform: translateX(-50%);
+          border-radius: 46px 46px 34px 34px;
+          background: linear-gradient(180deg, rgba(236, 72, 153, 0.18), rgba(96, 165, 250, 0.12));
+          clip-path: polygon(12% 0, 88% 0, 70% 100%, 30% 100%);
         }
 
         .arm {
           position: absolute;
-          width: 54px;
-          height: 250px;
-          top: 267px;
+          width: 56px;
+          height: 260px;
+          top: 290px;
           border-radius: 999px;
-          background: linear-gradient(180deg, #161b2c, #0f172a);
+          background: linear-gradient(180deg, #111827, #050816);
           transform-origin: top center;
           z-index: 0;
         }
 
         .arm.left {
-          left: 73px;
-          transform: rotate(10deg);
+          left: 62px;
+          transform: rotate(11deg);
         }
 
         .arm.right {
-          right: 73px;
-          transform: rotate(-10deg);
+          right: 62px;
+          transform: rotate(-11deg);
         }
 
         .hand {
           position: absolute;
           width: 42px;
           height: 46px;
-          top: 497px;
+          top: 526px;
           border-radius: 999px;
-          background: linear-gradient(160deg, #d69488, #9f625f);
+          background: linear-gradient(160deg, #c77d5b, #93523f);
           z-index: 2;
         }
 
         .hand.left {
-          left: 66px;
+          left: 54px;
         }
 
         .hand.right {
-          right: 66px;
+          right: 54px;
         }
 
         .legs {
