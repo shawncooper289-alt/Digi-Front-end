@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { hasSupabaseConfig, supabase } from '../lib/supabaseClient';
 
 const packages = [
-  { name: 'Starter Campaign Setup', price: 497, description: 'Launch-ready campaign setup for a focused offer.' },
-  { name: 'Growth Marketing System', price: 997, description: 'Marketing automation, content structure, and campaign workflow.' },
-  { name: 'Digital Empire Buildout', price: 2497, description: 'Full-stack brand, automation, and conversion system planning.' },
+  { id: 'starter-seat', name: 'Starter Seat', price: 97, priceLabel: '$97/mo', description: 'For solo founders launching their first AI-powered marketing system.' },
+  { id: 'growth-team', name: 'Growth Team', price: 297, priceLabel: '$297/mo', description: 'For teams that need campaign execution, content, and follow-up systems.' },
+  { id: 'agency-command', name: 'Agency Command', price: 997, priceLabel: '$997/mo', description: 'For agencies building a full client acquisition and delivery command center.' },
 ];
 
 export default function Checkout() {
   const router = useRouter();
-  const [selectedPackage, setSelectedPackage] = useState(packages[0].name);
+  const [selectedPackage, setSelectedPackage] = useState(packages[1].id);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,7 +21,22 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const selected = packages.find((item) => item.name === selectedPackage) || packages[0];
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const queryTier = String(router.query.tier || '');
+    const queryEmail = String(router.query.email || '');
+
+    if (packages.some((item) => item.id === queryTier)) {
+      setSelectedPackage(queryTier);
+    }
+
+    if (queryEmail) {
+      setForm((current) => ({ ...current, email: queryEmail }));
+    }
+  }, [router.isReady, router.query.email, router.query.tier]);
+
+  const selected = packages.find((item) => item.id === selectedPackage) || packages[1];
 
   const updateForm = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -48,7 +63,7 @@ export default function Checkout() {
       currency: 'USD',
       payment_status: 'pending',
       payment_provider: 'not_connected_yet',
-      notes: form.notes,
+      notes: `${selected.priceLabel}${form.notes ? ` — ${form.notes}` : ''}`,
       created_at: new Date().toISOString(),
     };
 
@@ -255,7 +270,7 @@ export default function Checkout() {
             <span className="gradient-text">digital empire</span>
           </h1>
           <p>
-            Submit your package request now. This creates a payment-pending order record so your checkout is ready for client payments once a payment processor is connected.
+            Submit your selected seat tier now. This creates a payment-pending order record so checkout is ready for live client payments once the payment processor is connected.
           </p>
           <p>
             Automatic card charging, invoices, and receipts will be connected after you choose and activate a payment provider.
@@ -266,13 +281,13 @@ export default function Checkout() {
           <label htmlFor="package">Package</label>
           <select id="package" value={selectedPackage} onChange={(event) => setSelectedPackage(event.target.value)}>
             {packages.map((item) => (
-              <option key={item.name} value={item.name}>{item.name} — ${item.price}</option>
+              <option key={item.id} value={item.id}>{item.name} — {item.priceLabel}</option>
             ))}
           </select>
 
           <div className="package-card">
             <strong>{selected.name}</strong>
-            <div className="price">${selected.price}</div>
+            <div className="price">{selected.priceLabel}</div>
             <p>{selected.description}</p>
           </div>
 
