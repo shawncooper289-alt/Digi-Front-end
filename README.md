@@ -76,6 +76,27 @@ The founder dashboard links to `/dashboard-sales`, a protected backend sales pag
 
 Only sell consented, opt-in, niche-matched leads. Do not use this flow for scraped, cold, or non-consented contact lists.
 
+## Ava Voice Calling with Twilio
+
+The project includes Twilio-compatible routes for Ava sales calls:
+
+- Inbound webhook: `https://digimark101.com/api/twilio/inbound-call`
+- Speech handler: `https://digimark101.com/api/twilio/handle-speech`
+- Outbound API: `POST /api/twilio/outbound-call`
+
+Set the Twilio phone number voice webhook to the inbound URL above. Required Vercel environment variables:
+
+- `TWILIO_ACCOUNT_SID`
+- `TWILIO_AUTH_TOKEN`
+- `TWILIO_FROM_NUMBER`
+- `TWILIO_OUTBOUND_ADMIN_SECRET`
+- `TWILIO_AVA_VOICE` - defaults to `Polly.Joanna-Neural`, an English US female neural voice. This can be changed to the closest supported Twilio voice to the Gemini Vega-style tone.
+- `AI_GATEWAY_API_KEY`
+- `AVA_VOICE_MODEL`
+- `NEXT_PUBLIC_SITE_URL`
+
+Do not commit Twilio tokens, AI Gateway keys, or outbound admin secrets.
+
 ## What Was Fixed
 
 **Why you were getting a 404 error:**
