@@ -442,7 +442,10 @@ export default function Home() {
           </div>
 
           <div className="actions">
-            <button className="primary-button" onClick={() => { window.location.href = '/dashboard'; }}>
+            <button className="primary-button" onClick={() => { window.location.href = '/checkout'; }}>
+              Start Checkout
+            </button>
+            <button className="secondary-button" onClick={() => { window.location.href = '/dashboard'; }}>
               Enter Dashboard
             </button>
             <button

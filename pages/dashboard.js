@@ -5,6 +5,7 @@ import { hasSupabaseConfig, supabase } from '../lib/supabaseClient';
 export default function Dashboard() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('Checking owner session...');
 
@@ -29,6 +30,19 @@ export default function Dashboard() {
 
       setEmail(data.session.user.email || 'Owner');
       setMessage('Founder access confirmed.');
+
+      const { data: checkoutRequests, error: checkoutError } = await supabase
+        .from('checkout_requests')
+        .select('id, customer_name, customer_email, package_name, package_price, payment_status, created_at')
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (!active) return;
+
+      if (!checkoutError && checkoutRequests) {
+        setOrders(checkoutRequests);
+      }
+
       setLoading(false);
     }
 
@@ -65,7 +79,7 @@ export default function Dashboard() {
         }
 
         .dashboard-card {
-          width: min(100%, 720px);
+          width: min(100%, 920px);
           padding: clamp(1.5rem, 5vw, 2.5rem);
           border-radius: 1.5rem;
           background: rgba(15, 23, 42, 0.78);
@@ -95,12 +109,36 @@ export default function Dashboard() {
           line-height: 1.6;
         }
 
-        .session-box {
+        .session-box,
+        .orders-box {
           margin: 1.5rem 0;
           padding: 1rem;
           border-radius: 1rem;
           border: 1px solid rgba(148, 163, 184, 0.24);
           background: rgba(2, 6, 23, 0.32);
+        }
+
+        .order-list {
+          display: grid;
+          gap: 0.75rem;
+          margin-top: 1rem;
+        }
+
+        .order-item {
+          padding: 0.9rem;
+          border-radius: 0.9rem;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          background: rgba(15, 23, 42, 0.48);
+        }
+
+        .order-item strong {
+          display: block;
+        }
+
+        .status {
+          color: #fbbf24;
+          font-weight: 900;
+          text-transform: uppercase;
         }
 
         button,
@@ -139,6 +177,21 @@ export default function Dashboard() {
             This page checks the Supabase Auth session in the browser. Add Supabase database policies for any protected customer, campaign, or billing data.
           </p>
         </div>
+
+        <div className="orders-box">
+          <strong>Recent checkout requests</strong>
+          <p>Payment provider is not connected yet, so new requests are saved with payment pending.</p>
+          <div className="order-list">
+            {orders.length ? orders.map((order) => (
+              <div className="order-item" key={order.id}>
+                <strong>{order.customer_name} — {order.package_name}</strong>
+                <span>{order.customer_email}</span>
+                <p>${order.package_price} • <span className="status">{order.payment_status}</span></p>
+              </div>
+            )) : <p>No checkout requests yet.</p>}
+          </div>
+        </div>
+
         <button type="button" onClick={handleSignOut}>Sign out</button>
         <a href="/">Back to site</a>
       </section>

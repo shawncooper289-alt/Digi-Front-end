@@ -51,6 +51,25 @@ Set these in your Vercel project settings:
 
 The website includes `/login` for the owner/founder account. Create the owner user in Supabase Auth, then set the two Supabase environment variables above in Vercel. Do not commit Supabase service-role keys or passwords to this repository.
 
+## Checkout Requests
+
+The website includes `/checkout` and saves payment-pending client requests to a Supabase table named `checkout_requests`. Run `supabase/checkout_requests.sql` in the Supabase SQL Editor before using checkout in production. It creates this table and the basic insert/read policies. The table uses these columns:
+
+- `id` - UUID primary key with default generation
+- `customer_name` - text
+- `customer_email` - text
+- `customer_phone` - text
+- `business_name` - text
+- `package_name` - text
+- `package_price` - numeric
+- `currency` - text
+- `payment_status` - text, default `pending`
+- `payment_provider` - text
+- `notes` - text
+- `created_at` - timestamp
+
+When a payment provider is connected later, the same checkout flow can update `payment_status` from `pending` to `paid` and trigger receipts/invoices.
+
 ## What Was Fixed
 
 **Why you were getting a 404 error:**
