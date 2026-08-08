@@ -1,22 +1,45 @@
 import { useEffect, useState } from 'react';
 
+const features = [
+  'Vercel-hosted Next.js frontend',
+  'Supabase-backed API routes',
+  'Server-side environment variable access',
+  'Production-ready deployment flow'
+];
+
 export default function Home() {
-  const [message, setMessage] = useState('Initializing Dynasty...');
+  const [status, setStatus] = useState({
+    message: 'Checking Supabase backend...',
+    connected: false,
+    detail: 'Initializing Vercel runtime.'
+  });
   const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  async function refreshStatus(method = 'GET') {
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/hello', { method });
+      const data = await response.json();
+
+      setStatus({
+        message: data.message,
+        connected: Boolean(data.connected),
+        detail: data.detail || 'Supabase status returned from Vercel.'
+      });
+    } catch (error) {
+      setStatus({
+        message: 'Vercel frontend is live, but the backend status check failed.',
+        connected: false,
+        detail: error instanceof Error ? error.message : 'Unknown network error.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    // Test existing API endpoint (unchanged)
-    fetch('/api/hello')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setMessage('Welcome to Your Digital Dynasty');
-        setLoading(false);
-      });
+    refreshStatus();
   }, []);
 
   return (
@@ -27,215 +50,139 @@ export default function Home() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #050816 0%, #0f1419 50%, #1a1f2e 100%)',
-        color: '#f9fafb',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+        background: 'linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%)',
+        color: '#f8fafc',
+        fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
         padding: '2rem',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden'
       }}
     >
-      {/* Animated background elements */}
       <div
         style={{
           position: 'absolute',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)',
+          width: 420,
+          height: 420,
           borderRadius: '50%',
-          top: '-200px',
-          left: '-200px',
-          animation: 'float 6s ease-in-out infinite'
+          background: 'radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)',
+          top: -180,
+          left: -160
         }}
       />
       <div
         style={{
           position: 'absolute',
-          width: '300px',
-          height: '300px',
-          background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)',
+          width: 360,
+          height: 360,
           borderRadius: '50%',
-          bottom: '-150px',
-          right: '-150px',
-          animation: 'float 8s ease-in-out infinite reverse'
+          background: 'radial-gradient(circle, rgba(16,185,129,0.16) 0%, transparent 70%)',
+          bottom: -150,
+          right: -130
         }}
       />
 
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(30px); }
-        }
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .dynasty-title {
-          animation: slideUp 0.8s ease-out 0.1s both;
-        }
-        .dynasty-subtitle {
-          animation: slideUp 0.8s ease-out 0.3s both;
-        }
-        .dynasty-box {
-          animation: slideUp 0.8s ease-out 0.5s both;
-        }
-        .dynasty-button {
-          animation: slideUp 0.8s ease-out 0.7s both;
-        }
-      `}</style>
+      <section style={{ position: 'relative', zIndex: 1, width: 'min(920px, 100%)' }}>
+        <p style={{ color: '#38bdf8', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+          Vercel frontend + Supabase backend
+        </p>
 
-      {/* Main Content - Z-index to appear over background */}
-      <div style={{ position: 'relative', zIndex: 10 }}>
         <h1
-          className="dynasty-title"
           style={{
-            fontSize: '3.5rem',
-            fontWeight: 800,
-            marginBottom: '0.5rem',
-            background: 'linear-gradient(135deg, #60a5fa 0%, #ec4899 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            letterSpacing: '-1px'
+            fontSize: 'clamp(2.5rem, 7vw, 5rem)',
+            lineHeight: 1,
+            margin: '0.5rem 0 1rem',
+            fontWeight: 900,
+            letterSpacing: '-0.06em'
           }}
         >
-          Your Digital Dynasty Starts Here
+          DigiMark101 runs on Vercel and Supabase.
         </h1>
 
         <p
-          className="dynasty-subtitle"
           style={{
-            fontSize: '1.3rem',
-            maxWidth: '600px',
-            marginBottom: '2rem',
-            opacity: 0.85,
-            lineHeight: '1.6'
+            color: '#cbd5e1',
+            fontSize: '1.2rem',
+            maxWidth: 720,
+            margin: '0 auto 2rem',
+            lineHeight: 1.7
           }}
         >
-          Advanced AI-powered marketing automation. The simplest structure. Unlimited potential.
+          The frontend is served by Vercel. Backend reads and writes should go through Supabase using Vercel API routes so private keys stay server-side.
         </p>
 
-        {/* Status Box */}
         <div
-          className="dynasty-box"
           style={{
+            background: 'rgba(15, 23, 42, 0.72)',
+            border: '1px solid rgba(148, 163, 184, 0.24)',
+            borderRadius: 24,
+            boxShadow: '0 24px 80px rgba(2, 6, 23, 0.42)',
             padding: '2rem',
-            borderRadius: '1rem',
-            background:
-              'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(236,72,153,0.1) 100%)',
-            border: '1px solid rgba(148,163,184,0.3)',
-            marginBottom: '2rem',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 8px 32px rgba(15,23,42,0.2)'
+            marginBottom: '1.5rem',
+            backdropFilter: 'blur(18px)'
           }}
         >
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#60a5fa' }}>
-            {loading ? 'Initializing...' : 'System Status'}
+          <h2 style={{ marginTop: 0, color: status.connected ? '#34d399' : '#f59e0b' }}>
+            {loading ? 'Checking backend...' : status.connected ? 'Supabase connected' : 'Supabase needs attention'}
           </h2>
-          <p style={{ fontSize: '1.1rem', margin: 0, minHeight: '2rem' }}>
-            {loading ? (
-              <span style={{ opacity: 0.7 }}>Connecting to Ava OS...</span>
-            ) : (
-              <span style={{ color: '#34d399' }}>✓ {message}</span>
-            )}
-          </p>
+          <p style={{ fontSize: '1.05rem', marginBottom: '0.75rem' }}>{status.message}</p>
+          <p style={{ color: '#94a3b8', margin: 0 }}>{status.detail}</p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="dynasty-button" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2rem' }}>
           <button
-            onClick={() => {
-              window.location.href = '/dashboard';
-            }}
+            onClick={() => refreshStatus('POST')}
             style={{
-              padding: '1rem 2rem',
-              borderRadius: '999px',
-              border: 'none',
+              padding: '0.95rem 1.5rem',
+              borderRadius: 999,
+              border: 0,
               cursor: 'pointer',
-              background: 'linear-gradient(135deg, #3b82f6, #ec4899)',
-              color: '#f9fafb',
-              fontWeight: 700,
-              fontSize: '1rem',
-              boxShadow: '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)',
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 15px 35px rgba(59,130,246,0.5), 0 0 60px rgba(236,72,153,0.3)'
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 15px 35px rgba(59,130,246,0.5), 0 0 60px rgba(236,72,153,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 25px rgba(59,130,246,0.4), 0 0 50px rgba(236,72,153,0.2)';
+              background: 'linear-gradient(135deg, #0ea5e9, #10b981)',
+              color: '#fff',
+              fontWeight: 800,
+              fontSize: '1rem'
             }}
           >
-            Enter Dashboard
+            Test Supabase connection
           </button>
-
-          <button
-            onClick={() => {
-              fetch('/api/hello', { method: 'POST' })
-                .then((res) => res.json())
-                .then((data) => setMessage(data.message))
-                .catch(() => setMessage('Error connecting to backend'));
-            }}
+          <a
+            href="/dashboard"
             style={{
-              padding: '1rem 2rem',
-              borderRadius: '999px',
-              border: '2px solid rgba(148,163,184,0.5)',
-              cursor: 'pointer',
-              background: 'transparent',
-              color: '#f9fafb',
-              fontWeight: 700,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                borderColor: 'rgba(96,165,250,0.8)',
-                background: 'rgba(59,130,246,0.1)'
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.borderColor = 'rgba(96,165,250,0.8)';
-              e.target.style.background = 'rgba(59,130,246,0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.borderColor = 'rgba(148,163,184,0.5)';
-              e.target.style.background = 'transparent';
+              padding: '0.95rem 1.5rem',
+              borderRadius: 999,
+              border: '1px solid rgba(148,163,184,0.36)',
+              color: '#e2e8f0',
+              textDecoration: 'none',
+              fontWeight: 800
             }}
           >
-            Test Ava OS
-          </button>
+            Open dashboard
+          </a>
         </div>
 
-        {/* Footer */}
-        <p
+        <div
           style={{
-            marginTop: '3rem',
-            fontSize: '0.9rem',
-            opacity: 0.6,
-            animation: 'fadeIn 1.5s ease-out 1s both'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+            gap: '1rem',
+            textAlign: 'left'
           }}
         >
-          Powered by Ava OS • Base44 Backend • Ava Knowledge Base
-          <br />
-          <small>Deployed on Vercel • Fully responsive • Zero downtime updates</small>
-        </p>
-      </div>
+          {features.map((feature) => (
+            <div
+              key={feature}
+              style={{
+                padding: '1rem',
+                borderRadius: 16,
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                background: 'rgba(15, 23, 42, 0.48)'
+              }}
+            >
+              <strong>{feature}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

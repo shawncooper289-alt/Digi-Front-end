@@ -1,89 +1,44 @@
-# DigiMark101 Client Setup - $15,000 Account
+# Client protection model
 
-## ⚠️ DO NOT MODIFY WITHOUT BACKUP
+## Current target architecture
 
-This document protects your existing client setup.
+- Frontend: Next.js on Vercel
+- Backend: Supabase
+- Server boundary: Vercel API routes under `/api/*`
+- Database: Supabase Postgres
 
-### Current Client Configuration:
-- **Client ID**: `digi-marketing` (or your ID)
-- **Backend**: Base44 (Digi-Back-end)
-- **AI Engine**: Ava Knowledge Base + Ava OS
-- **Status**: ✅ ACTIVE & WORKING
+## Credential rules
 
-### What's Protected:
-1. ✅ All existing campaigns & data
-2. ✅ User accounts & permissions
-3. ✅ Social media integrations
-4. ✅ Email marketing sequences
-5. ✅ Analytics & reporting
-6. ✅ API configurations
-7. ✅ Billing information
+Public browser variables:
 
-### Update Safety Protocol:
-
-**BEFORE any deployment:**
-```bash
-# 1. Create backup
-git branch backup-$(date +%Y-%m-%d)
-git push origin backup-$(date +%Y-%m-%d)
-
-# 2. Test on staging
-npm run test:existing
-
-# 3. Verify client data intact
-echo "Testing $NEXT_PUBLIC_CLIENT_ID"
-
-# 4. Check API endpoints
-curl -H "X-Client-ID: $NEXT_PUBLIC_CLIENT_ID" https://api.base44.com/health
-
-# 5. Only then deploy
-git push origin main
-```
-
-### Rollback Instructions:
-```bash
-# If ANYTHING goes wrong
-git checkout backup-2026-06-01  # Use your backup date
-git push --force origin main
-# Done - client unaffected, reverted in < 1 minute
-```
-
-### Critical Environment Variables:
 ```env
-# These MUST NOT CHANGE
-NEXT_PUBLIC_CLIENT_ID=digi-marketing
-NEXT_PUBLIC_BASE44_API_URL=https://api.base44.com
-NEXT_PUBLIC_BASE44_API_KEY=[your-key]
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 ```
 
-### Post-Deployment Verification:
-1. [ ] Client can log in
-2. [ ] Dashboard loads
-3. [ ] Campaigns visible
-4. [ ] Social media posts working
-5. [ ] Email campaigns sending
-6. [ ] Analytics displaying
-7. [ ] No error messages
+Server-only variables:
 
-**If ANY of these fail → IMMEDIATE ROLLBACK**
+```env
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+SUPABASE_SECRET_KEY=...
+POSTGRES_URL=...
+POSTGRES_PASSWORD=...
+```
 
----
+Do not import server-only values into React pages or components. Use Vercel API routes for privileged Supabase reads and writes.
 
-## Your Improvements (No Risk):
+## Recommended Supabase controls
 
-✅ Better looking landing page (Dynasty theme)
-✅ Faster page loads
-✅ Smoother animations
-✅ Better mobile support
-✅ More stable errors
-✅ Easier to manage
-✅ Better monitoring
+1. Enable row-level security on production tables.
+2. Use the anon or publishable key for browser-safe reads only.
+3. Use the service role key only inside Vercel API routes.
+4. Validate request payloads in API routes before writing to Supabase.
+5. Add per-client ownership columns and RLS policies before storing customer data.
 
-✅ **All without touching anything the client uses**
+## Verification
 
----
-
-**Deployment Date**: ___________
-**Approved By**: ___________
-**Backup Location**: ___________
-**Rollback Time (if needed)**: < 1 minute
+- Home page loads from Vercel.
+- `/api/hello` returns a Supabase connectivity status.
+- No service role, database URL, or password is present in browser bundles.
