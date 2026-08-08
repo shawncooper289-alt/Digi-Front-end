@@ -1,188 +1,153 @@
 import { useEffect, useState } from 'react';
 
-const features = [
-  'Vercel-hosted Next.js frontend',
-  'Supabase-backed API routes',
-  'Server-side environment variable access',
-  'Production-ready deployment flow'
+const stack = [
+  ['Frontend', 'Next.js pages deployed on Vercel with production and preview URLs.'],
+  ['Backend', 'Supabase Postgres, Auth-ready keys, and REST endpoints behind Vercel API routes.'],
+  ['Security', 'Service role and Postgres credentials stay server-side inside Vercel functions.'],
+  ['Deployments', 'Git pushes trigger Vercel builds using the project Supabase environment variables.']
 ];
 
-export default function Home() {
-  const [status, setStatus] = useState({
-    message: 'Checking Supabase backend...',
-    connected: false,
-    detail: 'Initializing Vercel runtime.'
-  });
-  const [loading, setLoading] = useState(true);
+const initialLead = {
+  name: '',
+  email: '',
+  company: '',
+  message: ''
+};
 
-  async function refreshStatus(method = 'GET') {
-    setLoading(true);
+export default function Home() {
+  const [health, setHealth] = useState(null);
+  const [campaigns, setCampaigns] = useState([]);
+  const [lead, setLead] = useState(initialLead);
+  const [formState, setFormState] = useState({ status: 'idle', message: '' });
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/health').then((response) => response.json()),
+      fetch('/api/campaigns').then((response) => response.json())
+    ])
+      .then(([healthData, campaignData]) => {
+        setHealth(healthData);
+        setCampaigns(campaignData.campaigns || []);
+      })
+      .catch((error) => {
+        setHealth({ ok: false, error: error.message });
+      });
+  }, []);
+
+  async function submitLead(event) {
+    event.preventDefault();
+    setFormState({ status: 'loading', message: 'Sending lead to Supabase...' });
 
     try {
-      const response = await fetch('/api/hello', { method });
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead)
+      });
       const data = await response.json();
 
-      setStatus({
-        message: data.message,
-        connected: Boolean(data.connected),
-        detail: data.detail || 'Supabase status returned from Vercel.'
-      });
+      if (!response.ok) {
+        setFormState({ status: 'error', message: data.error || 'Unable to save lead.' });
+        return;
+      }
+
+      setLead(initialLead);
+      setFormState({ status: 'success', message: 'Lead saved through the Vercel API route into Supabase.' });
     } catch (error) {
-      setStatus({
-        message: 'Vercel frontend is live, but the backend status check failed.',
-        connected: false,
-        detail: error instanceof Error ? error.message : 'Unknown network error.'
-      });
-    } finally {
-      setLoading(false);
+      setFormState({ status: 'error', message: error.message || 'Unable to reach the lead API route.' });
     }
   }
 
-  useEffect(() => {
-    refreshStatus();
-  }, []);
+  const isConnected = Boolean(health?.ok);
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%)',
-        color: '#f8fafc',
-        fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-        padding: '2rem',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          width: 420,
-          height: 420,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)',
-          top: -180,
-          left: -160
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          width: 360,
-          height: 360,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(16,185,129,0.16) 0%, transparent 70%)',
-          bottom: -150,
-          right: -130
-        }}
-      />
+    <main className="page-shell">
+      <div className="container">
+        <nav className="nav">
+          <div className="brand">
+            <span className="brand-mark">D</span>
+            <span>DigiMark101</span>
+          </div>
+          <div className="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/api/health">API health</a>
+          </div>
+        </nav>
 
-      <section style={{ position: 'relative', zIndex: 1, width: 'min(920px, 100%)' }}>
-        <p style={{ color: '#38bdf8', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-          Vercel frontend + Supabase backend
-        </p>
-
-        <h1
-          style={{
-            fontSize: 'clamp(2.5rem, 7vw, 5rem)',
-            lineHeight: 1,
-            margin: '0.5rem 0 1rem',
-            fontWeight: 900,
-            letterSpacing: '-0.06em'
-          }}
-        >
-          DigiMark101 runs on Vercel and Supabase.
-        </h1>
-
-        <p
-          style={{
-            color: '#cbd5e1',
-            fontSize: '1.2rem',
-            maxWidth: 720,
-            margin: '0 auto 2rem',
-            lineHeight: 1.7
-          }}
-        >
-          The frontend is served by Vercel. Backend reads and writes should go through Supabase using Vercel API routes so private keys stay server-side.
-        </p>
-
-        <div
-          style={{
-            background: 'rgba(15, 23, 42, 0.72)',
-            border: '1px solid rgba(148, 163, 184, 0.24)',
-            borderRadius: 24,
-            boxShadow: '0 24px 80px rgba(2, 6, 23, 0.42)',
-            padding: '2rem',
-            marginBottom: '1.5rem',
-            backdropFilter: 'blur(18px)'
-          }}
-        >
-          <h2 style={{ marginTop: 0, color: status.connected ? '#34d399' : '#f59e0b' }}>
-            {loading ? 'Checking backend...' : status.connected ? 'Supabase connected' : 'Supabase needs attention'}
-          </h2>
-          <p style={{ fontSize: '1.05rem', marginBottom: '0.75rem' }}>{status.message}</p>
-          <p style={{ color: '#94a3b8', margin: 0 }}>{status.detail}</p>
-        </div>
-
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2rem' }}>
-          <button
-            onClick={() => refreshStatus('POST')}
-            style={{
-              padding: '0.95rem 1.5rem',
-              borderRadius: 999,
-              border: 0,
-              cursor: 'pointer',
-              background: 'linear-gradient(135deg, #0ea5e9, #10b981)',
-              color: '#fff',
-              fontWeight: 800,
-              fontSize: '1rem'
-            }}
-          >
-            Test Supabase connection
-          </button>
-          <a
-            href="/dashboard"
-            style={{
-              padding: '0.95rem 1.5rem',
-              borderRadius: 999,
-              border: '1px solid rgba(148,163,184,0.36)',
-              color: '#e2e8f0',
-              textDecoration: 'none',
-              fontWeight: 800
-            }}
-          >
-            Open dashboard
-          </a>
-        </div>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-            gap: '1rem',
-            textAlign: 'left'
-          }}
-        >
-          {features.map((feature) => (
-            <div
-              key={feature}
-              style={{
-                padding: '1rem',
-                borderRadius: 16,
-                border: '1px solid rgba(148, 163, 184, 0.2)',
-                background: 'rgba(15, 23, 42, 0.48)'
-              }}
-            >
-              <strong>{feature}</strong>
+        <section className="hero">
+          <div>
+            <p className="eyebrow">Built for Vercel + Supabase</p>
+            <h1>Your marketing OS is now a real Vercel frontend with a Supabase backend.</h1>
+            <p className="lede">
+              This rewrite moves the app to a Vercel-native architecture: Next.js for the interface,
+              Vercel API routes for server logic, and Supabase for Postgres-backed customer data.
+            </p>
+            <div className="status-grid" style={{ marginTop: '2rem' }}>
+              {stack.map(([title, description]) => (
+                <article className="card" key={title}>
+                  <h3>{title}</h3>
+                  <p className="muted">{description}</p>
+                </article>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+
+          <aside className="panel">
+            <span className={isConnected ? 'status-pill' : 'status-pill warning'}>
+              {isConnected ? 'Supabase connected' : 'Supabase setup check'}
+            </span>
+            <h2 style={{ marginTop: '1.25rem' }}>Backend status</h2>
+            <p className="muted">
+              {health
+                ? health.ok
+                  ? 'Vercel can reach Supabase using the configured project environment variables.'
+                  : health.error || 'Supabase is not fully configured yet.'
+                : 'Checking the Vercel API route now...'}
+            </p>
+            <div className="card-grid">
+              <div className="card">
+                <strong>Frontend</strong>
+                <p className="muted">Vercel</p>
+              </div>
+              <div className="card">
+                <strong>Backend</strong>
+                <p className="muted">Supabase</p>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section className="section hero" style={{ alignItems: 'start' }}>
+          <div className="panel">
+            <p className="eyebrow">Lead capture</p>
+            <h2>Save customer leads through Supabase.</h2>
+            <form className="form" onSubmit={submitLead}>
+              <input className="input" placeholder="Name" value={lead.name} onChange={(event) => setLead({ ...lead, name: event.target.value })} />
+              <input className="input" placeholder="Email" value={lead.email} onChange={(event) => setLead({ ...lead, email: event.target.value })} />
+              <input className="input" placeholder="Company" value={lead.company} onChange={(event) => setLead({ ...lead, company: event.target.value })} />
+              <textarea className="textarea" placeholder="What should DigiMark101 help with?" value={lead.message} onChange={(event) => setLead({ ...lead, message: event.target.value })} />
+              <button className="button primary" type="submit" disabled={formState.status === 'loading'}>
+                {formState.status === 'loading' ? 'Saving...' : 'Create Supabase lead'}
+              </button>
+              {formState.message ? <div className={`notice ${formState.status}`}>{formState.message}</div> : null}
+            </form>
+          </div>
+
+          <div>
+            <p className="eyebrow">Campaign backend</p>
+            <h2>Campaigns are served by `/api/campaigns`.</h2>
+            <div className="table-list">
+              {campaigns.map((campaign) => (
+                <article className="row" key={campaign.id}>
+                  <strong>{campaign.name}</strong>
+                  <span className="muted">{campaign.channel || 'web'} · {campaign.status || 'draft'}</span>
+                  <span>{campaign.description}</span>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

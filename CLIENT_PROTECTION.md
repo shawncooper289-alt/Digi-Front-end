@@ -1,44 +1,26 @@
-# Client protection model
+# Client data protection
 
-## Current target architecture
+## Target setup
 
 - Frontend: Next.js on Vercel
-- Backend: Supabase
-- Server boundary: Vercel API routes under `/api/*`
-- Database: Supabase Postgres
+- Backend: Supabase Postgres and REST API
+- Server boundary: Vercel API routes
+- Public routes: landing page, campaign reads
+- Protected data: leads and future client records
 
-## Credential rules
+## Rules
 
-Public browser variables:
+1. Public React pages never import server-only env vars.
+2. Lead writes go through `/api/leads`.
+3. Dashboard reads go through `/api/leads` and `/api/campaigns`.
+4. Supabase RLS stays enabled on every production table.
+5. Privileged writes use server-side Supabase keys only inside Vercel functions.
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
-```
+## Data model
 
-Server-only variables:
+The included schema creates `leads` and `campaigns`. Add future tables with these defaults:
 
-```env
-SUPABASE_URL=...
-SUPABASE_SERVICE_ROLE_KEY=...
-SUPABASE_SECRET_KEY=...
-POSTGRES_URL=...
-POSTGRES_PASSWORD=...
-```
-
-Do not import server-only values into React pages or components. Use Vercel API routes for privileged Supabase reads and writes.
-
-## Recommended Supabase controls
-
-1. Enable row-level security on production tables.
-2. Use the anon or publishable key for browser-safe reads only.
-3. Use the service role key only inside Vercel API routes.
-4. Validate request payloads in API routes before writing to Supabase.
-5. Add per-client ownership columns and RLS policies before storing customer data.
-
-## Verification
-
-- Home page loads from Vercel.
-- `/api/hello` returns a Supabase connectivity status.
-- No service role, database URL, or password is present in browser bundles.
+- `created_at timestamptz default now()`
+- RLS enabled immediately
+- anon role denied by default
+- explicit policies only for public marketing reads

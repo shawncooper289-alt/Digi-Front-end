@@ -1,17 +1,12 @@
-# Vercel and Supabase migration safety notes
+# Vercel + Supabase safety model
 
-This app is now structured as a Vercel frontend with a Supabase backend.
+## Runtime boundary
 
-## What changed
+This app uses Vercel API routes as the backend boundary. Browser requests go to `/api/*`; API routes call Supabase using environment variables available only on the server.
 
-- Removed legacy backend-specific runtime assumptions from the frontend.
-- Added a Vercel API route at `/api/hello` for server-side Supabase connectivity checks.
-- Removed legacy `vercel.json` secret aliases for the previous backend.
-- Kept private Supabase credentials on the server side only.
+## Secret handling
 
-## What must stay protected
-
-Never expose these values to browser code:
+Never send these values to the browser or include them in `NEXT_PUBLIC_*` variables:
 
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `SUPABASE_SECRET_KEY`
@@ -19,11 +14,17 @@ Never expose these values to browser code:
 - `POSTGRES_PASSWORD`
 - `SUPABASE_JWT_SECRET`
 
-Browser code may only use publishable values such as `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` when client-side Supabase access is required.
+Browser-safe keys are limited to publishable or anon keys and must be paired with Supabase row-level security.
 
-## Deployment checklist
+## Supabase row-level security
 
-- Confirm Supabase Marketplace environment variables exist in the target Vercel project.
-- Deploy through Vercel from the connected GitHub repository.
-- Open `/api/hello` after deployment to confirm the Vercel runtime can reach Supabase.
-- Add real Supabase tables and row-level security policies before enabling production writes.
+Run `supabase/schema.sql` before production use. It enables RLS and keeps lead reads private from the public anon role. Campaigns are publicly readable because they power marketing content.
+
+## Production checklist
+
+1. Confirm Vercel has Supabase env vars for Production and Preview.
+2. Run `supabase/schema.sql` in the connected Supabase project.
+3. Deploy from GitHub through Vercel.
+4. Verify `/api/health` returns `ok: true`.
+5. Submit a test lead from `/`.
+6. Confirm `/dashboard` reads the lead through the Vercel API route.

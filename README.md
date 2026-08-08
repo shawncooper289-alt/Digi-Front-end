@@ -1,48 +1,73 @@
 # Digi-Front-end
 
-Next.js frontend deployed on Vercel with Supabase as the backend.
+A Vercel-first Next.js frontend with Supabase as the backend.
 
-## Stack
+## Architecture
 
-- Vercel: frontend hosting, serverless API routes, production deployments
-- Next.js: Pages Router application
-- Supabase: Postgres, Auth, REST API, and server-side backend access
+- **Vercel Frontend**: Next.js Pages Router deployed from GitHub through Vercel.
+- **Vercel API Routes**: `/api/*` routes handle backend requests without exposing private credentials.
+- **Supabase Backend**: Postgres tables, REST API, Auth-ready keys, and optional direct Postgres access.
+- **Credential Boundary**: Browser code only uses public Supabase values. Server-only keys stay in Vercel environment variables.
 
-## Development
+The Supabase Vercel Marketplace integration injects variables such as `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `POSTGRES_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Vercel's Supabase Marketplace docs list those variables and describe automatic project env sync: https://vercel.com/marketplace/supabase
+
+## App routes
+
+- `/` — Vercel/Supabase landing page with lead capture
+- `/dashboard` — operations dashboard reading through Vercel API routes
+- `/api/health` — verifies Vercel can reach Supabase
+- `/api/leads` — creates and lists leads through Supabase
+- `/api/campaigns` — reads campaigns from Supabase, with safe fallback content until the table exists
+
+## Supabase schema
+
+Run `supabase/schema.sql` in the Supabase SQL Editor for the connected project. It creates:
+
+- `public.leads`
+- `public.campaigns`
+- row-level security policies for public campaign reads and protected lead data
+
+## Environment variables
+
+Set these in Vercel Project Settings → Environment Variables, or connect the Supabase Marketplace resource so Vercel syncs them automatically.
+
+Public browser-safe values:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
+Server-only values:
+
+```env
+SUPABASE_URL=...
+SUPABASE_PUBLISHABLE_KEY=...
+SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+SUPABASE_SECRET_KEY=...
+POSTGRES_URL=...
+POSTGRES_PASSWORD=...
+```
+
+Never expose service role, secret, Postgres URL, or password values in React pages/components.
+
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
-
-## Environment variables
-
-Set these in Vercel Project Settings → Environment Variables:
-
-- `SUPABASE_URL`
-- `SUPABASE_ANON_KEY` or `SUPABASE_PUBLISHABLE_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY` for privileged server-only API routes
-- `POSTGRES_URL` if direct SQL access is needed from server-side code
-- `NEXT_PUBLIC_SUPABASE_URL` only when browser-side Supabase access is required
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` only when browser-side Supabase access is required
-
-Do not expose `SUPABASE_SERVICE_ROLE_KEY`, `POSTGRES_URL`, or `POSTGRES_PASSWORD` to browser code.
-
-## Backend flow
-
-Browser requests call Vercel API routes under `/api/*`. Those routes read Supabase environment variables server-side and call Supabase without exposing private credentials to the client.
-
-Current health route:
-
-```bash
-GET /api/hello
-POST /api/hello
-```
-
-It verifies that the Vercel runtime can reach the configured Supabase REST endpoint.
+Create `.env.local` with the public and server-side Supabase values for local testing.
 
 ## Deployment
 
-The linked Vercel projects already have Supabase Marketplace environment variables configured. Pushes to `main` deploy through Vercel.
+Push to GitHub. Vercel builds with:
+
+```bash
+npm run build
+```
+
+After deployment, open `/api/health` to verify the Vercel runtime can reach Supabase.
