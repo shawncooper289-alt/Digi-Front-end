@@ -51,7 +51,7 @@ export default function DashboardSales() {
     let active = true;
 
     async function loadSession() {
-      if (!hasSupabaseConfig || !supabase) {
+      if (!hasSupabaseConfig() || !supabase) {
         setMessage('Supabase is not configured yet. Add the Supabase environment variables in Vercel.');
         setLoading(false);
         return;
@@ -82,7 +82,7 @@ export default function DashboardSales() {
     event.preventDefault();
     setMessage('');
 
-    if (!hasSupabaseConfig || !supabase) {
+    if (!hasSupabaseConfig() || !supabase) {
       setMessage('Supabase is not configured yet.');
       return;
     }

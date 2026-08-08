@@ -46,7 +46,7 @@ export default function Checkout() {
     event.preventDefault();
     setMessage('');
 
-    if (!hasSupabaseConfig || !supabase) {
+    if (!hasSupabaseConfig() || !supabase) {
       setMessage('Supabase is not configured yet. Your order cannot be saved until the Supabase environment variables are active.');
       return;
     }
