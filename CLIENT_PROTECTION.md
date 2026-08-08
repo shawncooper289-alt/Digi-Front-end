@@ -3,22 +3,35 @@
 ## Target setup
 
 - Frontend: Next.js on Vercel
-- Backend: Supabase Postgres and REST API
+- App: Ava Skye command center for DigiMark101
+- Backend: Supabase Postgres, Auth, and REST API
 - Server boundary: Vercel API routes
-- Public routes: landing page, campaign reads
-- Protected data: leads and future client records
+- Public routes: landing page, campaign reads, checkout intake
+- Protected routes: Ava Skye dashboard, AI chat, founder lead sales, orders
 
 ## Rules
 
 1. Public React pages never import server-only env vars.
-2. Lead writes go through `/api/leads`.
-3. Dashboard reads go through `/api/leads` and `/api/campaigns`.
+2. Ava Skye protected actions go through authenticated Vercel API routes.
+3. Lead and checkout writes are validated before Supabase insert.
 4. Supabase RLS stays enabled on every production table.
-5. Privileged writes use server-side Supabase keys only inside Vercel functions.
+5. Privileged reads/writes use service keys only inside Vercel functions.
+6. Voice and AI secrets stay in Vercel environment variables.
 
 ## Data model
 
-The included schema creates `leads` and `campaigns`. Add future tables with these defaults:
+The schema now covers:
+
+- `leads`
+- `campaigns`
+- `profiles`
+- `subscriptions`
+- `checkout_requests`
+- `orders`
+- `order_items`
+- `lead_sale_requests`
+
+Add future Ava Skye tables with these defaults:
 
 - `created_at timestamptz default now()`
 - RLS enabled immediately
