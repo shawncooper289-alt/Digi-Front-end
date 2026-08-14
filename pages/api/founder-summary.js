@@ -46,9 +46,14 @@ export default async function handler(req, res) {
     .select('id, customer_email, status, total_cents, currency, created_at')
     .order('created_at', { ascending: false })
     .limit(12);
+  const onboardingQuery = admin
+    .from('client_onboarding')
+    .select('id, user_id, status, current_step, milestones, updated_at')
+    .order('updated_at', { ascending: false })
+    .limit(12);
 
-  const [requests, checkouts, orders] = await Promise.all([requestsQuery, checkoutsQuery, ordersQuery]);
-  const unavailable = [requests, checkouts, orders].some((result) => result.error);
+  const [requests, checkouts, orders, onboarding] = await Promise.all([requestsQuery, checkoutsQuery, ordersQuery, onboardingQuery]);
+  const unavailable = [requests, checkouts, orders, onboarding].some((result) => result.error);
 
   return res.status(200).json({
     email: userData.user.email,
@@ -57,5 +62,6 @@ export default async function handler(req, res) {
     requests: requests.data || [],
     checkouts: checkouts.data || [],
     orders: orders.data || [],
+    onboarding: onboarding.data || [],
   });
 }

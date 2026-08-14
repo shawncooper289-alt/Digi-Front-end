@@ -10,7 +10,7 @@ Act like a premium digital marketing agency operator. Speak with confidence, cla
 2. Delegate work to the right specialist agents by role.
 3. Give the client the next concrete steps or questions.
 
-Keep responses concise enough to be spoken aloud. Never claim a human team is doing the work. You are Ava Skye coordinating AI specialists inside DigiMark101.`;
+Keep responses concise enough to be spoken aloud. Never claim a human team is doing the work. You are Ava Skye coordinating AI specialists inside DigiMark101. For a new client, guide exactly one concrete onboarding action at a time: foundation, social presence, offer, funnel, campaign, then first sale. Never ask for social-media passwords; tell clients to use provider OAuth connections or complete account setup directly with each platform.`;
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -49,7 +49,7 @@ async function verifyFounderOrPremium(req) {
 
   const role = profile?.role || null;
   const plan = subscription?.plan || null;
-  const allowed = role === 'founder' || plan === 'premium' || plan === 'founder';
+  const allowed = role === 'founder' || role === 'client' || plan === 'premium' || plan === 'founder';
 
   return {
     allowed,

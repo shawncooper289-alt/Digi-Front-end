@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
   const role = profile?.role || null;
   const plan = subscription?.plan || null;
-  const allowed = role === 'founder' || plan === 'premium' || plan === 'founder';
+  const allowed = role === 'founder' || role === 'client' || plan === 'premium' || plan === 'founder';
 
   return res.status(allowed ? 200 : 403).json({
     allowed,
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
     role,
     plan,
     message: allowed
-      ? 'Founder or premium access confirmed.'
-      : 'This account needs profiles.role = founder or subscriptions.plan = premium.',
+      ? 'Account access confirmed.'
+      : 'This account needs a DigiMark101 client, founder, or premium profile.',
   });
 }

@@ -75,6 +75,10 @@ export default function Dashboard() {
     };
   }, [supabase]);
 
+  useEffect(() => {
+    if (access?.allowed && access.role === 'client') window.location.href = '/onboarding';
+  }, [access]);
+
   async function signOut() {
     if (supabase) {
       await supabase.auth.signOut();
@@ -351,6 +355,7 @@ export default function Dashboard() {
                   <article><span>Lead requests</span><strong>{founderSummary.requests.length}</strong></article>
                   <article><span>Checkout requests</span><strong>{founderSummary.checkouts.length}</strong></article>
                   <article><span>Recent orders</span><strong>{founderSummary.orders.length}</strong></article>
+                  <article><span>Client journeys</span><strong>{founderSummary.onboarding.length}</strong></article>
                 </div>
                 {!founderSummary.dataAvailable && <p className="hubNotice">Some data tables are not available yet. Run the included Supabase schema files to populate this hub.</p>}
                 <div className="hubLists">
@@ -365,6 +370,10 @@ export default function Dashboard() {
                   <article>
                     <h3>Orders</h3>
                     {founderSummary.orders.length ? founderSummary.orders.map((item) => <p key={item.id}><strong>{item.customer_email}</strong><span>{item.status} · {item.currency} {(item.total_cents / 100).toFixed(2)}</span></p>) : <p>No orders yet.</p>}
+                  </article>
+                  <article>
+                    <h3>Client onboarding</h3>
+                    {founderSummary.onboarding.length ? founderSummary.onboarding.map((item) => <p key={item.id}><strong>Client journey {item.user_id.slice(0, 8)}</strong><span>Step {item.current_step + 1} · {item.status}</span></p>) : <p>No client onboarding records yet.</p>}
                   </article>
                 </div>
               </>
@@ -429,7 +438,7 @@ export default function Dashboard() {
         .founderHub { margin-bottom: 3rem; padding: 1.25rem; border-radius: 1.5rem; border: 1px solid rgba(134,239,172,.26); background: linear-gradient(145deg, rgba(15,23,42,.82), rgba(22,101,52,.12)); }
         .hubLink { display: inline-flex; align-items: center; border: 1px solid rgba(134,239,172,.35); color: #bbf7d0; text-decoration: none; border-radius: 999px; padding: .75rem 1rem; font-weight: 900; }
         .hubNotice { margin: 0 0 1rem; color: rgba(226,232,240,.76); }
-        .hubMetrics, .hubLists { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .hubMetrics, .hubLists { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
         .hubMetrics article, .hubLists article { min-height: auto; padding: 1rem; background: rgba(2,6,23,.42); }
         .hubMetrics span { display: block; color: #bbf7d0; font-size: .75rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
         .hubMetrics strong { display: block; margin-top: .45rem; font-size: 2.4rem; }
@@ -451,7 +460,7 @@ export default function Dashboard() {
         textarea:focus { border-color: rgba(147,197,253,.72); box-shadow: 0 0 0 4px rgba(59,130,246,.14); }
         .voiceStatus { margin: .85rem 0 0; color: rgba(226,232,240,.62); font-size: .9rem; }
         .sectionTop { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 1rem; }
-        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
         article { padding: 1.15rem; min-height: 180px; }
         article h3 { font-size: 1.35rem; margin: .7rem 0; }
         article p { color: rgba(226,232,240,.72); line-height: 1.6; }
