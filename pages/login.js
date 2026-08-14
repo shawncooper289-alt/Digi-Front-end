@@ -3,9 +3,8 @@ import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
 export default function Login() {
   const supabase = useMemo(() => createSupabaseClient(), []);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('shawncooper289@gmail.com');
   const [password, setPassword] = useState('');
-  const [mode, setMode] = useState('signin');
   const [status, setStatus] = useState('Sign in with your founder or premium account.');
   const [loading, setLoading] = useState(false);
 
@@ -28,11 +27,9 @@ export default function Login() {
     }
 
     setLoading(true);
-    setStatus(mode === 'signin' ? 'Signing you in...' : 'Creating your account...');
+    setStatus('Signing you in...');
 
-    const result = mode === 'signin'
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password });
+    const result = await supabase.auth.signInWithPassword({ email, password });
 
     setLoading(false);
 
@@ -41,12 +38,23 @@ export default function Login() {
       return;
     }
 
-    if (mode === 'signup') {
-      setStatus('Account created. Add this user to profiles.role = founder or subscriptions.plan = premium, then sign in.');
+
+    window.location.href = '/dashboard';
+  }
+
+  async function sendMagicLink() {
+    if (!supabase) {
+      setStatus('Supabase browser credentials are missing.');
       return;
     }
 
-    window.location.href = '/dashboard';
+    setLoading(true);
+    const result = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+    });
+    setLoading(false);
+    setStatus(result.error ? result.error.message : 'Check your email for a secure sign-in link.');
   }
 
   return (
@@ -58,7 +66,7 @@ export default function Login() {
         </a>
         <p className="eyebrow">Founder access</p>
         <h1>Enter the DigiMark101 backend.</h1>
-        <p className="intro">The private command center is available to founder and premium accounts only.</p>
+        <p className="intro">Use the secure email link for fast founder access, or sign in with your password.</p>
 
         <form onSubmit={handleSubmit}>
           <label>
@@ -67,15 +75,15 @@ export default function Login() {
           </label>
           <label>
             Password
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} minLength={6} />
+            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required autoComplete="current-password" minLength={6} />
           </label>
-          <button type="submit" disabled={loading || !hasSupabaseConfig()}>
-            {loading ? 'Working...' : mode === 'signin' ? 'Sign in' : 'Create account'}
+          <button type="submit" disabled={loading || !hasSupabaseConfig}>
+            {loading ? 'Working...' : 'Sign in'}
           </button>
         </form>
 
-        <button className="switchMode" type="button" onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}>
-          {mode === 'signin' ? 'Need to create the founder account?' : 'Already have the founder account?'}
+        <button className="switchMode" type="button" onClick={sendMagicLink} disabled={loading || !hasSupabaseConfig}>
+          Email me a secure sign-in link
         </button>
         <p className="status">{status}</p>
       </section>

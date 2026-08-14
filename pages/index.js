@@ -81,7 +81,7 @@ const tiers = [
 export default function Home() {
   const [message, setMessage] = useState('Preparing your launch room...');
   const [loading, setLoading] = useState(true);
-  const supabaseReady = hasSupabaseConfig();
+  const supabaseReady = hasSupabaseConfig;
 
   useEffect(() => {
     fetch('/api/hello')

@@ -27,7 +27,9 @@ export default function Dashboard() {
   ]);
   const [avaThinking, setAvaThinking] = useState(false);
   const [voiceStatus, setVoiceStatus] = useState('Voice ready when your browser supports speech.');
-  const ready = hasSupabaseConfig();
+  const [founderSummary, setFounderSummary] = useState(null);
+  const [founderSummaryError, setFounderSummaryError] = useState('');
+  const ready = hasSupabaseConfig;
   const supabase = useMemo(() => createSupabaseClient(), []);
 
   useEffect(() => {
@@ -80,6 +82,29 @@ export default function Dashboard() {
     window.location.href = '/login';
   }
 
+  useEffect(() => {
+    if (!access?.allowed || access.role !== 'founder' || !supabase) return;
+    let active = true;
+
+    async function loadFounderSummary() {
+      const { data } = await supabase.auth.getSession();
+      const token = data.session?.access_token;
+      if (!token) return;
+      const response = await fetch('/api/founder-summary', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!active) return;
+      if (!response.ok) {
+        setFounderSummaryError(result.error || 'Founder Hub data could not be loaded.');
+        return;
+      }
+      setFounderSummary(result);
+    }
+
+    loadFounderSummary();
+    return () => { active = false; };
+  }, [access, supabase]);
 
   function chooseAvaVoice() {
     if (typeof window === 'undefined' || !window.speechSynthesis) return null;
@@ -223,10 +248,11 @@ export default function Dashboard() {
         </a>
         <nav>
           <span className="active">Onboarding</span>
+          {access?.role === 'founder' && <a href="#founder-hub">Founder Hub</a>}
+          <a href="/dashboard-sales">Lead Sales</a>
           <span>Agents</span>
           <span>Studio</span>
           <span>Funnels</span>
-          <span>Channels</span>
         </nav>
       </aside>
 
@@ -308,6 +334,44 @@ export default function Dashboard() {
           <p className="voiceStatus">{voiceStatus}</p>
         </section>
 
+        {access?.role === 'founder' && (
+          <section id="founder-hub" className="founderHub">
+            <div className="sectionTop">
+              <div>
+                <p className="eyebrow">Founder Hub</p>
+                <h2>Business operations at a glance.</h2>
+              </div>
+              <a className="hubLink" href="/dashboard-sales">Open lead sales</a>
+            </div>
+            {founderSummaryError && <p className="hubNotice">{founderSummaryError}</p>}
+            {!founderSummary && !founderSummaryError && <p className="hubNotice">Loading live business records...</p>}
+            {founderSummary && (
+              <>
+                <div className="hubMetrics">
+                  <article><span>Lead requests</span><strong>{founderSummary.requests.length}</strong></article>
+                  <article><span>Checkout requests</span><strong>{founderSummary.checkouts.length}</strong></article>
+                  <article><span>Recent orders</span><strong>{founderSummary.orders.length}</strong></article>
+                </div>
+                {!founderSummary.dataAvailable && <p className="hubNotice">Some data tables are not available yet. Run the included Supabase schema files to populate this hub.</p>}
+                <div className="hubLists">
+                  <article>
+                    <h3>Lead requests</h3>
+                    {founderSummary.requests.length ? founderSummary.requests.map((item) => <p key={item.id}><strong>{item.client_name}</strong><span>{item.package_name} · {item.status}</span></p>) : <p>No lead requests yet.</p>}
+                  </article>
+                  <article>
+                    <h3>Checkout requests</h3>
+                    {founderSummary.checkouts.length ? founderSummary.checkouts.map((item) => <p key={item.id}><strong>{item.customer_name}</strong><span>{item.package_name} · {item.payment_status}</span></p>) : <p>No checkout requests yet.</p>}
+                  </article>
+                  <article>
+                    <h3>Orders</h3>
+                    {founderSummary.orders.length ? founderSummary.orders.map((item) => <p key={item.id}><strong>{item.customer_email}</strong><span>{item.status} · {item.currency} {(item.total_cents / 100).toFixed(2)}</span></p>) : <p>No orders yet.</p>}
+                  </article>
+                </div>
+              </>
+            )}
+          </section>
+        )}
+
         <section className="workstreams">
           <div className="sectionTop">
             <p className="eyebrow">Delegated agent workstreams</p>
@@ -331,7 +395,7 @@ export default function Dashboard() {
         .home { display: flex; align-items: center; gap: .7rem; color: #fff; text-decoration: none; font-weight: 1000; letter-spacing: -.04em; margin-bottom: 2rem; }
         .home img { width: 48px; height: 48px; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 12px 28px rgba(168,85,247,.38)); }
         nav { display: grid; gap: .65rem; }
-        nav span { padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.65); font-weight: 850; }
+        nav span, nav a { padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.65); font-weight: 850; text-decoration: none; }
         nav .active { color: #fff; background: linear-gradient(135deg, rgba(37,99,235,.32), rgba(219,39,119,.22)); border: 1px solid rgba(147,197,253,.22); }
         .main { padding: 2rem; }
         header { display: grid; grid-template-columns: 1fr minmax(280px, 430px); gap: 1.5rem; align-items: start; margin-bottom: 2rem; }
@@ -362,6 +426,16 @@ export default function Dashboard() {
         .missionGrid div { display: grid; gap: .35rem; padding: 1rem; border-radius: 1rem; background: rgba(2,6,23,.42); }
         .missionGrid span, article span { color: #93c5fd; font-size: .78rem; font-weight: 950; text-transform: uppercase; letter-spacing: .1em; }
         .missionGrid strong { font-size: 1.08rem; }
+        .founderHub { margin-bottom: 3rem; padding: 1.25rem; border-radius: 1.5rem; border: 1px solid rgba(134,239,172,.26); background: linear-gradient(145deg, rgba(15,23,42,.82), rgba(22,101,52,.12)); }
+        .hubLink { display: inline-flex; align-items: center; border: 1px solid rgba(134,239,172,.35); color: #bbf7d0; text-decoration: none; border-radius: 999px; padding: .75rem 1rem; font-weight: 900; }
+        .hubNotice { margin: 0 0 1rem; color: rgba(226,232,240,.76); }
+        .hubMetrics, .hubLists { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .hubMetrics article, .hubLists article { min-height: auto; padding: 1rem; background: rgba(2,6,23,.42); }
+        .hubMetrics span { display: block; color: #bbf7d0; font-size: .75rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+        .hubMetrics strong { display: block; margin-top: .45rem; font-size: 2.4rem; }
+        .hubLists h3 { margin: 0 0 1rem; }
+        .hubLists p { display: grid; gap: .25rem; margin: 0; padding: .7rem 0; border-top: 1px solid rgba(148,163,184,.14); }
+        .hubLists span { color: rgba(226,232,240,.62); font-size: .88rem; }
         .avaChat { margin-bottom: 3rem; padding: 1.25rem; border-radius: 1.5rem; border: 1px solid rgba(148,163,184,.18); background: linear-gradient(145deg, rgba(15,23,42,.78), rgba(37,99,235,.12)); box-shadow: 0 25px 80px rgba(2,6,23,.3); }
         .chatHeader { display: flex; justify-content: space-between; gap: 1rem; align-items: start; margin-bottom: 1rem; }
         .chatHeader h2 { max-width: 820px; margin-bottom: 0; }
@@ -381,8 +455,8 @@ export default function Dashboard() {
         article { padding: 1.15rem; min-height: 180px; }
         article h3 { font-size: 1.35rem; margin: .7rem 0; }
         article p { color: rgba(226,232,240,.72); line-height: 1.6; }
-        @media (max-width: 980px) { .console { grid-template-columns: 1fr; } .rail { position: static; border-right: 0; border-bottom: 1px solid rgba(148,163,184,.16); } .rail nav { display: flex; overflow: auto; } header, .builder { grid-template-columns: 1fr; } .cards { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .main { padding: 1rem; } .cards { grid-template-columns: 1fr; } .sectionTop, .chatHeader { display: block; } .avaComposer { grid-template-columns: 1fr; } }
+        @media (max-width: 980px) { .console { grid-template-columns: 1fr; } .rail { position: static; border-right: 0; border-bottom: 1px solid rgba(148,163,184,.16); } .rail nav { display: flex; overflow: auto; } header, .builder { grid-template-columns: 1fr; } .cards, .hubMetrics, .hubLists { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .main { padding: 1rem; } .cards, .hubMetrics, .hubLists { grid-template-columns: 1fr; } .sectionTop, .chatHeader { display: block; } .avaComposer { grid-template-columns: 1fr; } }
       `}</style>
     </main>
   );
