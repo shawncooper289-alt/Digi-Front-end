@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { hasSupabaseConfig } from '../lib/supabaseClient';
 
-const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
-
 const agentSpecialists = [
   'Brand Strategy',
   'Social Onboarding',
@@ -34,7 +32,7 @@ const pricingPlans = [
     slug: 'launch',
     price: '$97/mo',
     note: 'For a founder starting their digital presence with a guided premium launch path.',
-    features: ['Ava Skye guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
+    features: ['AI-guided intake', 'Brand foundation', 'Starter website plan', 'Social profile checklist', 'Basic content prompts'],
   },
   {
     name: 'Growth Account',
@@ -81,9 +79,8 @@ const tiers = [
 ];
 
 export default function Home() {
-  const [message, setMessage] = useState('Ava Skye is preparing your launch room...');
+  const [message, setMessage] = useState('Preparing your launch room...');
   const [loading, setLoading] = useState(true);
-  const [avatarLoaded, setAvatarLoaded] = useState(true);
   const supabaseReady = hasSupabaseConfig();
 
   useEffect(() => {
@@ -94,7 +91,7 @@ export default function Home() {
         setLoading(false);
       })
       .catch(() => {
-        setMessage('Ava Skye is ready to build your digital agency stack.');
+        setMessage('Your AI workspace is ready to build your digital agency stack.');
         setLoading(false);
       });
   }, []);
@@ -109,7 +106,7 @@ export default function Home() {
           <span>DigiMark101</span>
         </div>
         <div className="navLinks">
-          <a href="#ava-video">Ava Skye</a>
+          <a href="#platform">Platform</a>
           <a href="#workflow">Workflow</a>
           <a href="#agents">AI Agents</a>
           <a href="#tiers">Client Plans</a>
@@ -126,11 +123,11 @@ export default function Home() {
             <p className="dynastyStatement">A futuristic agency platform built to turn attention into leads, sales, content, campaigns, and long-term growth.</p>
           </div>
           <p className="lead">
-            DigiMark101 blends elite strategy, beautiful web experiences, conversion-focused funnels, AI-guided execution, and Ava Skye’s command-center workflow into one polished growth system.
+            DigiMark101 blends elite strategy, beautiful web experiences, conversion-focused funnels, and AI-guided execution into one polished growth system.
           </p>
           <div className="heroActions">
             <a className="primary" href="/dashboard">Start your dynasty build</a>
-            <a className="secondary" href="#ava-video">Meet Ava Skye</a>
+            <a className="secondary" href="#platform">Explore the platform</a>
           </div>
           <div className="signalBar">
             <span>{loading ? 'Preparing your agency command room...' : message}</span>
@@ -138,54 +135,42 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="avaShowcase" aria-label="Meet Ava Skye, your AI chief of staff">
-          <div className="portraitHalo" />
-          <div className="portraitCard">
-            {avatarLoaded && (
-              <img
-                src={AVA_SKYE_IMAGE_URL}
-                alt="Ava Skye, AI chief of staff"
-                onError={() => setAvatarLoaded(false)}
-              />
-            )}
-            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
-          </div>
-          <div className="chiefCard">
-            <span>Meet your AI chief of staff.</span>
-            <p>Ava Skye turns your ideas into a premium marketing operating system.</p>
+        <div className="platformShowcase" aria-label="DigiMark101 platform overview">
+          <div className="platformHalo" />
+          <div className="platformCard">
+            <span className="platformKicker">DigiMark101 platform</span>
+            <strong>Strategy, systems, and execution in one workspace.</strong>
+            <div className="platformMetrics">
+              <span>AI-guided workflows</span>
+              <span>Connected growth channels</span>
+              <span>Specialist agent network</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="ava-video" className="section cinema">
-        <div className="videoStage">
-          <div className="avatarFrame">
-            {avatarLoaded && (
-              <img
-                src={AVA_SKYE_IMAGE_URL}
-                alt="Ava Skye AI executive avatar"
-                onError={() => setAvatarLoaded(false)}
-              />
-            )}
-            {!avatarLoaded && <div className="avatarFallback">Ava<br />Skye</div>}
-            <div className="scanLine" />
+      <section id="platform" className="section cinema">
+        <div className="videoStage platformStage">
+          <div className="systemGrid">
+            <span>01<br /><strong>Plan</strong></span>
+            <span>02<br /><strong>Build</strong></span>
+            <span>03<br /><strong>Launch</strong></span>
+            <span>04<br /><strong>Measure</strong></span>
           </div>
-          <div className="playOrb">▶</div>
-          <div className="captionStrip">Cinematic intro video placeholder • replace with Ava Skye narration asset</div>
+          <div className="captionStrip">A connected operating system for marketing growth</div>
         </div>
         <div className="videoCopy">
-          <p className="eyebrow">Cinematic front-end story</p>
-          <h2>Ava Skye tells clients what happens after they enter the backend dashboard.</h2>
+          <p className="eyebrow">The DigiMark101 platform</p>
+          <h2>Move from a business idea to coordinated marketing execution.</h2>
           <p>
-            The page now frames Ava as the beautiful executive AI host who explains the guided dashboard: she interviews the client, builds the blanks, assigns specialized agents, monitors completion, and turns the selected client plan into a full marketing operating system.
+            Start with guided intake, define the work that matters, and coordinate specialist AI workflows across your brand, content, website, funnels, and client channels.
           </p>
           <div className="scriptCard">
-            <strong>Intro script direction</strong>
-            <span>“Welcome to DigiMark101. I’m Ava Skye. Once you enter your dashboard, I’ll learn your business, connect your socials, build your brand systems, launch your pages, coordinate your content studio, and delegate every task to the right AI specialist until your digital agency engine is ready.”</span>
+            <strong>Built for momentum</strong>
+            <span>Organize the next best action, connect the right growth channels, and keep every deliverable moving toward launch.</span>
           </div>
         </div>
       </section>
-
       <section id="backend" className="section backendPreview">
         <div className="sectionHeader">
           <p className="eyebrow">Inside the backend dashboard</p>
@@ -219,7 +204,7 @@ export default function Home() {
       <section id="agents" className="section">
         <div className="sectionHeader">
           <p className="eyebrow">Specialized AI agent network</p>
-          <h2>Ava Skye delegates, reviews, and sees the work to completion.</h2>
+          <h2>Specialist agents coordinate the work to completion.</h2>
         </div>
         <div className="agentGrid">
           {agentSpecialists.map((agent) => (
@@ -273,7 +258,7 @@ export default function Home() {
 
       <footer>
         <strong>DigiMark101</strong>
-        <span>Vercel front end • Supabase-ready data layer • Ava Skye AI agency workflow</span>
+        <span>Vercel front end • Supabase-ready data layer • AI agency workflow</span>
       </footer>
 
       <style jsx>{`
@@ -306,24 +291,22 @@ export default function Home() {
         .primary:hover, .secondary:hover { transform: translateY(-2px); }
         .signalBar { max-width: 720px; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border: 1px solid rgba(148,163,184,.2); border-radius: 1.2rem; background: rgba(15,23,42,.6); color: rgba(226,232,240,.78); }
         .signalBar strong { color: #86efac; white-space: nowrap; }
-        .avaShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
-        .portraitHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
-        .portraitCard { position: relative; width: min(430px, 82vw); aspect-ratio: .82; overflow: hidden; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: rgba(15,23,42,.72); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
-        .portraitCard:after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 52%, rgba(2,6,23,.55)); pointer-events: none; }
-        .portraitCard img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.03); }
-        .chiefCard { position: absolute; left: 0; right: 0; bottom: 2rem; width: min(420px, 82vw); margin: 0 auto; padding: 1.15rem; border-radius: 1.35rem; border: 1px solid rgba(255,255,255,.22); background: rgba(2,6,23,.72); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
-        .chiefCard span { display: block; color: #fff; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1; font-weight: 1000; letter-spacing: -.04em; }
-        .chiefCard p { margin: .55rem 0 0; color: rgba(226,232,240,.76); line-height: 1.55; }
+        .platformShowcase { position: relative; min-height: 620px; display: grid; place-items: center; }
+        .platformHalo { position: absolute; width: min(520px, 86vw); aspect-ratio: 1; border-radius: 999px; background: conic-gradient(from 140deg, rgba(37,99,235,.3), rgba(236,72,153,.38), rgba(245,158,11,.22), rgba(37,99,235,.3)); filter: blur(8px); opacity: .9; }
+        .platformCard { position: relative; width: min(430px, 82vw); min-height: 370px; display: grid; align-content: center; gap: 1.3rem; padding: 2.25rem; box-sizing: border-box; border-radius: 2.25rem; border: 1px solid rgba(255,255,255,.28); background: linear-gradient(145deg, rgba(15,23,42,.94), rgba(37,99,235,.22)); box-shadow: 0 42px 140px rgba(2,6,23,.74), 0 0 90px rgba(219,39,119,.2), inset 0 1px 0 rgba(255,255,255,.14); }
+        .platformKicker { color: #bfdbfe; font-size: .76rem; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
+        .platformCard strong { color: #fff; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .98; letter-spacing: -.06em; }
+        .platformMetrics { display: grid; gap: .65rem; }
+        .platformMetrics span { padding: .7rem .85rem; border-radius: .85rem; color: rgba(226,232,240,.86); background: rgba(2,6,23,.44); border: 1px solid rgba(148,163,184,.2); font-weight: 800; }
         .steps span, .workflowList span, .backendGrid span { color: #f0abfc; font-weight: 950; }
         .section { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
         .cinema { display: grid; grid-template-columns: .95fr 1.05fr; gap: 2rem; align-items: center; }
         .videoStage { min-height: 560px; position: relative; display: grid; place-items: center; border-radius: 2.2rem; overflow: hidden; border: 1px solid rgba(148,163,184,.22); background: radial-gradient(circle at 50% 20%, rgba(59,130,246,.28), transparent 34rem), linear-gradient(145deg, rgba(15,23,42,.96), rgba(2,6,23,.82)); box-shadow: 0 40px 130px rgba(2,6,23,.72); }
         .videoStage:before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0 40%, rgba(255,255,255,.1) 50%, transparent 60%); transform: translateX(-120%); animation: sweep 5s infinite; }
-        .avatarFrame { width: min(360px, 72vw); aspect-ratio: 1; border-radius: 2rem; overflow: hidden; display: grid; place-items: center; position: relative; border: 1px solid rgba(255,255,255,.22); background: linear-gradient(145deg, rgba(15,23,42,.7), rgba(37,99,235,.22)); box-shadow: 0 24px 80px rgba(0,0,0,.48); }
-        .avatarFrame img { width: 100%; height: 100%; object-fit: cover; }
-        .avatarFallback { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 3.5rem; line-height: .9; font-weight: 1000; letter-spacing: -.08em; background: radial-gradient(circle at 50% 15%, rgba(240,171,252,.35), transparent 16rem), linear-gradient(145deg, #0f172a, #1e3a8a 52%, #831843); }
-        .scanLine { position: absolute; left: 0; right: 0; height: 2px; top: 50%; background: linear-gradient(90deg, transparent, #93c5fd, transparent); box-shadow: 0 0 24px #60a5fa; opacity: .8; animation: scan 3s infinite; }
-        .playOrb { position: absolute; width: 76px; height: 76px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(16px); box-shadow: 0 20px 60px rgba(37,99,235,.32); }
+        .platformStage { padding: 2rem; box-sizing: border-box; }
+        .systemGrid { position: relative; z-index: 1; width: min(390px, 90%); display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .systemGrid span { min-height: 128px; display: grid; align-content: space-between; padding: 1rem; border-radius: 1.15rem; color: #93c5fd; background: rgba(2,6,23,.52); border: 1px solid rgba(147,197,253,.24); font-weight: 900; }
+        .systemGrid strong { color: #fff; font-size: 1.3rem; }
         .captionStrip { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; padding: .9rem 1rem; border-radius: 1rem; color: rgba(226,232,240,.8); background: rgba(2,6,23,.72); border: 1px solid rgba(148,163,184,.18); }
         .videoCopy p { color: rgba(226,232,240,.78); font-size: 1.08rem; line-height: 1.75; }
         .scriptCard { display: grid; gap: .6rem; padding: 1.2rem; border-radius: 1.2rem; background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.2); color: rgba(226,232,240,.8); }
@@ -362,8 +345,8 @@ export default function Home() {
         footer { position: relative; z-index: 1; width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: rgba(226,232,240,.62); border-top: 1px solid rgba(148,163,184,.16); }
         @keyframes sweep { 0%, 45% { transform: translateX(-120%); } 70%, 100% { transform: translateX(120%); } }
         @keyframes scan { 0%, 100% { transform: translateY(-120px); opacity: .25; } 50% { transform: translateY(120px); opacity: .9; } }
-        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .avaShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .avaShowcase { min-height: 500px; } .portraitCard { width: min(360px, 88vw); } .chiefCard { bottom: 1rem; } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
+        @media (max-width: 900px) { .hero, .gridTwo, .cinema { grid-template-columns: 1fr; min-height: auto; padding: 4rem 0; } .platformShowcase { min-height: 560px; } .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: repeat(2, 1fr); } .navLinks a:not(.navCta) { display: none; } .sectionHeader, footer, .signalBar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 560px) { .agentGrid, .tiers, .backendGrid, .pricingGrid { grid-template-columns: 1fr; } .heroActions { flex-direction: column; } .platformShowcase { min-height: 500px; } .platformCard { width: min(360px, 88vw); } .primary, .secondary { text-align: center; } .videoStage { min-height: 460px; } }
       `}</style>
     </main>
   );

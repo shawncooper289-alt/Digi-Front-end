@@ -58,7 +58,7 @@ export default function Login() {
         </a>
         <p className="eyebrow">Founder access</p>
         <h1>Enter the DigiMark101 backend.</h1>
-        <p className="intro">Ava Skye opens the private command center for founder and premium accounts only.</p>
+        <p className="intro">The private command center is available to founder and premium accounts only.</p>
 
         <form onSubmit={handleSubmit}>
           <label>

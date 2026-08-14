@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createSupabaseClient, hasSupabaseConfig } from '../lib/supabaseClient';
 
-const AVA_SKYE_IMAGE_URL = 'https://nova-cdn.ace.ai/chatgpt_images/a74a3cb6-8b88-11f1-be78-5e535f6037b5/_17853560262a141f7ae1a7da059fcc0921011a3f34f9494fa7eee5ef6aef12a8a7886584a9.png';
-
 const questions = [
   'What business are we building and who is it for?',
-  'What offer, pricing, and client plan should Ava Skye optimize around?',
+  'What offer, pricing, and client plan should the AI workflow optimize around?',
   'Which socials, Meta pages, communities, YouTube channels, and WhatsApp flows need onboarding?',
   'What brand voice, visuals, proof, products, and monetization paths should the agents use?',
 ];
@@ -23,7 +21,6 @@ export default function Dashboard() {
   const [status, setStatus] = useState('Checking founder access...');
   const [access, setAccess] = useState(null);
   const [checking, setChecking] = useState(true);
-  const [avatarLoaded, setAvatarLoaded] = useState(true);
   const [avaInput, setAvaInput] = useState('');
   const [avaMessages, setAvaMessages] = useState([
     { role: 'assistant', content: 'Welcome back. I am Ava Skye, your AI chief of staff. Tell me what you want to build, and I will delegate the work to the right specialist agents.' },
@@ -177,7 +174,7 @@ export default function Dashboard() {
       <main className="gate">
         <div>
           <img src="/digimark101-logo.svg" alt="DigiMark101 logo" />
-          <p>Opening Ava Skye command center...</p>
+          <p>Opening DigiMark101 command center...</p>
         </div>
         <style jsx>{`
           .gate { min-height: 100vh; display: grid; place-items: center; color: #fff; background: #020617; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
@@ -236,7 +233,7 @@ export default function Dashboard() {
       <section className="main">
         <header>
           <div>
-            <p className="eyebrow">Ava Skye Guided Build Room</p>
+            <p className="eyebrow">AI-Guided Build Room</p>
             <h1>Founder command center for premium client builds.</h1>
           </div>
           <div className={ready ? 'status online' : 'status pending'}>
@@ -266,17 +263,10 @@ export default function Dashboard() {
 
           <div className="missionPanel">
             <div className="studioPreview">
-              {avatarLoaded && (
-                <img
-                  src={AVA_SKYE_IMAGE_URL}
-                  alt="Ava Skye AI executive avatar"
-                  onError={() => setAvatarLoaded(false)}
-                />
-              )}
-              {!avatarLoaded && <div className="studioFallback">Ava Skye</div>}
+              <div className="workflowMark" aria-hidden="true">DM</div>
               <div>
-                <strong>Cinematic dashboard host</strong>
-                <span>Video-ready Ava intro, client briefing, and task delegation preview.</span>
+                <strong>Guided workspace</strong>
+                <span>Client briefing, task delegation, and launch progress in one place.</span>
               </div>
             </div>
             <h2>Launch Mission</h2>
@@ -364,8 +354,7 @@ export default function Dashboard() {
         button span { width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; background: rgba(37,99,235,.28); color: #bfdbfe; flex: 0 0 auto; }
         .missionPanel { padding: 1.4rem; background: linear-gradient(145deg, rgba(37,99,235,.16), rgba(219,39,119,.12)); }
         .studioPreview { display: grid; grid-template-columns: 92px 1fr; gap: 1rem; align-items: center; margin-bottom: 1.25rem; padding: .85rem; border-radius: 1.15rem; background: rgba(2,6,23,.48); border: 1px solid rgba(148,163,184,.18); }
-        .studioPreview img, .studioFallback { width: 92px; height: 92px; border-radius: 1rem; object-fit: cover; border: 1px solid rgba(255,255,255,.18); }
-        .studioFallback { display: grid; place-items: center; text-align: center; color: #fff; font-weight: 1000; background: linear-gradient(135deg, #2563eb, #db2777); }
+        .workflowMark { width: 92px; height: 92px; display: grid; place-items: center; border-radius: 1rem; border: 1px solid rgba(255,255,255,.18); color: #fff; font-size: 1.7rem; font-weight: 1000; letter-spacing: -.08em; background: linear-gradient(135deg, #2563eb, #db2777); }
         .studioPreview strong, .studioPreview span { display: block; }
         .studioPreview strong { margin-bottom: .3rem; }
         .studioPreview span { color: rgba(226,232,240,.72); line-height: 1.45; }
