@@ -60,3 +60,13 @@ Set these in your Vercel project settings:
 ✅ Updated `vercel.json` - Added framework declaration and improved configuration
 
 Your app should now deploy successfully on Vercel!
+
+## Ava Skye and Pinecone setup
+
+1. Run `supabase/schema.sql` in the Supabase SQL editor.
+2. Set these server-only Vercel environment variables: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `PINECONE_API_KEY`, `PINECONE_INDEX_HOST`, `AI_API_KEY`, `AI_BASE_URL` (optional OpenAI-compatible endpoint), `AI_CHAT_MODEL`, `AI_EMBEDDING_MODEL`, and a strong `AVA_INGESTION_SECRET`.
+3. Create a Pinecone index whose vector dimension matches `AI_EMBEDDING_MODEL`; the app writes to the `ava-knowledge` namespace.
+4. Send authenticated users' Supabase access tokens as `Authorization: Bearer <access-token>` when calling `/api/chat`. The included UI provides Supabase email-link sign-in and adds this token automatically.
+5. Ingest approved playbooks through `POST /api/knowledge/ingest` using `Authorization: Bearer <AVA_INGESTION_SECRET>` and JSON `{ "title", "content", "stage", "source" }`. Keep the ingestion secret server-side.
+
+The chat route reads the authenticated user's stage/profile, retrieves the five most relevant stage-scoped Pinecone chunks, saves the exchange in Supabase, and returns one stage-gated answer.
